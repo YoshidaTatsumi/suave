@@ -1,0 +1,53 @@
+<div class="row">
+	<h2 class="col-xs-6"><%= @game.title %></h2>
+	<% if @game.user.id == current_user.id %>
+		<%= link_to "編集する", edit_game_path(@game), class:"col-xs-2 col-xs-offset-1 btn btn-info", style:"margin-top:20px;" %>
+	<% end %>
+</div>
+
+<div class="theTarget">
+	<% @game.screenshots.each do |screenshot| %>
+		<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg" %>
+	<% end %>
+</div>
+
+<h3>説明</h3>
+<%= @game.introduction %>
+
+<%= link_to "ダウンロードはこちら", @game.url %>
+
+<% @game.tag_list.each do |tag| %>
+	<%= tag %>
+<% end %>
+
+
+<script>
+	//Skipprの初期化
+	$("document").ready(function() {
+    $(".theTarget").skippr();
+	});
+
+	// オプションを指定してSkipprの実行
+	$(".theTarget").skippr({
+	    // スライドショーの変化（"fade" or "slide"）
+	    transition : 'fade',
+	    // 変化にかかる時間（ミリ秒）
+	    speed : 1000,
+	    // easingの種類
+	    easing : 'easeOutQuart',
+	    // ナビゲーションの形（"block" or "bubble"）
+	    navType : 'block',
+	    // 子要素の種類（"div" or "img"）
+	    childrenElementType : 'div',
+	    // ナビゲーション矢印の表示（trueで表示）
+	    arrows : true,
+	    // スライドショーの自動再生（falseで自動再生なし）
+	    autoPlay : false,
+	    // 自動再生時のスライド切替間隔（ミリ秒）
+	    autoPlayDuration : 5000,
+	    // キーボードの矢印キーによるスライド送りの設定（trueで有効）
+	    keyboardOnAlways : true,
+	    // 1枚目のスライド表示時に戻る矢印を表示するかどうか（falseで非表示）
+	    hidePrevious : false
+	});
+</script>

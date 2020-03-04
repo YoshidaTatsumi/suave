@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   attachment :image
 
-  has_many :game, dependent: :destroy
+  has_many :games, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :contacts, dependent: :destroy
 
@@ -31,4 +31,19 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: {in: 2..20}
   validates :introduction, length: {maximum: 150}
+
+  # ユーザーをフォローする
+  def follow(user_id)
+    active_relationships.create(followed_id: user_id)
+  end
+
+  # ユーザーのフォローを外す
+  def unfollow(user_id)
+    active_relationships.find_by(followed_id: user_id).destroy
+  end
+
+  # フォローしていればtrueを返す
+  def following?(user)
+    following_user.include?(user)
+  end
 end

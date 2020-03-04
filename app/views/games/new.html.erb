@@ -28,14 +28,18 @@
 				<%= f.label :url, "ダウンロードURL", class:"col-xs-2" %>
 				<%= f.text_area :url, class:"col-xs-4" %>
 			</div>
+
+				<%= f.label :tag_list, 'タグをカンマ区切りで入力' %>
+				<%= text_field_tag 'game[tag_list]', @game.tag_list %>
 		</div>
 
-		<% f.fields_for :screenshots do |i| %>
-			<div class="col-xs-4 col-xs-offset-1">
+		<div class="col-xs-4 col-xs-offset-1">
+			<%= f.fields_for :screenshots do |i| %>
 				<%= i.label :image, "スクリーンショット" %><br>
-	    		<%= i.attachment_field :image, multiple: true %>
-	    	</div>
-		<% end %>
+	    		<%= i.attachment_field :image, multiple: true, name: "screenshots_attributes[0][image][]" %>
+	    	<% end %>
+    	</div>
+
 
 			<div class="row">
 				<%= f.submit "アップロード", class:"col-xs-3 col-xs-offset-4 btn btn-primary" %>

@@ -1,0 +1,31 @@
+<h2>フォローユーザー</h2>
+<table class="table">
+	<tr>
+		<th>画像</th>
+		<th>ユーザー名</th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	<% @user.following_user.each do |user| %>
+		<tr>
+			<td>
+				<%= link_to user_path(user.id) do %>
+					<%= attachment_image_tag user, :profile_image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+				<% end %>
+			</td>
+			<td><%= user.name %></td>
+			<td>
+				フォロー数：<%= user.active_relationships.count %>
+			</td>
+			<td>
+				フォロワー数：<%= user.passive_relationships.count %>
+			</td>
+			<td>
+				<%= link_to 'フォロー外す', user_relationships_path(user.id), method: :delete %>
+			</td>
+			<td><%= link_to "Show", user_path(user) %></td>
+		</tr>
+	<% end %>
+</table>

@@ -20,8 +20,15 @@ Rails.application.routes.draw do
 		passwords: 'users/passwords'
     }
 
+    resources :screenshots, only: [:destroy]
+
     resources :users, only: [:index, :show, :edit, :update, :destroy] do
     	patch 'status_change',on: :member
+    	resource :relationships, only: [:create, :destroy]
+	  	member do
+	      get :follows
+	      get :followers
+	    end
     end
 
 end

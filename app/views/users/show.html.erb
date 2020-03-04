@@ -2,7 +2,6 @@
 	<h2 class="col-xs-4"><%= @user.name %>さんのマイページ</h2>
 
 	<% if @user.id == current_user.id %>
-		<%= link_to "編集する", edit_user_path(@user), class:"btn btn-info col-xs-1 col-xs-offset-1", style:"margin-top: 20px; height: 60px; width: 130px;" %>
 
 		<%= button_to "データを残して退会する", status_change_user_path(@user), {method: :patch, params: {status: "false"}, class:"btn btn-warning col-xs-1 col-xs-offset-1", style:"margin-top: 20px; height: 60px; width: 130px; white-space: normal", confirm: "今まで投稿したゲームやコメントは消えずに残ります。本当に退会しますか？"} %>
 
@@ -12,11 +11,25 @@
 <div class="row">
 	<div class="col-xs-3">
 		<%= attachment_image_tag @user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'200x200' %>
+
 		<h4>フォロー数</h4>
+		<%= link_to follows_user_path(@user) do %>
+			<%= @user.active_relationships.count %>
+		<% end %>
 		<h4>フォロワー数</h4>
-		<% if @user.id != current_user %>
-			<h4>フォローする</h4>
+		<%= link_to followers_user_path(@user) do %>
+			<%= @user.passive_relationships.count %>
+		<% end %>
+
+		<% if @user.id != current_user.id %>
+			<% if current_user.following?(@user) %>
+				<%= link_to "フォロー外す", user_relationships_path(@user), method: :delete, class: "btn btn-primary" %>
+			<% else %>
+				<%= link_to "フォローする", user_relationships_path(@user), method: :post, class: "btn btn-success" %>
+			<% end %>
 			<h4>チャットする</h4>
+		<% else %>
+			<%= link_to "編集する", edit_user_path(@user), class:"btn btn-info" %>
 		<% end %>
 	</div>
 

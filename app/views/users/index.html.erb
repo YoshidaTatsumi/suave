@@ -1,0 +1,18 @@
+<h2>ユーザー一覧</h2>
+<table class="table table-hover">
+	<tr class="active">
+		<th>ユーザー名</th>
+		<th>紹介文</th>
+	</tr>
+	<% @users.each do |user| %>
+		<tr>
+			<td>
+				<%= link_to user_path(user) do %>
+					<%= attachment_image_tag user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'100x100' %>
+					<%= user.name %>
+				<% end %>
+			</td>
+			<td><%= user.introduction[0..100] %></td>
+		</tr>
+	<% end %>
+</table>
