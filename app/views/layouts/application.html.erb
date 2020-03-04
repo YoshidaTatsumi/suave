@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Suave</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header style="background-color: skyblue;height: 100px;">
+      <%= link_to 'Suave', admins_top_path, class:"nav navbar-nav navbar-left", style:"font-size: 50px;" %>
+
+      <nav>
+        <ul class="nav pull-right nav-pills">
+          <% if user_signed_in? && request.fullpath.index("/admins/") == nil %>
+            <%= render 'users/header' %>
+          <% elsif admin_signed_in? && request.fullpath.index("/admins/") %>
+            <%= render 'admins/header' %>
+          <% else %>
+            <li><%= link_to "ゲーム一覧" %></li>
+            <li><%= link_to "新規登録", new_user_registration_path %></li>
+            <li><%= link_to "ログイン", new_user_session_path %></li>
+          <% end %>
+          <li><%= link_to "管理者はこちら", new_admin_session_path %></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <%= yield %>
+    </div>
+
+  </body>
+</html>

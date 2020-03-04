@@ -1,0 +1,31 @@
+<div class="row">
+	<h2 class="col-xs-4"><%= @user.name %>さんのマイページ</h2>
+
+	<% if @user.id == current_user.id %>
+		<%= link_to "編集する", edit_user_path(@user), class:"btn btn-info col-xs-1 col-xs-offset-1", style:"margin-top: 20px; height: 60px; width: 130px;" %>
+
+		<%= button_to "データを残して退会する", status_change_user_path(@user), {method: :patch, params: {status: "false"}, class:"btn btn-warning col-xs-1 col-xs-offset-1", style:"margin-top: 20px; height: 60px; width: 130px; white-space: normal", confirm: "今まで投稿したゲームやコメントは消えずに残ります。本当に退会しますか？"} %>
+
+		<%= link_to "全データを削除して退会する", user_path(@user), method: :delete, "data-confirm" => "今まで投稿したゲームやコメントが全て消えます。本当に退会しますか？", class:"btn btn-danger col-xs-1 col-xs-offset-1", style:"margin-top: 20px; height: 60px; width: 130px; white-space: normal" %>
+	<% end %>
+</div>
+<div class="row">
+	<div class="col-xs-3">
+		<%= attachment_image_tag @user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'200x200' %>
+		<h4>フォロー数</h4>
+		<h4>フォロワー数</h4>
+		<% if @user.id != current_user %>
+			<h4>フォローする</h4>
+			<h4>チャットする</h4>
+		<% end %>
+	</div>
+
+	<div class="col-xs-8 col-offset-1">
+		<h4>自己紹介文</h4>
+		<%= @user.introduction %>
+	</div>
+</div>
+
+<div class="row">
+	<h3>ゲーム一覧</h3>
+</div>

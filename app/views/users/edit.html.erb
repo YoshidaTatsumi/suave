@@ -1,0 +1,35 @@
+<h2>ユーザー編集</h2>
+
+<% if @user.errors.any? %>
+	<h2><%= @user.errors.count %>
+		 errors prohibited this obj from being saved:
+	</h2>
+	<ul>
+		<% @user.errors.full_messages.each do |message| %>
+			<li><%= message %></li>
+		<% end %>
+	</ul>
+<% end %>
+
+<%= form_for(@user, url:user_path(@user),method: :patch) do |f| %>
+	<div class="row">
+		<div class="col-xs-3">
+			<%= attachment_image_tag @user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'200x200' %>
+			<%= f.attachment_field :image %>
+		</div>
+
+		<div class="col-xs-8 col-offset-1">
+			<div class="row">
+				<%= f.label :name, "ユーザー名", class:"col-xs-2" %>
+				<%= f.text_field :name, class:"col-xs-4" %>
+			</div>
+
+			<div class="row">
+				<%= f.label :introduction, "自己紹介", class:"col-xs-2" %>
+				<%= f.text_area :introduction, class:"col-xs-4" %>
+			</div>
+
+			<%= f.submit "変更を保存", class:"btn btn-primary"  %>
+		</div>
+	</div>
+<% end %>
