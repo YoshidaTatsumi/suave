@@ -1,0 +1,42 @@
+<div class="row">
+	<h2 class="col-xs-2">ゲーム編集</h2>
+	<%= link_to "ゲームを削除", admins_game_path(@game), method: :delete, class:"col-xs-2 col-xs-offset-4 btn btn-danger", style:"margin-top: 20px;", "data-confirm" => "本当に削除しますか？" %>
+</div>
+
+<% if @game.errors.any? %>
+	<h2><%= @game.errors.count %>
+		 errors prohibited this obj from being saved:
+	</h2>
+	<ul>
+		<% @game.errors.full_messages.each do |message| %>
+			<li><%= message %></li>
+		<% end %>
+	</ul>
+<% end %>
+
+<%= form_for(@game, url:admins_game_path(@game),method: :patch) do |f| %>
+	<div class="row">
+		<%= f.label :title, "ゲーム名", class:"col-xs-2" %>
+		<%= f.text_field :title, class:"col-xs-4" %>
+	</div>
+
+	<div class="row">
+		<%= f.label :introduction, "説明", class:"col-xs-2" %>
+		<%= f.text_area :introduction, class:"col-xs-4" %>
+	</div>
+
+	<div class="row">
+		<%= f.label :url, "ダウンロードURL", class:"col-xs-2" %>
+		<%= f.text_area :url, class:"col-xs-4" %>
+	</div>
+
+	<div class="row">
+		<%= f.label :tag_list, 'タグをカンマ区切りで入力' %>
+		<%= text_field_tag 'game[tag_list]', @game.tag_list %>
+	</div>
+</div>
+
+<div class="row">
+	<%= f.submit "変更を保存", class:"col-xs-3 col-xs-offset-4 btn btn-primary" %>
+</div>
+<% end %>

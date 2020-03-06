@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 		get 'top' => 'homes#top'
 		resources :users, only: [:index, :show, :edit, :update, :destroy]
 		resources :games, only: [:index, :show, :edit, :update, :destroy] do
+			resource :screenshots, only: [:create, :edit, :update, :destroy]
 			resource :comments, only: [:destroy]
 		end
 	end

@@ -40,13 +40,6 @@ class GamesController < ApplicationController
 	def update
 		@game = Game.find(params[:id])
 		if @game.update(game_params)
-			if params[:screenshots_attributes].present?
-				@game.screenshots.destroy_all
-				params[:screenshots_attributes][:"0"][:image].each do |image|
-					screenshot = Screenshot.new(game_id: @game.id, image: image)
-					screenshot.save
-				end
-			end
 			flash[:notice] = "変更を保存しました"
 			redirect_to game_path(@game)
 		else
