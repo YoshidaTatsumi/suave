@@ -14,9 +14,10 @@ class CommentsController < ApplicationController
 		@comment = Comment.find(params[:game_id])
 		if current_user.id != @comment.user_id
 			redirect_to request.referer
+		else
+			@comment.destroy
+			flash[:notice] = "コメントを削除しました"
 		end
-		@comment.destroy
-		flash[:notice] = "コメントを削除しました"
 	end
 
 	private

@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
 	namespace :admins do
 		get 'top' => 'homes#top'
+		resources :users, only: [:index, :show, :edit, :update, :destroy]
+		resources :games, only: [:index, :show, :edit, :update, :destroy] do
+			resource :comments, only: [:destroy]
+		end
 	end
 
 	devise_for :admins, controllers: {

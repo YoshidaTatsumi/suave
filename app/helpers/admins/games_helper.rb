@@ -1,0 +1,2 @@
+module Admins::GamesHelper
+end

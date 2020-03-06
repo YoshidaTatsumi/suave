@@ -1,0 +1,41 @@
+<div class="row">
+	<h2 class="col-xs-4"><%= @game.title %></h2>
+	<%= link_to "編集する", edit_admins_game_path(@game), class:"col-xs-2 col-offset-2 btn btn-info", style:"margin-top: 20px;" %>
+</div>
+
+<% if @game.screenshots.present? %>
+	<div class="bxslider">
+		<% @game.screenshots.each do |screenshot| %>
+			<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg' %>
+		<% end %>
+	</div>
+<% else %>
+	<%= image_tag 'NoImage.jpg', style:"width: 200px; border: 1px solid #000;", class:"center-block" %>
+<% end %>
+
+<%= @game.introduction %>
+<%= link_to "ダウンロードはこちら", @game.url %>
+
+<% @game.tag_list.each do |tag| %>
+	<%= tag %>
+<% end %>
+
+<h3>コメント一覧</h3>
+<table class="table">
+	<%= render 'admins/comments/comments', game: @game %>
+</table>
+
+<script>
+	$(function(){
+	  $('.bxslider').bxSlider({
+	    auto: true,           // 自動スライド
+	    speed: 1000,          // スライドするスピード
+	    moveSlides: 1,        // 移動するスライド数
+	    pause: 5000,          // 自動スライドの待ち時間
+	    maxSlides: 4,         // 一度に表示させる最大数
+	    slideWidth: 250,      // 各スライドの幅
+		randomStart: false,    // 最初に表示するスライドをランダムに設定
+	    autoHover: true       // ホバー時に自動スライドを停止
+	  });
+	});
+</script>
