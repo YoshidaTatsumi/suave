@@ -1,0 +1,16 @@
+<% game.comments.each do |comment| %>
+	<tr id="comment-<%= comment.id %>">
+		<td>
+			<%= attachment_image_tag comment.user, :image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %><br>
+			<%= comment.user.name %>
+		</td>
+		<td><%= comment.comment %></td>
+		<td><%= comment.difficulty %>/100</td>
+		<td><%= comment.rating %>/10</td>
+		<% if current_user.id == comment.user_id %>
+			<td>
+				<%= link_to "Destroy", game_comments_path(comment), method: :delete, remote: true, class:"btn-sm btn-danger" %>
+			</td>
+		<% end %>
+	</tr>
+<% end %>

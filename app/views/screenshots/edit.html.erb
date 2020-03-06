@@ -1,0 +1,31 @@
+<% if flash[:notice] %>
+	<div class="row flash">
+		<%= flash[:notice] %>
+	</div>
+<% end %>
+
+<h2>スクリーンショット追加</h2>
+<div class="row">
+	<%= form_for(@screenshot, url:game_screenshots_path(@game)) do |f| %>
+		<%= f.attachment_field :image %>
+		<%= f.submit "追加", class:"btn btn-primary" %>
+	<% end %>
+</div>
+
+<h2>スクリーンショット編集</h2>
+<div class="row">
+	<% @game.screenshots.each do |screenshot| %>
+		<div class="col-xs-3">
+			<div class="row">
+				<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg' %>
+				<%= form_for(screenshot, url:game_screenshots_path(screenshot), method: :patch) do |f| %>
+					<%= f.attachment_field :image %>
+					<%= f.submit "更新", class:"btn btn-primary" %>
+					<%= link_to "削除", game_screenshots_path(screenshot), method: :delete, class:"btn btn-danger" %>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
+</div>
+
+<%= link_to "戻る", game_path(@game), class:"col-xs-2 btn btn-info" %>

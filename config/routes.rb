@@ -2,7 +2,11 @@ Rails.application.routes.draw do
 	 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 	root 'homes#top'
 	get 'homes/about'
-	resources :games
+	resources :chat, only: [:index, :show, :create, :destroy]
+	resources :games do
+		resource :screenshots, only: [:create, :edit, :update, :destroy]
+		resource :comments, only: [:create, :destroy]
+	end
 
 	namespace :admins do
 		get 'top' => 'homes#top'
@@ -19,8 +23,6 @@ Rails.application.routes.draw do
 		registrations: 'users/registrations',
 		passwords: 'users/passwords'
     }
-
-    resources :screenshots, only: [:destroy]
 
     resources :users, only: [:index, :show, :edit, :update, :destroy] do
     	patch 'status_change',on: :member

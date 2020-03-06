@@ -35,7 +35,7 @@
 
 		<div class="col-xs-4 col-xs-offset-1">
 			<%= f.fields_for :screenshots do |i| %>
-				<%= i.label :image, "スクリーンショット" %><br>
+				<%= i.label :image, "スクリーンショット（複数選択可能）" %><br>
 	    		<%= i.attachment_field :image, multiple: true, name: "screenshots_attributes[0][image][]" %>
 	    	<% end %>
     	</div>

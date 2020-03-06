@@ -27,7 +27,7 @@
 			<% else %>
 				<%= link_to "フォローする", user_relationships_path(@user), method: :post, class: "btn btn-success" %>
 			<% end %>
-			<h4>チャットする</h4>
+			<%= link_to "チャットを始める", chat_path(@user) %>
 		<% else %>
 			<%= link_to "編集する", edit_user_path(@user), class:"btn btn-info" %>
 		<% end %>

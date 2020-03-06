@@ -10,6 +10,7 @@ class GamesController < ApplicationController
 
 	def show
 		@game = Game.find(params[:id])
+		@comment = Comment.new
 	end
 
 	def edit
@@ -29,6 +30,7 @@ class GamesController < ApplicationController
 					screenshot.save
 				end
 			end
+			flash[:notice] = "アップロードが完了しました"
 			redirect_to game_path(@game)
 		else
 			render 'new'
@@ -45,6 +47,7 @@ class GamesController < ApplicationController
 					screenshot.save
 				end
 			end
+			flash[:notice] = "変更を保存しました"
 			redirect_to game_path(@game)
 		else
 			render 'edit'
@@ -52,6 +55,10 @@ class GamesController < ApplicationController
 	end
 
 	def destroy
+		game = Game.find(params[:id])
+		game.destroy
+		flash[:notice] = "ゲームを削除しました"
+		redirect_to root_path
 	end
 
 	private

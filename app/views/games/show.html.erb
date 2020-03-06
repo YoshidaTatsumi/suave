@@ -1,15 +1,36 @@
+<% if flash[:notice] %>
+	<div class="row flash">
+		<%= flash[:notice] %>
+	</div>
+<% end %>
+<% if @comment.errors.any? %>
+	<h2><%= @comment.errors.count %>
+		 errors prohibited this obj from being saved:
+	</h2>
+	<ul>
+		<% @comment.errors.full_messages.each do |message| %>
+			<li><%= message %></li>
+		<% end %>
+	</ul>
+<% end %>
+
 <div class="row">
 	<h2 class="col-xs-6"><%= @game.title %></h2>
 	<% if @game.user.id == current_user.id %>
-		<%= link_to "編集する", edit_game_path(@game), class:"col-xs-2 col-xs-offset-1 btn btn-info", style:"margin-top:20px;" %>
+		<%= link_to "ゲーム編集", edit_game_path(@game), class:"col-xs-2 col-xs-offset-1 btn btn-info", style:"margin-top:20px;" %>
+		<%= link_to "スクリーンショット編集", edit_game_screenshots_path(@game), class:"col-xs-2 col-xs-offset-1 btn btn-info", style:"margin-top:20px;" %>
 	<% end %>
 </div>
 
-<div class="theTarget">
-	<% @game.screenshots.each do |screenshot| %>
-		<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg" %>
-	<% end %>
-</div>
+<% if @game.screenshots.present? %>
+	<div class="bxslider">
+		<% @game.screenshots.each do |screenshot| %>
+			<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg' %>
+		<% end %>
+	</div>
+<% else %>
+	<%= image_tag 'NoImage.jpg', style:"width: 200px; border: 1px solid #000;", class:"center-block" %>
+<% end %>
 
 <h3>説明</h3>
 <%= @game.introduction %>
@@ -20,34 +41,47 @@
 	<%= tag %>
 <% end %>
 
+<h3>コメントする</h3>
+<%= form_with(model: [@game, @comment], remote: true) do |f| %>
+	<div class="row">
+		<div class="col-xs-2">
+			<h3>Difficulty</h3>
+			<%= f.number_field :difficulty, class: "form-control" %>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<h3>Rating</h3>
+			<%= f.number_field :rating, class: "form-control" %>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-10">
+			<%= f.text_area :comment, rows:'5', class: "form-control" %>
+		</div>
+		<div class="col-xs-2" style="margin-top: 80px;">
+			<%= f.submit "送信", class: "btn btn-primary pull-left" %>
+		</div>
+	</div>
+<% end %>
+
+<table id="js-table-comment" class="table">
+	<%= render 'comments/comments', game: @game %>
+</table>
+
 
 <script>
-	//Skipprの初期化
-	$("document").ready(function() {
-    $(".theTarget").skippr();
-	});
-
-	// オプションを指定してSkipprの実行
-	$(".theTarget").skippr({
-	    // スライドショーの変化（"fade" or "slide"）
-	    transition : 'fade',
-	    // 変化にかかる時間（ミリ秒）
-	    speed : 1000,
-	    // easingの種類
-	    easing : 'easeOutQuart',
-	    // ナビゲーションの形（"block" or "bubble"）
-	    navType : 'block',
-	    // 子要素の種類（"div" or "img"）
-	    childrenElementType : 'div',
-	    // ナビゲーション矢印の表示（trueで表示）
-	    arrows : true,
-	    // スライドショーの自動再生（falseで自動再生なし）
-	    autoPlay : false,
-	    // 自動再生時のスライド切替間隔（ミリ秒）
-	    autoPlayDuration : 5000,
-	    // キーボードの矢印キーによるスライド送りの設定（trueで有効）
-	    keyboardOnAlways : true,
-	    // 1枚目のスライド表示時に戻る矢印を表示するかどうか（falseで非表示）
-	    hidePrevious : false
+	$(function(){
+	  $('.bxslider').bxSlider({
+	    auto: true,           // 自動スライド
+	    speed: 1000,          // スライドするスピード
+	    moveSlides: 1,        // 移動するスライド数
+	    pause: 5000,          // 自動スライドの待ち時間
+	    maxSlides: 4,         // 一度に表示させる最大数
+	    slideWidth: 250,      // 各スライドの幅
+		randomStart: false,    // 最初に表示するスライドをランダムに設定
+	    autoHover: true       // ホバー時に自動スライドを停止
+	  });
 	});
 </script>
+
+
