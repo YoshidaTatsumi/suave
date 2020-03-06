@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 	 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 	root 'homes#top'
 	get 'homes/about'
-	resources :chat, only: [:index, :show, :create, :destroy]
+	resources :chats, only: [:index, :show, :create, :destroy]
 	resources :games do
 		resource :screenshots, only: [:create, :edit, :update, :destroy]
 		resource :comments, only: [:create, :destroy]
