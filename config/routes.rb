@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
 	namespace :admins do
 		get 'top' => 'homes#top'
-		resources :users, only: [:index, :show, :edit, :update, :destroy]
+		resources :users, only: [:index, :show, :edit, :update, :destroy] do
+			patch 'status_change',on: :member
+		end
 		resources :games, only: [:index, :show, :edit, :update, :destroy] do
 			resource :screenshots, only: [:create, :edit, :update, :destroy]
 			resource :comments, only: [:destroy]

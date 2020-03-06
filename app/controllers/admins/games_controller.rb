@@ -1,6 +1,10 @@
 class Admins::GamesController < ApplicationController
 	def index
-		@games = Game.all
+		if params[:user].present?
+			@games = Game.where(user_id: params[:user])
+		else
+			@games = Game.all
+		end
 	end
 
 	def show
