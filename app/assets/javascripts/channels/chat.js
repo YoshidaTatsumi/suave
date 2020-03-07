@@ -5,11 +5,7 @@ $(function() {
     disconnected: function(data) {
     },
     received(data) {
-      if ($('.room').data('user') == data['current_user_id']) {
-        $('.message').append('<p style="text-align: right">' + data['data'] + '</p>');
-      } else {
-        $('.message').append('<p style="text-align: left">' + data['data'] + '</p>');
-      }
+      $('.message').append(data['data']);
     }
   })
   $(document).on('keypress', '.post', function(e) {

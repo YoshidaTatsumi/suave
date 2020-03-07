@@ -3,7 +3,11 @@
 </h1>
 
 <div class="message" style="width: 400px;">
-  <%= render 'message', chats: @chats %>
+	<% @chats.each do |chat| %>
+		<%= render 'chats/message', chat: chat %>
+	<% end %>
 </div>
 
-<input type="text" class="post">
+<div class="row">
+	<input type="text" class="post">
+</div>

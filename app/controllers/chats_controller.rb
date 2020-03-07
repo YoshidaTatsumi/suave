@@ -35,7 +35,6 @@ class ChatsController < ApplicationController
 			end
 		end
 	end
-	end
 
 	def update
 	end

@@ -1,11 +1,15 @@
-<% chats.each do |chat| %>
+<div class="row">
   <% if chat.user_id == current_user.id %>
-    <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
-    <%= chat.user.name %>
-    <p style="text-align: right;"><%= chat.message %></p>
+    <div class="col-xs-4">
+      <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+      <p style="color: green"><%= chat.user.name %></p>
+    </div>
+    <p class="col-xs-8"><%= chat.message %></p>
   <% else %>
-    <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
-    <%= chat.user.name %>
-    <p style="text-align: left;"><%= chat.message %></p>
+    <div class="col-xs-4">
+      <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+      <p><%= chat.user.name %></p>
+    </div>
+    <p class="col-xs-8"><%= chat.message %></p>
   <% end %>
-<% end %>
+</div>
