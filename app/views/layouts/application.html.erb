@@ -17,8 +17,20 @@
         <ul class="nav pull-right nav-pills">
           <% if user_signed_in? && request.fullpath.index("/admins/") == nil %>
             <%= render 'users/header' %>
+            <%= form_with url:search_path, method: :get, local: true do |f| %>
+              <%= f.text_field :search %>
+              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]] %>
+              <%= f.select :search_method, [["完全一致", "perfect_match"], ["部分一致", "partial_match"]] %>
+              <%= f.submit "検索", class:"btn btn-default" %>
+          <% end %>
           <% elsif admin_signed_in? && request.fullpath.index("/admins/") %>
             <%= render 'admins/header' %>
+            <%= form_with url:admins_search_path, method: :get, local: true do |f| %>
+              <%= f.text_field :search %>
+              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]] %>
+              <%= f.select :search_method, [["完全一致", "perfect_match"], ["部分一致", "partial_match"]] %>
+              <%= f.submit "検索", class:"btn btn-default" %>
+          <% end %>
           <% else %>
             <li><%= link_to "ゲーム一覧" %></li>
             <li><%= link_to "新規登録", new_user_registration_path %></li>

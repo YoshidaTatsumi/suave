@@ -2,7 +2,12 @@ Rails.application.routes.draw do
 	 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 	root 'homes#top'
 	get 'homes/about'
-	resources :chats, only: [:index, :show, :create, :destroy]
+	get 'search' => 'search#search'
+	resources :chats, only: [:index, :show, :create, :update, :destroy] do
+		collection do
+			get 'talk_room/:id' => 'chats#talk_room', as: 'talk_room'
+		end
+	end
 	resources :games do
 		resource :screenshots, only: [:create, :edit, :update, :destroy]
 		resource :comments, only: [:create, :destroy]
@@ -10,6 +15,7 @@ Rails.application.routes.draw do
 
 	namespace :admins do
 		get 'top' => 'homes#top'
+		get 'search' => 'search#search'
 		resources :users, only: [:index, :show, :edit, :update, :destroy] do
 			patch 'status_change',on: :member
 		end
