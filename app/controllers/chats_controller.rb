@@ -19,27 +19,42 @@ class ChatsController < ApplicationController
 		@chats = @room.chats
 	end
 
+	def edit
+		@room = Room.find(params[:id])
+		if @room.user_id != current_user.id
+			redirect_to root_path
+		end
+	end
+
 	def create
 		@room = Room.new(room_params)
 		@room.user_id = current_user.id
-		if params[:name].nil?
+		if @room.save
+			flash[:notice] = "ルームを作成しました"
+				redirect_to talk_room_chats_path(@room)
+		else
 			@rooms = Room.where.not(name: nil)
 			flash[:notice] = "ルーム名を入力してください"
 			render 'index'
-		else
-			if @room.save
-				flash[:notice] = "ルームを作成しました"
-				redirect_to talk_room_chats_path(@room)
-			else
-				render 'index'
-			end
 		end
 	end
 
 	def update
+		@room = Room.find(params[:id])
+		if @room.update(room_params)
+			flash[:notice] = "編集が完了しました"
+			redirect_to talk_room_chats_path(@room)
+		else
+			flash[:notice] = "ルーム名を入力してください"
+			render 'edit'
+		end
 	end
 
 	def destroy
+		@room = Room.find(params[:id])
+		@room.destroy
+		flash[:notice] = "ルームを削除しました"
+		redirect_to root_path
 	end
 
 	def talk_room

@@ -22,6 +22,7 @@ class User < ApplicationRecord
 
   has_many :chats
   has_many :user_rooms
+  has_many :rooms
   has_many :rooms, through: :user_rooms
 
   #自分からの通知

@@ -1,6 +1,16 @@
+<% if flash[:notice] %>
+	<div class="row flash">
+		<%= flash[:notice] %>
+	</div>
+<% end %>
+
 <h1 class="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>">
 	<%= @room.name %>
 </h1>
+<p><%= @room.introduction %></p>
+<% if current_user.id == @room.user_id %>
+	<%= link_to "ルーム編集", edit_chat_path(@room), class:"btn btn-info" %>
+<% end %>
 
 <div class="message" style="width: 400px;">
 	<% @chats.each do |chat| %>

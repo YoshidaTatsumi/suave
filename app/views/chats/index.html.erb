@@ -3,19 +3,9 @@
 		<%= flash[:notice] %>
 	</div>
 <% end %>
-<% if @room.errors.any? %>
-	<h2><%= @room.errors.count %>
-		 errors prohibited this obj from being saved:
-	</h2>
-	<ul>
-		<% @room.errors.full_messages.each do |message| %>
-			<li><%= message %></li>
-		<% end %>
-	</ul>
-<% end %>
 
 <h2>ルーム作成</h2>
-<%= form_for(@room) do |f| %>
+<%= form_for(@room, url: chats_path) do |f| %>
 	<%= f.label :name, "ルーム名" %>
 	<%= f.text_field :name %>
 
@@ -33,12 +23,14 @@
 		<th>内容</th>
 	</tr>
 	<% @rooms.each do |room| %>
-		<% if room.name != nil %>
-			<tr>
-				<td><%= room.user.name %></td>
-				<td><%= room.name %></td>
-				<td><%= room.introduction %></td>
-			</tr>
-		<% end %>
+		<tr>
+			<td><%= room.user.name %></td>
+			<td>
+				<%= link_to talk_room_chats_path(room) do %>
+					<%= room.name %>
+				<% end %>
+			</td>
+			<td><%= room.introduction %></td>
+		</tr>
 	<% end %>
 </table>

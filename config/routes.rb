@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 	root 'homes#top'
 	get 'homes/about'
 	get 'search' => 'search#search'
-	resources :chats, only: [:index, :show, :create, :update, :destroy] do
+	resources :chats, only: [:index, :show, :edit, :create, :update, :destroy] do
 		collection do
 			get 'talk_room/:id' => 'chats#talk_room', as: 'talk_room'
 		end
