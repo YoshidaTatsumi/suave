@@ -10,8 +10,10 @@
   </head>
 
   <body>
-    <header style="background-color: skyblue;height: 100px;">
-      <%= link_to 'Suave', admins_top_path, class:"nav navbar-nav navbar-left", style:"font-size: 50px;" %>
+    <header style="background-color: skyblue;height: 160px;">
+      <%= link_to root_path do %>
+        <%= image_tag 'suave.png', class:"nav navbar-nav navbar-left", size: '140x140' %>
+      <% end %>
 
       <nav>
         <ul class="nav pull-right nav-pills">

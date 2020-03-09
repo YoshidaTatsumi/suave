@@ -16,6 +16,11 @@ Rails.application.routes.draw do
 	namespace :admins do
 		get 'top' => 'homes#top'
 		get 'search' => 'search#search'
+		resources :chats, only: [:index, :edit, :update, :destroy] do
+			collection do
+				get 'talk_room/:id' => 'chats#talk_room', as: 'talk_room'
+			end
+		end
 		resources :users, only: [:index, :show, :edit, :update, :destroy] do
 			patch 'status_change',on: :member
 		end

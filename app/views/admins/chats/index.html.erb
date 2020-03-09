@@ -1,0 +1,19 @@
+<h2>ルーム一覧</h2>
+<table class="table">
+	<tr class="active">
+		<th>作成者</th>
+		<th>ルーム名</th>
+		<th>内容</th>
+	</tr>
+	<% @rooms.each do |room| %>
+		<tr>
+			<td><%= room.user.name %></td>
+			<td>
+				<%= link_to talk_room_admins_chats_path(room) do %>
+					<%= room.name %>
+				<% end %>
+			</td>
+			<td><%= room.introduction %></td>
+		</tr>
+	<% end %>
+</table>

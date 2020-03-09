@@ -1,0 +1,23 @@
+<% if flash[:notice] %>
+	<div class="row flash">
+		<%= flash[:notice] %>
+	</div>
+<% end %>
+
+<h1><%= @room.name %></h1>
+<p><%= @room.introduction %></p>
+<%= link_to "ルーム編集", edit_admins_chat_path(@room), class:"btn btn-info" %>
+
+<div style="width: 400px;">
+	<% @room.chats.each do |chat| %>
+		<div class="row">
+		    <div class="col-xs-4">
+		    	<%= link_to admins_user_path(chat.user) do %>
+				    <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+				    <p><%= chat.user.name %></p>
+				<% end %>
+		    </div>
+		    <p class="col-xs-8"><%= chat.message %></p>
+		</div>
+	<% end %>
+</div>
