@@ -49,5 +49,5 @@
 	<% end %>
 </div>
 <div class="row">
-	<%= link_to "もっと見る", admins_games_path(user: @user.id), class:"pull-right btn btn-info" %>
+	<%= link_to "もっと見る", admins_games_path(place: "user", user_id: @user.id), class:"pull-right btn btn-info" %>
 </div>

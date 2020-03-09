@@ -1,7 +1,9 @@
 class Admins::GamesController < ApplicationController
 	def index
-		if params[:user].present?
-			@games = Game.where(user_id: params[:user])
+		if params[:place] == "user"
+			@games = Game.where(user_id: params[:user_id])
+		elsif params[:place] == "top"
+			@games = Game.where(created_at: Time.now.beginning_of_day..Time.now.end_of_day)
 		else
 			@games = Game.all
 		end

@@ -10,42 +10,61 @@
   </head>
 
   <body>
-    <header style="background-color: skyblue;height: 160px;">
-      <%= link_to root_path do %>
-        <%= image_tag 'suave.png', class:"nav navbar-nav navbar-left", size: '140x140' %>
-      <% end %>
+    <header class="sticky-top">
+      <nav class="nav navbar-fixed-top">
+        <% if admin_signed_in? && request.fullpath.index("/admins/") %>
+          <%= link_to admins_top_path do %>
+            <%= image_tag 'logo.png', class:"nav navbar-nav navbar-left logo", size: '120x120' %>
+          <% end %>
+        <% else %>
+          <%= link_to root_path do %>
+            <%= image_tag 'logo.png', class:"nav navbar-nav navbar-left logo", size: '120x120' %>
+          <% end %>
+        <% end %>
 
-      <nav>
         <ul class="nav pull-right nav-pills">
           <% if user_signed_in? && request.fullpath.index("/admins/") == nil %>
             <%= render 'users/header' %>
-            <%= form_with url:search_path, method: :get, local: true do |f| %>
-              <%= f.text_field :search %>
-              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]] %>
-              <%= f.select :search_method, [["完全一致", "perfect_match"], ["部分一致", "partial_match"]] %>
-              <%= f.submit "検索", class:"btn btn-default" %>
-          <% end %>
           <% elsif admin_signed_in? && request.fullpath.index("/admins/") %>
             <%= render 'admins/header' %>
+          <% else %>
+            <li><%= link_to "ゲーム一覧", games_path %></li>
+            <li><%= link_to "新規登録", new_user_registration_path %></li>
+            <li><%= link_to "ログイン", new_user_session_path %></li>
+            <li><%= link_to "管理者はこちら", new_admin_session_path %></li>
+          <% end %>
+        </ul>
+
+        <div class="search">
+          <% if admin_signed_in? && request.fullpath.index("/admins/") %>
             <%= form_with url:admins_search_path, method: :get, local: true do |f| %>
-              <%= f.text_field :search %>
+              <%= f.text_field :search, size: "40", placeholder: "ゲームかユーザー名で検索" %>
               <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]] %>
               <%= f.select :search_method, [["完全一致", "perfect_match"], ["部分一致", "partial_match"]] %>
               <%= f.submit "検索", class:"btn btn-default" %>
-          <% end %>
+            <% end %>
           <% else %>
-            <li><%= link_to "ゲーム一覧" %></li>
-            <li><%= link_to "新規登録", new_user_registration_path %></li>
-            <li><%= link_to "ログイン", new_user_session_path %></li>
+            <%= form_with url:search_path, method: :get, local: true do |f| %>
+              <%= f.text_field :search, size: "40", placeholder: "ゲームかユーザー名で検索" %>
+              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]] %>
+              <%= f.select :search_method, [["完全一致", "perfect_match"], ["部分一致", "partial_match"]] %>
+              <%= f.submit "検索", class:"btn btn-default" %>
+            <% end %>
           <% end %>
-          <li><%= link_to "管理者はこちら", new_admin_session_path %></li>
-        </ul>
+        </div>
       </nav>
     </header>
+
+    <% if !request.fullpath.index("/admins/") %>
+      <div class="main-visual"></div>
+    <% end %>
 
     <div class="container">
       <%= yield %>
     </div>
 
+    <footer>
+      <p class="pull-right">©Infratop.Inc.</p>
+    </footer>
   </body>
 </html>
