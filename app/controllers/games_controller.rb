@@ -34,12 +34,6 @@ class GamesController < ApplicationController
 		@game = Game.new(game_params)
 		@game.user_id = current_user.id
 		if @game.save
-			if params[:screenshots_attributes].present?
-				params[:screenshots_attributes][:"0"][:image].each do |image|
-					screenshot = Screenshot.new(game_id: @game.id, image: image)
-					screenshot.save
-				end
-			end
 			flash[:notice] = "アップロードが完了しました"
 			redirect_to game_path(@game)
 		else
@@ -66,7 +60,7 @@ class GamesController < ApplicationController
 
 	private
 	def game_params
-		params.require(:game).permit(:title, :introduction, :url, :tag_list)
+		params.require(:game).permit(:title, :introduction, :url, :tag_list, screenshots_attributes: [:id, :game_id, :image, :_destroy])
 	end
 
 end

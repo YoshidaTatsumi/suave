@@ -22,15 +22,15 @@
 	<% end %>
 </div>
 
-<% if @game.screenshots.present? %>
-	<div class="bxslider">
-		<% @game.screenshots.each do |screenshot| %>
-			<%= attachment_image_tag screenshot, :image,:fill, 800, 600, format: 'jpeg' %>
-		<% end %>
-	</div>
-<% else %>
-	<%= image_tag 'NoImage.jpg', style:"width: 200px; border: 1px solid #000;", class:"center-block" %>
-<% end %>
+
+<div class="bxslider">
+	<% @game.screenshots.each do |screenshot| %>
+		<%= attachment_image_tag screenshot, :image,:fill, 800, 600, format: 'jpeg',fallback: "NoImage.jpg" %>
+	<% end %>
+</div>
+
+
+
 
 <%= @game.difficulty %>
 <%= @game.rating %>

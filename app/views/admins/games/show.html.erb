@@ -4,15 +4,11 @@
 	<%= link_to "スクリーンショット編集", edit_admins_game_screenshots_path(@game), class:"col-xs-2 col-xs-offset-1 btn btn-info", style:"margin-top:20px;" %>
 </div>
 
-<% if @game.screenshots.present? %>
-	<div class="bxslider">
-		<% @game.screenshots.each do |screenshot| %>
-			<%= attachment_image_tag screenshot, :image,:fill, 800, 600, format: 'jpeg' %>
-		<% end %>
-	</div>
-<% else %>
-	<%= image_tag 'NoImage.jpg', style:"width: 200px; border: 1px solid #000;", class:"center-block" %>
-<% end %>
+<div class="bxslider">
+	<% @game.screenshots.each do |screenshot| %>
+		<%= attachment_image_tag screenshot, :image,:fill, 800, 600, format: 'jpeg', fallback: "NoImage.jpg" %>
+	<% end %>
+</div>
 
 <%= @game.introduction %>
 <%= link_to "ダウンロードはこちら", @game.url %>

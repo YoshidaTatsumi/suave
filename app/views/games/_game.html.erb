@@ -3,11 +3,7 @@
 <div class="row game-box">
 	<%= link_to game_path(game) do %>
 		<div class="col-xs-2">
-			<% if screenshot.present? %>
-				<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg', size:"200x112" %>
-			<% else %>
-				<%= image_tag 'NoImage.jpg', style:"border: 1px solid #000;", class:"center-block", size:"200x112" %>
-			<% end %>
+			<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg', fallback:"NoImage.jpg" ,size:"200x112" %>
 		</div>
 
 		<div class="col-xs-9 col-xs-offset-1">

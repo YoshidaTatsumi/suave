@@ -4,11 +4,7 @@
 		<% @index_games.each do |index_game| %>
 			<% screenshot = index_game.screenshots.find_by(game_id: index_game.id) %>
 			<%= link_to game_path(index_game) do %>
-				<% if screenshot.present? %>
-					<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg' %>
-				<% else %>
-					<%= image_tag 'NoImage.jpg', style:"border: 1px solid #000;", class:"center-block", size:"900x506" %>
-				<% end %>
+				<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg', fallback:"NoImage.jpg" %>
 			<% end %>
 		<% end %>
 	</div>

@@ -72,4 +72,5 @@ gem 'acts-as-taggable-on'
 gem 'bxslider-rails'
 gem 'kaminari','~> 1.1.1'
 gem 'summernote-rails'
+gem 'nested_form_fields'
 

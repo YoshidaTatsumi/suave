@@ -1,4 +1,6 @@
-<h2>ゲーム投稿</h2>
+<div class="row">
+	<h2>ゲーム投稿</h2>
+</div>
 
 <div class="row">
 	<% if @game.errors.any? %>
@@ -14,11 +16,26 @@
 </div>
 
 <%= form_for(@game) do |f| %>
+	<h3>スクリーンショット選択</h3>
 	<div class="row">
-		<div class="col-xs-6">
+		<%= f.nested_fields_for :screenshots, wrapper_tag: :div do |i| %>
+			<div class="col-xs-3" style="margin-top: 20px;">
+				<%= image_tag "NoImage.jpg", alt:"Screenshot preview", class: "center-block image_prev", size: "250x140" %><br>
+	        	<%= i.label :image, "画像を変更", class:"btn btn-info" %>
+				<%= i.attachment_field :image, onchange: "previewFile(this)", style:"display: none;" %>
+				<%= i.remove_nested_fields_link "削除", class: "btn btn-danger" %>
+			</div>
+    	<% end %>
+    </div>
+	<div class="row">
+		<%= f.add_nested_fields_link :screenshots, '画像を追加する', class: "btn btn-primary", style:"margin-top: 40px;"%>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
 			<div class="row field">
 				<%= f.label :title, "タイトル" %><br>
-				<%= f.text_field :title, size:"80x1" %>
+				<%= f.text_field :title, size:"80x1", class:"validate" %>
 			</div>
 
 			<div class="row field">
@@ -31,13 +48,6 @@
 				<%= text_field_tag 'game[tag_list]', @game.tag_list, data: {role: "tagsinput"} %>
 			</div>
 		</div>
-
-		<div class="col-xs-4 col-xs-offset-1">
-			<%= f.fields_for :screenshots do |i| %>
-				<%= i.label :image, "スクリーンショット（複数選択可能）" %><br>
-	    		<%= i.attachment_field :image, multiple: true, name: "screenshots_attributes[0][image][]" %>
-	    	<% end %>
-    	</div>
     </div>
 
     <div class="row field">
@@ -53,6 +63,7 @@
 <% end %>
 
 <script>
+	//Summernoteの設定
 	$(function () {
 	    $('[data-provider="summernote"]').each(function(){
 	    	$(this).summernote({
@@ -72,4 +83,43 @@
 	      	});
 	    })
 	})
+
+	//画像を８枚まで投稿できるようにする
+	$(function() {
+	  var fieldsCount,
+	      maxFieldsCount = 6,
+	      $addLink = $('a.add_nested_fields_link');
+
+	  function toggleAddLink() {
+	    $addLink.toggle(fieldsCount <= maxFieldsCount)
+	  }
+
+	  $(document).on('fields_adding.nested_form_fields', function() {
+	    fieldsCount += 1;
+	    toggleAddLink();
+	  });
+
+	  $(document).on('fields_removing.nested_form_fields', function() {
+	    fieldsCount -= 1;
+	    toggleAddLink();
+	  });
+
+	  fieldsCount = $('form .fields').length;
+	  toggleAddLink();
+	})
+
+	//画像プレビュー
+	function previewFile(obj) {
+		var preview = $(".image_prev")[obj.name[29]];
+		var file    = obj.files[0];
+		var reader  = new FileReader();
+
+		if (file) {
+			reader.readAsDataURL(file);
+		}
+
+		reader.addEventListener("load", function () {
+	    	preview.src = reader.result;
+		}, false);
+	}
 </script>

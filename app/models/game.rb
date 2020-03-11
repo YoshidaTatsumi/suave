@@ -5,10 +5,8 @@ class Game < ApplicationRecord
 
 	belongs_to :user
 
-	#fields_forに必要な記述
-	accepts_nested_attributes_for :screenshots
-	#refileで複数枚画像保存する場合の記述
-	accepts_attachments_for :screenshots, attachment: :image, append: true
+	#nested_form_fieldsに必要な記述
+	accepts_nested_attributes_for :screenshots, allow_destroy: true
 
 	validates :title, presence: true, length: {maximum: 30}
 	validates :introduction, presence: true
