@@ -14,5 +14,6 @@
 //= require activestorage
 //= require jquery
 //= require bootstrap-sprockets
+//= require summernote
 //= require bxslider
 //= require_tree .

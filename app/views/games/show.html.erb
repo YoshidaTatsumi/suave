@@ -36,7 +36,7 @@
 <%= @game.rating %>
 
 <h3>説明</h3>
-<%= @game.introduction %>
+<%=raw @game.introduction %>
 
 <%= link_to "ダウンロードはこちら", @game.url %>
 

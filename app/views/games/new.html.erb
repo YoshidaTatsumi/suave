@@ -1,36 +1,35 @@
-<h2>ゲーム投稿ページ</h2>
+<h2>ゲーム投稿</h2>
 
-<% if @game.errors.any? %>
-	<h2><%= @game.errors.count %>
-		 errors prohibited this obj from being saved:
-	</h2>
-	<ul>
-		<% @game.errors.full_messages.each do |message| %>
-			<li><%= message %></li>
-		<% end %>
-	</ul>
-<% end %>
+<div class="row">
+	<% if @game.errors.any? %>
+		<h2><%= @game.errors.count %>
+			 errors prohibited this obj from being saved:
+		</h2>
+		<ul>
+			<% @game.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+			<% end %>
+		</ul>
+	<% end %>
+</div>
 
 <%= form_for(@game) do |f| %>
 	<div class="row">
 		<div class="col-xs-6">
-			<div class="row">
-				<%= f.label :title, "タイトル", class:"col-xs-2" %>
-				<%= f.text_field :title, class:"col-xs-4" %>
+			<div class="row field">
+				<%= f.label :title, "タイトル" %><br>
+				<%= f.text_field :title, size:"80x1" %>
 			</div>
 
-			<div class="row">
-				<%= f.label :introduction, "説明文", class:"col-xs-2" %>
-				<%= f.text_area :introduction, class:"col-xs-4" %>
+			<div class="row field">
+				<%= f.label :url, "ダウンロードURL" %><br>
+				<%= f.text_area :url, size:"80x2" %>
 			</div>
 
-			<div class="row">
-				<%= f.label :url, "ダウンロードURL", class:"col-xs-2" %>
-				<%= f.text_area :url, class:"col-xs-4" %>
-			</div>
-
-				<%= f.label :tag_list, 'タグをカンマ区切りで入力' %>
+			<div class="row field">
+				<%= f.label :tag_list, 'タグをカンマ区切りで入力' %><br>
 				<%= text_field_tag 'game[tag_list]', @game.tag_list, data: {role: "tagsinput"} %>
+			</div>
 		</div>
 
 		<div class="col-xs-4 col-xs-offset-1">
@@ -39,12 +38,38 @@
 	    		<%= i.attachment_field :image, multiple: true, name: "screenshots_attributes[0][image][]" %>
 	    	<% end %>
     	</div>
+    </div>
 
-
-			<div class="row">
-				<%= f.submit "アップロード", class:"col-xs-3 col-xs-offset-4 btn btn-primary" %>
-			</div>
-
-		</div>
+    <div class="row field">
+		<%= f.label :introduction, "説明文" %><br>
+		<%= f.text_area :introduction, data: { provider: 'summernote'} %>
 	</div>
+
+
+	<div class="row" style="margin-top: 40px;">
+		<%= f.submit "アップロード", class:"col-xs-4 col-xs-offset-4 btn btn-primary" %>
+	</div>
+
 <% end %>
+
+<script>
+	$(function () {
+	    $('[data-provider="summernote"]').each(function(){
+	    	$(this).summernote({
+	    		lang: 'ja-JP',
+	        	height: 400,
+	        	toolbar: [
+	        		['fontsize', ['fontsize']],
+	        		['fontname', ['fontname']],
+	          		['style', ['style']],
+			        ['font', ['bold', 'underline', 'clear']],
+			        ['color', ['forecolor', 'backcolor']],
+			        ['para', ['ul', 'ol', 'paragraph']],
+			        ['table', ['table']],
+			        ['insert', ['link', 'picture', 'table', 'hr']],
+			        ['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+	        	]
+	      	});
+	    })
+	})
+</script>

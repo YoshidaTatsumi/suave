@@ -34,16 +34,6 @@
 
 
 <script>
-	$('#game-contents .game[id != "new-game"]').hide();
- 
-	$('#game-menu a').on('click', function() {
-	  $("#game-contents .game").hide();
-	  $("#game-menu .active").removeClass("active");
-	  $(this).addClass("active");
-	  $($(this).attr("href")).show();
-	  return false;
-	});
-
 	$(function(){
 	  $('.bxslider').bxSlider({
 	    auto: true,           // 自動スライド

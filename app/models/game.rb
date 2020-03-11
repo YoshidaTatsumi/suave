@@ -10,7 +10,7 @@ class Game < ApplicationRecord
 	#refileで複数枚画像保存する場合の記述
 	accepts_attachments_for :screenshots, attachment: :image, append: true
 
-	validates :title, presence: true, length: {maximum: 199}
+	validates :title, presence: true, length: {maximum: 30}
 	validates :introduction, presence: true
 
 	#acts-as-taggable-onを使用できるように記述
