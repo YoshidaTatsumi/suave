@@ -25,29 +25,7 @@
 	</div>
 
 	<div id="game-contents" class="row">
-		<div id="new-game" class="game">
-			<% @desc_games.each do |desc_game| %>
-				<%= render 'index', game: desc_game %>
-			<% end %>
-		</div>
-
-		<div id="favorite-game" class="game">
-			<% @favorite_games.each do |favorite_game| %>
-				<%= render 'index', game: favorite_game %>
-			<% end %>
-		</div>
-
-		<div id="difficult-game" class="game">
-			<% @difficult_games.each do |difficult_game| %>
-				<%= render 'index', game: difficult_game %>
-			<% end %>
-		</div>
-
-		<div id="easy-game" class="game">
-			<% @easy_games.each do |easy_game| %>
-				<%= render 'index', game: easy_game %>
-			<% end %>
-		</div>
+		<%= render "index", desc_games:@desc_games, favorite_games: @favorite_games, difficult_games: @difficult_games, easy_games: @easy_games %>
 	</div>
 </div>
 
