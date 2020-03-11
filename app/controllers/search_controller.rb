@@ -13,6 +13,9 @@ class SearchController < ApplicationController
 			elsif params[:search_method] == "partial_match"
 				@searches = Game.where("title LIKE?","%#{params[:search]}%")
 			end
+
+		elsif params[:tag].present?
+			@searches = Game.tagged_with("#{params[:tag]}")
 		end
 	end
 end

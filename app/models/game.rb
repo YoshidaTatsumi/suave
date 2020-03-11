@@ -15,4 +15,12 @@ class Game < ApplicationRecord
 
 	#acts-as-taggable-onを使用できるように記述
 	acts_as_taggable
+
+	def rating_avg
+		comments.where.not(rating: nil).average(:rating)
+	end
+
+	def difficulty_avg
+		comments.where.not(difficulty: nil).average(:difficulty)
+	end
 end

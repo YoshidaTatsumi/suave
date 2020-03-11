@@ -16,6 +16,7 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
+ @import "tagsinput";
 
  header {
 	background-color: #0cf;
@@ -60,4 +61,8 @@
  		font-size: 26px;
  		line-height: 100px;
  	}
+ }
+
+ .field {
+ margin-top: 40px;
  }

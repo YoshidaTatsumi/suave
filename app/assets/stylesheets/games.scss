@@ -1,3 +1,52 @@
 // Place all the styles related to the games controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.wrap {
+	width: 90%;
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+#game-menu {
+	margin: 0;
+	padding: 0;
+}
+
+#game-menu li {
+  list-style-type: none;
+  padding: 0;
+}
+
+#game-menu a {
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  text-align: center;
+}
+
+#game-menu .active {
+  background: #0c0;
+  color: #fff;
+}
+
+#game-contents {
+	margin-right: 0;
+	margin-left: 0;
+	margin-bottom: 0;
+}
+
+.game-box {
+	font-size: 16px;
+	color: #eee;
+	background-color: #0c0;
+	margin-top: 3px;
+}
+
+.game-box:hover {
+	opacity: 0.8;
+}
+
+.game-box:first-child {
+	margin-top: 0px;
+}

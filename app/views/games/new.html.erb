@@ -30,7 +30,7 @@
 			</div>
 
 				<%= f.label :tag_list, 'タグをカンマ区切りで入力' %>
-				<%= text_field_tag 'game[tag_list]', @game.tag_list %>
+				<%= text_field_tag 'game[tag_list]', @game.tag_list, data: {role: "tagsinput"} %>
 		</div>
 
 		<div class="col-xs-4 col-xs-offset-1">

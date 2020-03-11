@@ -1,18 +1,83 @@
 <div class="row">
-	<h2>人気ゲーム</h2>
-	<p>レートが高いやつが表示される</p>
-</div>
-
-<div class="row">
-	<h2>新着ゲーム</h2>
-	<p>最近投稿されたやつが表示される</p>
-</div>
-
-<div class="row">
 	<h2>ゲーム一覧</h2>
-	<% @games.each do |game| %>
-		<%= link_to game_path(game) do %>
-			<%= game.title %>
+	<div class="bxslider">
+		<% @index_games.each do |index_game| %>
+			<% screenshot = index_game.screenshots.find_by(game_id: index_game.id) %>
+			<%= link_to game_path(index_game) do %>
+				<% if screenshot.present? %>
+					<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg' %>
+				<% else %>
+					<%= image_tag 'NoImage.jpg', style:"border: 1px solid #000;", class:"center-block", size:"900x506" %>
+				<% end %>
+			<% end %>
 		<% end %>
-	<% end %>
+	</div>
 </div>
+
+<div class="wrap">
+	<div class="row">
+		<ul id="game-menu">
+			<li class="col-xs-3"><a href="#new-game" class="active">新作ゲーム</a></li>
+			<li class="col-xs-3"><a href="#favorite-game" class="">人気トップ</a></li>
+			<li class="col-xs-3"><a href="#difficult-game" class="">高難易度</a></li>
+			<li class="col-xs-3"><a href="#easy-game" class="">低難易度</a></li>
+		</ul>
+	</div>
+
+	<div id="game-contents" class="row">
+		<div id="new-game" class="game">
+			<% @desc_games.each do |desc_game| %>
+				<%= render 'index', game: desc_game %>
+			<% end %>
+		</div>
+
+		<div id="favorite-game" class="game">
+			<% @favorite_games.each do |favorite_game| %>
+				<%= render 'index', game: favorite_game %>
+			<% end %>
+		</div>
+
+		<div id="difficult-game" class="game">
+			<% @difficult_games.each do |difficult_game| %>
+				<%= render 'index', game: difficult_game %>
+			<% end %>
+		</div>
+
+		<div id="easy-game" class="game">
+			<% @easy_games.each do |easy_game| %>
+				<%= render 'index', game: easy_game %>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script>
+	$('#game-contents .game[id != "new-game"]').hide();
+ 
+	$('#game-menu a').on('click', function() {
+	  $("#game-contents .game").hide();
+	  $("#game-menu .active").removeClass("active");
+	  $(this).addClass("active");
+	  $($(this).attr("href")).show();
+	  return false;
+	});
+
+	$(function(){
+	  $('.bxslider').bxSlider({
+	    auto: true,           // 自動スライド
+	    speed: 1000,          // スライドするスピード
+	    moveSlides: 1,        // 移動するスライド数
+	    pause: 6000,          // 自動スライドの待ち時間
+	    maxSlides: 1,         // 一度に表示させる最大数
+	    slideWidth: 250,      // 各スライドの幅
+		randomStart: false,    // 最初に表示するスライドをランダムに設定
+	    autoHover: true,       // ホバー時に自動スライドを停止
+	    slideWidth: 900,      // 各スライドの幅
+	    touchEnabled: false,  // モバイルデバイスのタッチ、スワイプに反応。trueだとリンクできない
+	  });
+	});
+</script>

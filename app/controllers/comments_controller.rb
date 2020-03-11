@@ -4,7 +4,9 @@ class CommentsController < ApplicationController
 		@comment = current_user.comments.new(comment_params)
 		@comment.game_id = @game.id
 		if @comment.save
-			# redirect_to request.referer
+			@game.difficulty = @game.rating_avg
+			@game.rating = @game.difficulty_avg
+			@game.save
 		else
 			render 'games/show'
 		end
@@ -12,10 +14,14 @@ class CommentsController < ApplicationController
 
 	def destroy
 		@comment = Comment.find(params[:game_id])
+		@game = Game.find(@comment.game.id)
 		if current_user.id != @comment.user_id
 			redirect_to request.referer
 		else
 			@comment.destroy
+			@game.difficulty = @game.rating_avg
+			@game.rating = @game.difficulty_avg
+			@game.save
 			flash[:notice] = "コメントを削除しました"
 		end
 	end

@@ -5,8 +5,8 @@ class Comment < ApplicationRecord
 	has_many :notifications, dependent: :destroy
 
 	validates :comment, presence: true
-	validates :difficulty, numericality: {:greater_than_or_equal_to => 0, :less_than_or_equal_to => 100}
-	validates :rating, numericality: {:greater_than_or_equal_to => 0, :less_than_or_equal_to => 10}
+	validates :difficulty, numericality: {:greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :allow_nil => true}
+	validates :rating, numericality: {:greater_than_or_equal_to => 0, :less_than_or_equal_to => 10, :allow_nil => true}
 
 
 end

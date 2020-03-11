@@ -1,44 +1,60 @@
-<h2>新規登録画面</h2>
+<%= render "devise/shared/error_messages", resource: resource %>
+
+<div class="row">
+  <h1 class="col-xs-offset-1">新規登録</h1>
+</div>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+  <div class="row">
+    <div class="col-xs-4 col-xs-offset-1">
+      <div class="row field">
+        <div class="col-xs-offset-3">
+          <%= f.label :name, "ユーザー名" %><br />
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", size: "60" %>
+        </div>
+      </div>
+
+      <div class="row field">
+        <div class="col-xs-offset-3">
+          <%= f.label :introduction, "ひとこと" %><br />
+          <%= f.text_area :introduction, size: "60x4" %>
+        </div>
+      </div>
+
+      <div class="row field">
+        <div class="col-xs-offset-3">
+          <%= f.label :email, "メールアドレス" %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", size: "60" %>
+        </div>
+      </div>
+
+      <div class="row field">
+        <div class="col-xs-offset-3">
+        <%= f.label :password, "パスワード" %>
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %>文字以上)</em>
+          <% end %><br />
+          <%= f.password_field :password, autocomplete: "new-password", size: "60" %>
+        </div>
+      </div>
+
+      <div class="row field">
+        <div class="col-xs-offset-3">
+          <%= f.label :password_confirmation, "パスワード再入力" %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", size: "60" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-4 col-xs-offset-2 field">
+      <%= f.label :image, "トップ画像" %><br />
+      <%= f.attachment_field :image %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :introduction %><br />
-    <%= f.text_area :introduction %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :image %><br />
-    <%= f.attachment_field :image %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+  <div class="row actions">
+    <%= f.submit "登録する", class:"col-xs-4 col-xs-offset-4 btn btn-primary", style:"margin-top:40px;" %>
   </div>
 <% end %>
 
-<%= render "users/shared/links" %>

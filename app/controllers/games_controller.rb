@@ -1,6 +1,11 @@
 class GamesController < ApplicationController
 	def index
-		@games = Game.all
+		games = Game.all
+		@index_games = Game.order("RANDOM()").limit(10)
+		@desc_games = games.order(created_at: :desc)
+		@favorite_games = games.where.not(rating: nil).order(rating: :desc)
+		@difficult_games = games.where.not(difficulty: nil).order(difficulty: :desc)
+		@easy_games = games.where.not(difficulty: nil).order(difficulty: :asc)
 	end
 
 	def new

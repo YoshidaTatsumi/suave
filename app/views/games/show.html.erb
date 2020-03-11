@@ -25,12 +25,15 @@
 <% if @game.screenshots.present? %>
 	<div class="bxslider">
 		<% @game.screenshots.each do |screenshot| %>
-			<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg' %>
+			<%= attachment_image_tag screenshot, :image,:fill, 800, 600, format: 'jpeg' %>
 		<% end %>
 	</div>
 <% else %>
 	<%= image_tag 'NoImage.jpg', style:"width: 200px; border: 1px solid #000;", class:"center-block" %>
 <% end %>
+
+<%= @game.difficulty %>
+<%= @game.rating %>
 
 <h3>説明</h3>
 <%= @game.introduction %>

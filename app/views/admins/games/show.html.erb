@@ -7,7 +7,7 @@
 <% if @game.screenshots.present? %>
 	<div class="bxslider">
 		<% @game.screenshots.each do |screenshot| %>
-			<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg' %>
+			<%= attachment_image_tag screenshot, :image,:fill, 800, 600, format: 'jpeg' %>
 		<% end %>
 	</div>
 <% else %>
