@@ -4,8 +4,8 @@ class CommentsController < ApplicationController
 		@comment = current_user.comments.new(comment_params)
 		@comment.game_id = @game.id
 		if @comment.save
-			@game.difficulty = @game.rating_avg
-			@game.rating = @game.difficulty_avg
+			@game.difficulty = @game.difficulty_avg
+			@game.rating = @game.rating_avg
 			@game.save
 		else
 			render 'games/show'
@@ -19,8 +19,8 @@ class CommentsController < ApplicationController
 			redirect_to request.referer
 		else
 			@comment.destroy
-			@game.difficulty = @game.rating_avg
-			@game.rating = @game.difficulty_avg
+			@game.difficulty = @game.difficulty_avg
+			@game.rating = @game.rating_avg
 			@game.save
 			flash[:notice] = "コメントを削除しました"
 		end

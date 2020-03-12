@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+/*user-game-index*/
 .wrap {
 	width: 90%;
 	max-width: 1000px;
@@ -50,3 +52,56 @@
 .game-box:first-child {
 	margin-top: 0px;
 }
+
+/*user-game-show*/
+.game-author {
+	margin-top:40px;
+}
+
+.rating-box {
+	height: 100px;
+	background-color: #9f9;
+	border: 1px solid #000;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: 0 0 15px rgba(0,0,0,0.8);
+	margin-top: 40px;
+}
+
+.rating-box-value, .difficult-box-value {
+	height: 50px;
+	background-color: #fff;
+}
+
+.difficuty-box {
+	height: 100px;
+	background-color: #fcc;
+	border: 1px solid #000;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: 0 0 15px #000;
+	margin-top: 40px;
+}
+
+.download {
+	font-size: 16px;
+	display: block;
+	margin-top: 40px;
+}
+
+.game-tags {
+	margin-top: 30px;
+}
+
+.game-sceenshots {
+	margin-top: 40px;
+}
+
+.comment-field {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+
+
+

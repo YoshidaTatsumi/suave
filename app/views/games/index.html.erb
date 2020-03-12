@@ -4,7 +4,7 @@
 		<% @index_games.each do |index_game| %>
 			<% screenshot = index_game.screenshots.find_by(game_id: index_game.id) %>
 			<%= link_to game_path(index_game) do %>
-				<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg', fallback:"NoImage.jpg" %>
+				<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg', fallback:"NoImage.jpg", size: "900x506" %>
 			<% end %>
 		<% end %>
 	</div>

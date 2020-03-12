@@ -1,16 +1,32 @@
 <% game.comments.each do |comment| %>
 	<tr id="comment-<%= comment.id %>">
-		<td>
-			<%= attachment_image_tag comment.user, :image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %><br>
-			<%= comment.user.name %>
+		<td style="width: 10%;">
+			<%= link_to user_path(comment.user) do %>
+				<%= attachment_image_tag comment.user, :image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg", size: "60x60" %><br>
+				<%= comment.user.name %>
+			<% end %>
 		</td>
-		<td><%= comment.comment %></td>
-		<td><%= comment.difficulty %>/100</td>
-		<td><%= comment.rating %>/10</td>
-		<% if current_user.id == comment.user_id %>
-			<td>
+		<td style="width: 60%;"><%= comment.comment %></td>
+		<td style="width: 10%;">
+			<div class="comment-difficulty-box">
+				難易度<br>
+				<div class="comment-difficulty-value">
+					<%= comment.difficulty %> / 100
+				</div>
+			</div>
+		</td>
+		<td style="width: 10%;">
+			<div class="comment-rating-box">
+				評価<br>
+				<div class="comment-rating-value">
+					<%= comment.rating %> / 10
+				</div>
+			</div>
+		</td>
+		<td style="width: 10%;">
+			<% if current_user.id == comment.user_id %>
 				<%= link_to "Destroy", game_comments_path(comment), method: :delete, remote: true, class:"btn-sm btn-danger" %>
-			</td>
-		<% end %>
+			<% end %>
+		</td>
 	</tr>
 <% end %>

@@ -67,3 +67,27 @@
  .field {
  margin-top: 40px;
  }
+
+/* game-show*/
+.comment-difficulty-box {
+	height: 60px;
+	background-color: #fcc;
+	border: 1px solid #000;
+	border-radius: 10px;
+	text-align: center;
+	padding: 5px;
+}
+
+.comment-difficulty-value, .comment-rating-value {
+	background-color: #fff;
+	height: 30px;
+}
+
+.comment-rating-box {
+	background-color: #9f9;
+	border: 1px solid #000;
+	border-radius: 10px;
+	text-align: center;
+	padding: 5px;
+}
+
