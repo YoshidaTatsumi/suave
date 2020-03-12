@@ -33,7 +33,6 @@ class GamesController < ApplicationController
 	def create
 		@game = Game.new(game_params)
 		@game.user_id = current_user.id
-		binding.pry
 		if @game.save
 			flash[:notice] = "アップロードが完了しました"
 			redirect_to game_path(@game)

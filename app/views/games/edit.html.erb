@@ -1,6 +1,6 @@
 <div class="row">
 	<h2 class="col-xs-2">ゲーム編集</h2>
-	<%= link_to "ゲームを削除", game_path(@game), method: :delete, class:"col-xs-2 col-xs-offset-4 btn btn-danger", style:"margin-top: 20px;", "data-confirm" => "本当に削除しますか？" %>
+	<%= link_to "ゲームを削除", game_path(@game), method: :delete, class:"col-xs-2 col-xs-offset-6 btn btn-danger", style:"margin-top: 20px;", "data-confirm" => "本当に削除しますか？" %>
 </div>
 <% if @game.errors.any? %>
 	<h2><%= @game.errors.count %>
@@ -14,28 +14,116 @@
 <% end %>
 
 <%= form_for(@game, url:game_path(@game),method: :patch) do |f| %>
+	<h3>スクリーンショット選択</h3>
 	<div class="row">
-		<%= f.label :title, "ゲーム名", class:"col-xs-2" %>
-		<%= f.text_field :title, class:"col-xs-4" %>
-	</div>
+		<%= f.nested_fields_for :screenshots, wrapper_tag: :div do |i| %>
+			<div class="col-xs-3" style="margin-top: 20px;">
+				<% if i.object.image.present? %>
+					<%= attachment_image_tag i.object, :image, alt:"Screenshot preview", class: "center-block image_prev", size: "250x140" %><br>
+				<% else %>
+					<%= image_tag "NoImage.jpg", alt:"Screenshot preview", class: "center-block image_prev", size: "250x140" %><br>
+				<% end %>
+
+	        	<%= i.label :image, "画像を変更", class:"btn btn-info" %>
+				<%= i.attachment_field :image, onchange: "previewFile(this)", style:"display: none;" %>
+				<%= i.remove_nested_fields_link "削除", class: "btn btn-danger" %>
+			</div>
+    	<% end %>
+    </div>
 
 	<div class="row">
-		<%= f.label :introduction, "説明", class:"col-xs-2" %>
-		<%= f.text_area :introduction, class:"col-xs-4" %>
+		<%= f.add_nested_fields_link :screenshots, '画像を追加する', class: "btn btn-primary", style:"margin-top: 40px;"%>
+	</div>
+	<div class="row field">
+		<div class="col-xs-6">
+			<%= f.label :title, "ゲーム名" %>（<span class="required">※必須</span>）<br>
+			<%= f.text_field :title, class:"form-control" %>
+		</div>
 	</div>
 
-	<div class="row">
-		<%= f.label :url, "ダウンロードURL", class:"col-xs-2" %>
-		<%= f.text_area :url, class:"col-xs-4" %>
+	<div class="row field">
+		<div class="col-xs-6">
+			<%= f.label :url, "ダウンロードURL" %>（<span class="required">※必須</span>）<br>
+			<%= f.text_area :url, class:"form-control" %>
+		</div>
 	</div>
 
-	<div class="row">
-		<%= f.label :tag_list, 'タグをカンマ区切りで入力' %>
-		<%= text_field_tag 'game[tag_list]', @game.tag_list %>
+	<div class="row field">
+		<div class="col-xs-6">
+			<%= f.label :tag_list, 'タグをカンマ区切りで入力' %>
+			<%= text_field_tag 'game[tag_list]', @game.tag_list, class:"form-control", data: {role: "tagsinput"} %>
+		</div>
 	</div>
-</div>
+
+	<div class="row field">
+		<%= f.label :introduction, "ゲームについて" %>（<span class="required">※必須</span>）<br>
+		<%= f.text_area :introduction, data: { provider: 'summernote'} %>
+	</div>
 
 <div class="row">
-	<%= f.submit "変更を保存", class:"col-xs-3 col-xs-offset-4 btn btn-primary" %>
+	<%= f.submit "変更を保存", class:"col-xs-4 col-xs-offset-4 btn btn-primary" %>
 </div>
 <% end %>
+
+
+<script>
+	//Summernoteの設定
+	$(function () {
+	    $('[data-provider="summernote"]').each(function(){
+	    	$(this).summernote({
+	    		lang: 'ja-JP',
+	        	height: 400,
+	        	toolbar: [
+	        		['fontsize', ['fontsize']],
+	        		['fontname', ['fontname']],
+	          		['style', ['style']],
+			        ['font', ['bold', 'underline', 'clear']],
+			        ['color', ['forecolor', 'backcolor']],
+			        ['para', ['ul', 'ol', 'paragraph']],
+			        ['table', ['table']],
+			        ['insert', ['link', 'picture', 'table', 'hr']],
+			        ['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+	        	]
+	      	});
+	    })
+	})
+
+	//画像を８枚まで投稿できるようにする
+	$(function() {
+	  var fieldsCount,
+	      maxFieldsCount = 6,
+	      $addLink = $('a.add_nested_fields_link');
+
+	  function toggleAddLink() {
+	    $addLink.toggle(fieldsCount <= maxFieldsCount)
+	  }
+
+	  $(document).on('fields_adding.nested_form_fields', function() {
+	    fieldsCount += 1;
+	    toggleAddLink();
+	  });
+
+	  $(document).on('fields_removing.nested_form_fields', function() {
+	    fieldsCount -= 1;
+	    toggleAddLink();
+	  });
+
+	  fieldsCount = $('form .fields').length;
+	  toggleAddLink();
+	})
+
+	//画像プレビュー
+	function previewFile(obj) {
+		var preview = $(".image_prev")[obj.name[29]];
+		var file    = obj.files[0];
+		var reader  = new FileReader();
+
+		if (file) {
+			reader.readAsDataURL(file);
+		}
+
+		reader.addEventListener("load", function () {
+	    	preview.src = reader.result;
+		}, false);
+	}
+</script>
