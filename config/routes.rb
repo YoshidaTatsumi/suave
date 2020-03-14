@@ -22,7 +22,11 @@ Rails.application.routes.draw do
 			end
 		end
 		resources :users, only: [:index, :show, :edit, :update, :destroy] do
-			patch 'status_change',on: :member
+			member do
+			  patch :status_change
+		      get :follow
+		      get :follower
+		    end
 		end
 		resources :games, only: [:index, :show, :edit, :update, :destroy] do
 			resource :screenshots, only: [:create, :edit, :update, :destroy]
@@ -46,8 +50,8 @@ Rails.application.routes.draw do
     	patch 'status_change',on: :member
     	resource :relationships, only: [:create, :destroy]
 	  	member do
-	      get :follows
-	      get :followers
+	      get :follow
+	      get :follower
 	    end
     end
 

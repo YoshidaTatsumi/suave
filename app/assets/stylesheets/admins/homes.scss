@@ -2,7 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.box1 {
+.admin-top-boxes {
+	margin-top: 100px;
+}
+
+.admin-top-box1 {
 	height: 200px;
 	font-size: 20px;
 	background-color: #fc0;
@@ -10,9 +14,10 @@
 	border-radius: 20px;
 	padding-top: 85px;
 	text-align: center;
+	box-shadow: 0 0 20px rgba(255,175,0,0.8);
 }
 
-.box2 {
+.admin-top-box2 {
 	height: 200px;
 	font-size: 20px;
 	background-color: #0cf;
@@ -20,9 +25,10 @@
 	border-radius: 20px;
 	padding-top: 85px;
 	text-align: center;
+	box-shadow: 0 0 20px rgba(0,175,255,0.8);
 }
 
-.box3 {
+.admin-top-box3 {
 	height: 200px;
 	font-size: 20px;
 	background-color: #0fc;
@@ -30,4 +36,5 @@
 	border-radius: 20px;
 	padding-top: 85px;
 	text-align: center;
+	box-shadow: 0 0 20px rgba(0,255,0,0.8);
 }

@@ -1,1 +1,3 @@
+$('.game-evaluation').html("<%= j(render 'games/evaluation', {game: @game}) %>");
+$('#user-comments-count').html("<%= @game.comments.count %>件のコメント");
 $('#comment-<%= @comment.id  %>').remove();

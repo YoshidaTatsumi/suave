@@ -15,8 +15,10 @@
 <% end %>
 
 <div class="row">
-	<% if @game.user.id == current_user.id %>
-		<%= link_to "ゲーム編集", edit_game_path(@game), class:"col-xs-2 col-xs-offset-8 btn btn-info" %>
+	<% if user_signed_in? %>
+		<% if @game.user.id == current_user.id %>
+			<%= link_to "ゲーム編集", edit_game_path(@game), class:"col-xs-2 col-xs-offset-8 btn btn-info" %>
+		<% end %>
 	<% end %>
 </div>
 
@@ -26,45 +28,10 @@
 		<h2><%= @game.title %></h2>
 		<h3 class="game-author">作者：<%= link_to @game.user.name, user_path(@game.user) %></h3>
 
-		<div class="row">
-			<div class="col-xs-4 difficuty-box">
-				<h4>難易度</h4>
-				<div class="difficult-box-value">
-					<% if @game.difficulty != nil %>
-						<h4><%= @game.difficulty.round(1) %> / 100</h4>
-						<% if @game.difficulty >= 80 %>
-							<p>鬼畜！</p>
-						<% elsif @game.difficulty >= 70 %>
-							<p>難しい</p>
-						<% elsif @game.difficulty >= 40 %>
-							<p>普通</p>
-						<% else %>
-							<p>簡単</p>
-						<% end %>
-					<% else %>
-						<h4>未評価</h4>
-					<% end %>
-				</div>
-			</div>
-
-			<div class="col-xs-4 col-xs-offset-1 rating-box">
-				<h4>評価</h4>
-				<div class="rating-box-value">
-					<% if @game.rating != nil %>
-						<h4><%= @game.rating.round(1) %> / 10</h4>
-						<% if @game.rating >= 8 %>
-							<p>神ゲー！</p>
-						<% elsif @game.rating >= 6 %>
-							<p>良ゲー</p>
-						<% else %>
-							<p>クソゲー</p>
-						<% end %>
-					<% else %>
-						<h4>未評価</h4>
-					<% end %>
-				</div>
-			</div>
+		<div class="row game-evaluation">
+			<%= render 'evaluation', game: @game %>
 		</div>
+
 		<div class="row">
 			<%= link_to "ダウンロードはこちら", @game.url, class:"download" %>
 		</div>
@@ -93,34 +60,39 @@
 
 <%=raw @game.introduction %>
 
+
 <div class="row">
-	<h3 class="col-xs-3 page-header">コメントする</h3>
+	<h3 class="col-xs-3 page-header">コメント</h3>
 </div>
-<%= form_with(model: [@game, @comment], remote: true) do |f| %>
-	<div class="row">
-		<div class="col-xs-3">
-			<h3>難易度（１００点中）</h3>
-			<%= f.number_field :difficulty, class:"form-control" %>
-		</div>
-		<div class="col-xs-3 col-xs-offset-1">
-			<h3>評価（１０点中）</h3>
-			<div class="row">
-				<%= f.number_field :rating, class:"form-control" %>
+
+<% if user_signed_in? %>
+	<%= form_with(model: [@game, @comment], remote: true) do |f| %>
+		<div class="row">
+			<div class="col-xs-3">
+				<h3>難易度（１００点中）</h3>
+				<%= f.number_field :difficulty, class:"form-control" %>
+			</div>
+			<div class="col-xs-3 col-xs-offset-1">
+				<h3>評価（１０点中）</h3>
+				<div class="row">
+					<%= f.number_field :rating, class:"form-control" %>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="row comment-field">
-		<div class="col-xs-10">
-			<%= f.text_area :comment, rows:'5', class: "form-control" %>
+		<div class="row comment-field">
+			<div class="col-xs-10">
+				<%= f.text_area :comment, rows:'5', class: "form-control" %>
+			</div>
+			<div class="col-xs-2" style="margin-top: 80px;">
+				<%= f.submit "送信", class: "btn btn-primary pull-left" %>
+			</div>
 		</div>
-		<div class="col-xs-2" style="margin-top: 80px;">
-			<%= f.submit "送信", class: "btn btn-primary pull-left" %>
-		</div>
-	</div>
+	<% end %>
 <% end %>
 
-<table id="js-table-comment" class="table">
+<h3 id="user-comments-count"><%= @game.comments.count %>件のコメント</h3>
+<table id="user-comment" class="table">
 	<%= render 'comments/comments', game: @game %>
 </table>
 

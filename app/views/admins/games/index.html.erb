@@ -5,16 +5,18 @@
 <% end %>
 <h2>ゲーム一覧</h2>
 <table class="table">
-	<tr>
+	<tr class="active">
+		<th>ID</th>
 		<th>投稿者</th>
 		<th>タイトル</th>
-		<th>内容</th>
+		<th>タグ</th>
 	</tr>
 	<% @games.each do |game| %>
 		<tr>
+			<td><%= game.id %></td>
 			<td>
 				<%= link_to admins_user_path(game.user) do %>
-					<%= attachment_image_tag game.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
+					<%= attachment_image_tag game.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %><br>
 					<%= game.user.name %>
 				<% end %>
 			</td>
@@ -23,7 +25,14 @@
 					<%= game.title %>
 				<% end %>
 			</td>
-			<td><%= game.introduction[0..100] %></td>
+			<td>
+				<% game.tag_list.each do |tag| %>
+					<%= link_to admins_search_path(tag: tag), class:"btn btn-primary game-tags" do %>
+						<%= tag %>
+					<% end %>
+				<% end %>
+			</td>
 		</tr>
 	<% end %>
 </table>
+<%= paginate @games, class: "paginate" %>

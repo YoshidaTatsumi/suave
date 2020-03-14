@@ -1,7 +1,8 @@
 <div class="row">
 	<h2 class="col-xs-2">ゲーム編集</h2>
-	<%= link_to "ゲームを削除", game_path(@game), method: :delete, class:"col-xs-2 col-xs-offset-6 btn btn-danger", style:"margin-top: 20px;", "data-confirm" => "本当に削除しますか？" %>
+	<%= link_to "ゲームを削除", game_path(@game), method: :delete, class:"col-xs-2 col-xs-offset-6 btn btn-danger", "data-confirm" => "本当に削除しますか？" %>
 </div>
+
 <% if @game.errors.any? %>
 	<h2><%= @game.errors.count %>
 		 errors prohibited this obj from being saved:
@@ -34,6 +35,7 @@
 	<div class="row">
 		<%= f.add_nested_fields_link :screenshots, '画像を追加する', class: "btn btn-primary", style:"margin-top: 40px;"%>
 	</div>
+	
 	<div class="row field">
 		<div class="col-xs-6">
 			<%= f.label :title, "ゲーム名" %>（<span class="required">※必須</span>）<br>
@@ -51,7 +53,7 @@
 	<div class="row field">
 		<div class="col-xs-6">
 			<%= f.label :tag_list, 'タグをカンマ区切りで入力' %>
-			<%= text_field_tag 'game[tag_list]', @game.tag_list, class:"form-control", data: {role: "tagsinput"} %>
+			<%= text_field_tag 'game[tag_list]', @game.tag_list.join(","), class:"form-control", data: {role: "tagsinput"} %>
 		</div>
 	</div>
 

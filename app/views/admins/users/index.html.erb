@@ -5,7 +5,7 @@
 			<tr class="active">
 				<th>ユーザーID</th>
 				<th>ユーザー名</th>
-				<th>自己紹介</th>
+				<th>ひとこと</th>
 				<th>ステータス</th>
 			</tr>
 			<% @users.each do |user| %>
@@ -29,4 +29,5 @@
 			<% end %>
 		</table>
 	</div>
+	<%= paginate @users, class: "paginate" %>
 </div>

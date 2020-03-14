@@ -35,17 +35,17 @@
 		<div class="col-xs-12">
 			<div class="row field">
 				<%= f.label :title, "タイトル" %>（<span class="required">※必須</span>）<br>
-				<%= f.text_field :title, size:"80x1" %>
+				<%= f.text_field :title, class:"form-control", size:"80x1" %>
 			</div>
 
 			<div class="row field">
 				<%= f.label :url, "ダウンロードURL" %>（<span class="required">※必須</span>）<br>
-				<%= f.text_area :url, size:"80x2" %>
+				<%= f.text_area :url, class:"form-control", size:"80x2" %>
 			</div>
 
 			<div class="row field">
 				<%= f.label :tag_list, 'タグをカンマ区切りで入力' %><br>
-				<%= text_field_tag 'game[tag_list]', @game.tag_list, data: {role: "tagsinput"} %>
+				<%= text_field_tag 'game[tag_list]', @game.tag_list.join(","), data: {role: "tagsinput"}, class:"form-control" %>
 			</div>
 		</div>
     </div>

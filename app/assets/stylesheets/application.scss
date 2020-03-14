@@ -72,7 +72,7 @@
  	color :red;
  }
 
-/* game-show*/
+/* admin&user-game-show*/
 .comment-difficulty-box {
 	height: 60px;
 	background-color: #fcc;
@@ -93,5 +93,110 @@
 	border-radius: 10px;
 	text-align: center;
 	padding: 5px;
+}
+
+/*admin&user--game-index*/
+.wrap {
+	width: 90%;
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+#game-menu {
+	margin: 0;
+	padding: 0;
+}
+
+#game-menu li {
+  list-style-type: none;
+  padding: 0;
+}
+
+#game-menu a {
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  text-align: center;
+}
+
+#game-menu .active {
+  background: #0c0;
+  color: #fff;
+}
+
+#game-contents {
+	margin-right: 0;
+	margin-left: 0;
+	margin-bottom: 0;
+}
+
+.game-box {
+	font-size: 16px;
+	color: #eee;
+	background-color: #0c0;
+	margin-top: 3px;
+}
+
+.game-box:hover {
+	opacity: 0.8;
+}
+
+.game-box:first-child {
+	margin-top: 0px;
+}
+
+/*admin&user--game-show*/
+.game-author {
+	margin-top:40px;
+}
+
+.rating-box {
+	height: 100px;
+	background-color: #9f9;
+	border: 1px solid #000;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: 0 0 15px rgba(0,0,0,0.8);
+	margin-top: 40px;
+}
+
+.rating-box-value, .difficult-box-value {
+	height: 50px;
+	background-color: #fff;
+}
+
+.difficuty-box {
+	height: 100px;
+	background-color: #fcc;
+	border: 1px solid #000;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: 0 0 15px #000;
+	margin-top: 40px;
+}
+
+.download {
+	font-size: 16px;
+	display: block;
+	margin-top: 40px;
+}
+
+.game-tags {
+	margin-top: 30px;
+}
+
+.game-sceenshots {
+	margin-top: 40px;
+}
+
+.comment-field {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+/*admin&user-user-show*/
+.user-follow {
+	display: block;
+	margin-top: 10px;
 }
 

@@ -1,37 +1,56 @@
+<% if flash[:notice] %>
+	<div class="row flash">
+		<%= flash[:notice] %>
+	</div>
+<% end %>
+
 <div class="row">
 	<h2 class="col-xs-4"><%= @user.name %></h2>
 </div>
+
 <div class="row">
 	<div class="col-xs-3">
 		<%= attachment_image_tag @user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'200x200' %>
 
-		<h4>フォロー数</h4>
-		<%= link_to follows_user_path(@user) do %>
-			<%= @user.active_relationships.count %>
-		<% end %>
-		<h4>フォロワー数</h4>
-		<%= link_to followers_user_path(@user) do %>
-			<%= @user.passive_relationships.count %>
-		<% end %>
-
-		<% if @user.id != current_user.id %>
-			<% if current_user.following?(@user) %>
-				<%= link_to "フォロー外す", user_relationships_path(@user), method: :delete, class: "btn btn-primary" %>
-			<% else %>
-				<%= link_to "フォローする", user_relationships_path(@user), method: :post, class: "btn btn-success" %>
+		<div class="row">
+			<h4 class="col-xs-7">フォロー数：</h4>
+			<%= link_to follow_user_path(@user), class:"col-xs-5 user-follow" do %>
+				<%= @user.active_relationships.count %>
 			<% end %>
-			<%= link_to "チャットを始める", chat_path(@user) %>
-		<% else %>
-			<%= link_to "編集する", edit_user_path(@user), class:"btn btn-info" %>
-		<% end %>
+		</div>
+
+		<div class="row">
+			<h4 class="col-xs-7">フォロワー数：</h4>
+			<%= link_to follower_user_path(@user), class:"col-xs-5 user-follow" do %>
+				<%= @user.passive_relationships.count %>
+			<% end %>
+		</div>
+
+		<div class="row">
+			<% if @user.id != current_user.id %>
+				<% if current_user.following?(@user) %>
+					<%= link_to "フォロー外す", user_relationships_path(@user), method: :delete, class: "col-xs-5 col-xs-offset-2 btn btn-primary" %>
+				<% else %>
+					<%= link_to "フォローする", user_relationships_path(@user), method: :post, class: "col-xs-5 col-xs-offset-2 btn btn-success" %>
+				<% end %>
+			<% else %>
+				<%= link_to "編集する", edit_user_path(@user), class: "col-xs-4 col-xs-offset-3 btn btn-info" %>
+			<% end %>
+		</div>
+
+		<div class="row">
+			<% if @user.id != current_user.id %>
+				<%= link_to "チャットを始める", chat_path(@user), class: "col-xs-offset-2" %>
+			<% end %>
+		</div>
 	</div>
 
 	<div class="col-xs-8 col-offset-1">
-		<h4>自己紹介文</h4>
+		<h4 class="page-header">ひとこと</h4>
 		<%= @user.introduction %>
 	</div>
 </div>
 
 <div class="row">
-	<h3>ゲーム一覧</h3>
+	<h3 class="page-header">ゲーム一覧</h3>
 </div>

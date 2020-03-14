@@ -1,0 +1,29 @@
+<h2>フォロー一覧</h2>
+<table class="table">
+	<tr>
+		<th>ID</th>
+		<th>ユーザー名</th>
+		<th></th>
+		<th></th>
+
+	</tr>
+	<% @user.following_user.each do |user| %>
+		<tr>
+			<td>
+				<%= user.id %>
+			</td>
+			<td>
+				<%= link_to admins_user_path(user) do %>
+					<%= attachment_image_tag user, :image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %><br>
+					<%= user.name %>
+				<% end %>
+			</td>
+			<td>
+				フォロー数：<%= user.active_relationships.count %>
+			</td>
+			<td>
+				フォロワー数：<%= user.passive_relationships.count %>
+			</td>
+		</tr>
+	<% end %>
+</table>

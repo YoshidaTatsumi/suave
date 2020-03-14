@@ -6,7 +6,12 @@
 				<%= comment.user.name %>
 			<% end %>
 		</td>
-		<td style="width: 60%;"><%= comment.comment %></td>
+		<td style="width: 60%;">
+			<%= comment.comment %>
+			<div style="margin-top: 40px;">
+				<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+			</div>
+		</td>
 		<td style="width: 10%;">
 			<div class="comment-difficulty-box">
 				難易度<br>
@@ -24,8 +29,10 @@
 			</div>
 		</td>
 		<td style="width: 10%;">
-			<% if current_user.id == comment.user_id %>
-				<%= link_to "Destroy", game_comments_path(comment), method: :delete, remote: true, class:"btn-sm btn-danger" %>
+			<% if user_signed_in? %>
+				<% if current_user.id == comment.user_id %>
+					<%= link_to "Destroy", game_comments_path(comment), method: :delete, remote: true, class:"btn-sm btn-danger" %>
+				<% end %>
 			<% end %>
 		</td>
 	</tr>

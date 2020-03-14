@@ -1,23 +1,55 @@
-<div class="row">
-	<h2 class="col-xs-6"><%= @game.title %></h2>
-	<%= link_to "ゲーム編集", edit_admins_game_path(@game), class:"col-xs-2 col-xs-offset-1 btn btn-info", style:"margin-top:20px;" %>
-	<%= link_to "スクリーンショット編集", edit_admins_game_screenshots_path(@game), class:"col-xs-2 col-xs-offset-1 btn btn-info", style:"margin-top:20px;" %>
-</div>
-
-<div class="bxslider">
-	<% @game.screenshots.each do |screenshot| %>
-		<%= attachment_image_tag screenshot, :image,:fill, 800, 600, format: 'jpeg', fallback: "NoImage.jpg" %>
-	<% end %>
-</div>
-
-<%= @game.introduction %>
-<%= link_to "ダウンロードはこちら", @game.url %>
-
-<% @game.tag_list.each do |tag| %>
-	<%= tag %>
+<% if flash[:notice] %>
+	<div class="row flash">
+		<%= flash[:notice] %>
+	</div>
 <% end %>
 
-<h3 id="comments-count"><%= @game.comments.count %>件のコメント</h3>
+<div class="row">
+	<%= link_to "ゲーム編集", edit_admins_game_path(@game), class:"col-xs-2 col-xs-offset-8 btn btn-info" %>
+</div>
+
+<div class="row">
+	<div class="col-xs-6">
+		<h2><%= @game.title %></h2>
+		<h3 class="game-author">作者：<%= link_to @game.user.name, admins_user_path(@game.user) %></h3>
+
+		<div class="row admin-game-evaluation">
+			<%= render "evaluation", game: @game %>
+		</div>
+
+		<div class="row">
+			<%= link_to "ダウンロードはこちら", @game.url, class:"download" %>
+		</div>
+		<div class="row">
+			<% @game.tag_list.each do |tag| %>
+				<%= link_to admins_search_path(tag: tag), class:"btn btn-primary game-tags" do %>
+					<%= tag %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+
+	<div class="col-xs-6 game-sceenshots">
+		<h3>スクリーンショット</h3>
+		<div class="bxslider">
+			<% @game.screenshots.each do |screenshot| %>
+				<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg',fallback: "NoImage.jpg", size: "500x281" %>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<h3 class="col-xs-3 page-header">このゲームについて</h3>
+</div>
+
+<%=raw @game.introduction %>
+
+<div class="row">
+	<h3 class="col-xs-3 page-header">コメント</h3>
+</div>
+
+<h3 id="admin-comments-count"><%= @game.comments.count %>件のコメント</h3>
 <table class="table">
 	<%= render 'admins/comments/comments', game: @game %>
 </table>
@@ -29,8 +61,8 @@
 	    speed: 1000,          // スライドするスピード
 	    moveSlides: 1,        // 移動するスライド数
 	    pause: 5000,          // 自動スライドの待ち時間
-	    maxSlides: 4,         // 一度に表示させる最大数
-	    slideWidth: 250,      // 各スライドの幅
+	    maxSlides: 1,         // 一度に表示させる最大数
+	    slideWidth: 500,      // 各スライドの幅
 		randomStart: false,    // 最初に表示するスライドをランダムに設定
 	    autoHover: true       // ホバー時に自動スライドを停止
 	  });

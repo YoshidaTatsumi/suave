@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	def index
-		@users = User.where(status: true)
+		@users = User.where(status: true).page(params[:page]).per(10)
 	end
 
 	def show
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 		redirect_to root_path
 	end
 
-	def follows
+	def follow
 		@user = User.find(params[:id])
 	end
 

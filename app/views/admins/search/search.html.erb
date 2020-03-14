@@ -40,4 +40,26 @@
 			</tr>
 		<% end %>
 	</table>
+
+<% elsif params[:tag].present? %>
+	<h2>'<%= params[:tag] %>'の検索結果</h2>
+	<table class="table">
+		<tr>
+			<th>image</th>
+			<th>title</th>
+			<th></th>
+		</tr>
+		<% @searches.each do |search| %>
+			<% screenshot = search.screenshots.find_by(game_id: search.id) %>
+			<tr>
+				<td>
+					<%= link_to game_path(search) do %>
+						<%= attachment_image_tag screenshot, :image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+					<% end %>
+				</td>
+				<td><%= search.title %></td>
+				<td><%= link_to "Show", admins_game_path(search) %></td>
+			</tr>
+		<% end %>
+	</table>
 <% end %>

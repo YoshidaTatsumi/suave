@@ -1,3 +1,51 @@
 // Place all the styles related to the admins/users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/*admin-user-show*/
+.user-validity {
+	margin-top: 20px;
+	height: 40px;
+	line-height: 40px;
+	color: white;
+	background-color: skyblue;
+	border: 1px solid #000;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.user-invalid {
+	margin-top: 20px;
+	height: 40px;
+	line-height: 40px;
+	color: white;
+	background-color: red;
+	border: 1px solid #000;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.user-follow {
+	display: block;
+	margin-top: 10px;
+}
+
+.admin-user-introduction {
+	height: 200px;
+	padding: 20px;
+	background-color: #eee;
+	border: 1px solid #000;
+	border-radius: 20px;
+}
+
+.admin-user-show-game {
+	margin-top: 40px;
+}
+
+/*admin-user-edit*/
+.admin-user-edit-box {
+	margin-top: 60px;
+}
+
+
+

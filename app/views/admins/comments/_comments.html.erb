@@ -1,12 +1,35 @@
 <% game.comments.each do |comment| %>
 	<tr id="admin-comment-<%= comment.id %>">
-		<td>
-			<%= attachment_image_tag comment.user, :image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %><br>
-			<%= comment.user.name %>
+		<td style="width: 10%;">
+			<%= link_to user_path(comment.user) do %>
+				<%= attachment_image_tag comment.user, :image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg", size: "60x60" %><br>
+				<%= comment.user.name %>
+			<% end %>
 		</td>
-		<td><%= comment.comment %></td>
-		<td><%= comment.difficulty %>/100</td>
-		<td><%= comment.rating %>/10</td>
-		<td><%= link_to "Destroy", admins_game_comments_path(comment), method: :delete, remote: true, class:"btn-sm btn-danger" %></td>
+		<td style="width: 60%;">
+			<%= comment.comment %>
+			<div style="margin-top: 40px;">
+				<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+			</div>
+		</td>
+		<td style="width: 10%;">
+			<div class="comment-difficulty-box">
+				難易度<br>
+				<div class="comment-difficulty-value">
+					<%= comment.difficulty %> / 100
+				</div>
+			</div>
+		</td>
+		<td style="width: 10%;">
+			<div class="comment-rating-box">
+				評価<br>
+				<div class="comment-rating-value">
+					<%= comment.rating %> / 10
+				</div>
+			</div>
+		</td>
+		<td style="width: 10%;">
+			<%= link_to "Destroy", admins_game_comments_path(comment), method: :delete, remote: true, class:"btn-sm btn-danger" %>
+		</td>
 	</tr>
 <% end %>

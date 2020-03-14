@@ -1,11 +1,11 @@
 class Admins::GamesController < ApplicationController
 	def index
 		if params[:place] == "user"
-			@games = Game.where(user_id: params[:user_id])
+			@games = Game.where(user_id: params[:user_id]).page(params[:page]).per(10).reverse_order
 		elsif params[:place] == "top"
-			@games = Game.where(created_at: Time.now.beginning_of_day..Time.now.end_of_day)
+			@games = Game.where(created_at: Time.now.in_time_zone("Tokyo").beginning_of_day..Time.now.in_time_zone("Tokyo").end_of_day).page(params[:page]).per(10).reverse_order
 		else
-			@games = Game.all
+			@games = Game.all.page(params[:page]).per(10).reverse_order
 		end
 	end
 
@@ -36,6 +36,6 @@ class Admins::GamesController < ApplicationController
 
 	private
 	def game_params
-		params.require(:game).permit(:title, :introduction, :url, :tag_list)
+		params.require(:game).permit(:title, :introduction, :url, :tag_list, screenshots_attributes: [:id, :game_id, :image, :_destroy])
 	end
 end

@@ -286,7 +286,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on
   bootsnap (>= 1.1.0)
-  bootstrap-sass (~> 3.3.6)
+  bootstrap-sass
   bxslider-rails
   byebug
   capybara (>= 2.15)

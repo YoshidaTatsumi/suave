@@ -1,6 +1,6 @@
 class Admins::UsersController < ApplicationController
 	def index
-		@users = User.all
+		@users = User.all.page(params[:page]).per(10)
 	end
 
 	def show
@@ -31,6 +31,14 @@ class Admins::UsersController < ApplicationController
 		user = User.find(params[:id])
 		user.update(change_params)
 		redirect_to admins_user_path(user)
+	end
+
+	def follow
+		@user = User.find(params[:id])
+	end
+
+	def follower
+		@user = User.find(params[:id])
 	end
 
 	private
