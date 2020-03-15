@@ -12,7 +12,7 @@
 
   <body>
     <header class="sticky-top">
-      <nav class="nav navbar-fixed-top">
+      <nav class="nav navbar-expand-sm navbar-fixed-top">
         <% if admin_signed_in? && request.fullpath.index("/admins/") %>
           <%= link_to admins_top_path do %>
             <%= image_tag 'logo.png', class:"nav navbar-nav navbar-left logo", size: '120x120' %>
@@ -23,18 +23,29 @@
           <% end %>
         <% end %>
 
-        <ul class="nav pull-right nav-pills">
-          <% if user_signed_in? && request.fullpath.index("/admins/") == nil %>
-            <%= render 'users/header' %>
-          <% elsif admin_signed_in? && request.fullpath.index("/admins/") %>
-            <%= render 'admins/header' %>
-          <% else %>
-            <li><%= link_to "ゲーム一覧", games_path %></li>
-            <li><%= link_to "新規登録", new_user_registration_path %></li>
-            <li><%= link_to "ログイン", new_user_session_path %></li>
-            <li><%= link_to "管理者はこちら", new_admin_session_path %></li>
-          <% end %>
-        </ul>
+        <button class="navbar-toggler" type="button"
+            data-toggle="collapse"
+            data-target="#navmenu1"
+            aria-controls="navmenu1"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navmenu1">
+          <div class="navbar-nav">
+            <% if user_signed_in? && request.fullpath.index("/admins/") == nil %>
+              <%= render 'users/header' %>
+            <% elsif admin_signed_in? && request.fullpath.index("/admins/") %>
+              <%= render 'admins/header' %>
+            <% else %>
+              <%= link_to "ゲーム一覧", games_path, class:"nav-item nav-link" %>
+              <%= link_to "新規登録", new_user_registration_path, class:"nav-item nav-link" %>
+              <%= link_to "ログイン", new_user_session_path, class:"nav-item nav-link" %>
+              <%= link_to "管理者はこちら", new_admin_session_path, class:"nav-item nav-link" %>
+            <% end %>
+          </ul>
+        </div>
 
         <div class="search">
           <% if admin_signed_in? && request.fullpath.index("/admins/") %>

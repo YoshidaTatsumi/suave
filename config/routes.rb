@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 	resources :games do
 		resource :screenshots, only: [:create, :edit, :update, :destroy]
 		resource :comments, only: [:create, :destroy]
+		get 'more_game', on: :collection
 	end
 
 	namespace :admins do

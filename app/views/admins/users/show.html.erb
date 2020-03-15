@@ -32,13 +32,13 @@
 
 	<div class="col-xs-8 col-offset-1">
 		<h4>ひとこと</h4>
-		<div class="admin-user-introduction">
+		<div class="user-introduction">
 			<%= @user.introduction %>
 		</div>
 	</div>
 </div>
 
-<div class="row admin-user-show-game">
+<div class="row user-show-game">
 	<h3>ゲーム一覧</h3>
 	<div class="row">
 		<% @user.games.first(4).each do |game| %>

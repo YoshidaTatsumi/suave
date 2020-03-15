@@ -2,3 +2,26 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+/*user-more-game*/
+.more-game-box {
+	height: 400px;
+	margin-bottom: 100px;
+}
+
+.more_game_title {
+	display: block;
+	border-bottom: 1px solid gray;
+	width: 98%;
+	margin-top: 20px;
+	color: #666;
+}
+
+.more-game-tag {
+	color: #666;
+	display: block;
+	border-bottom: 1px solid gray;
+	width: 98%;
+	margin-top: 20px;
+}
+

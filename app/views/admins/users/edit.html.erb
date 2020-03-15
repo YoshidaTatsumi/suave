@@ -20,7 +20,7 @@
 	<%= link_to "全データを削除して退会する", admins_user_path(@user), method: :delete, "data-confirm" => "今まで投稿したゲームやコメントが全て消えます。本当に退会しますか？", class: "btn btn-danger col-xs-offset-1", style:"height: 60px; width: 130px; white-space: normal;" %>
 </div>
 
-<div class="admin-user-edit-box">
+<div class="user-edit-box">
 	<%= form_for(@user, url:admins_user_path(@user),method: :patch) do |f| %>
 		<div class="row">
 			<div class="col-xs-3">

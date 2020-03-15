@@ -58,6 +58,13 @@ class GamesController < ApplicationController
 		redirect_to root_path
 	end
 
+	def more_game
+		if params[:place] == "user"
+			@games = Game.where(user_id: params[:id_user]).page(params[:page]).per(9)
+			@user = User.find(params[:id_user])
+		end
+	end
+
 	private
 	def game_params
 		params.require(:game).permit(:title, :introduction, :url, :tag_list, screenshots_attributes: [:id, :game_id, :image, :_destroy])

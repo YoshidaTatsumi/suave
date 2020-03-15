@@ -16,6 +16,9 @@ class Admins::SearchController < ApplicationController
 
 		elsif params[:tag].present?
 			@searches = Game.tagged_with("#{params[:tag]}")
+
+		else
+			redirect_to admins_top_path
 		end
 	end
 end
