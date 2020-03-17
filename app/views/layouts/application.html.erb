@@ -39,6 +39,7 @@
             <% elsif admin_signed_in? && request.fullpath.index("/admins/") %>
               <%= render 'admins/header' %>
             <% else %>
+              <%= link_to "アバウト", homes_about_path, class:"nav-item nav-link" %>
               <%= link_to "ゲーム一覧", games_path, class:"nav-item nav-link" %>
               <%= link_to "新規登録", new_user_registration_path, class:"nav-item nav-link" %>
               <%= link_to "ログイン", new_user_session_path, class:"nav-item nav-link" %>

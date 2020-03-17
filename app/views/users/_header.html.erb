@@ -1,7 +1,8 @@
-<li class="nav-item nav-link"><%= link_to "マイページ", user_path(current_user) %></li>
-<li class="nav-item nav-link"><%= link_to "ユーザー一覧", users_path %></li>
-<li class="nav-item nav-link"><%= link_to "ゲーム一覧", games_path %></li>
-<li class="nav-item nav-link"><%= link_to "ゲーム投稿", new_game_path %></li>
-<li class="nav-item nav-link"><%= link_to "チャットルーム", chats_path %></li>
-<li class="nav-item nav-link"><%= link_to "お問い合わせフォーム" %></li>
-<li class="nav-item nav-link"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+<%= link_to "マイページ", user_path(current_user), class:"nav-item nav-link" %>
+<%= link_to "アバウト", homes_about_path, class:"nav-item nav-link" %>
+<%= link_to "ユーザー一覧", users_path, class:"nav-item nav-link" %>
+<%= link_to "ゲーム一覧", games_path, class:"nav-item nav-link" %>
+<%= link_to "ゲーム投稿", new_game_path, class:"nav-item nav-link" %>
+<%= link_to "チャットルーム", chats_path, class:"nav-item nav-link" %>
+<%= link_to "お問い合わせフォーム" %>
+<%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"nav-item nav-link" %>
