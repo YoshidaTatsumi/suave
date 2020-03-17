@@ -1,23 +1,67 @@
 <% if flash[:notice] %>
-	<div class="row flash">
-		<%= flash[:notice] %>
+	<div class="alert alert-success alert-dismissible" role="alert">
+	 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  	<%= flash[:notice] %>
 	</div>
 <% end %>
 
-<h1><%= @room.name %></h1>
-<p><%= @room.introduction %></p>
-<%= link_to "ルーム編集", edit_admins_chat_path(@room), class:"btn btn-info" %>
+<% if flash[:danger] %>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+	 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  	<strong>エラー！</strong> <%= flash[:danger] %>
+	</div>
+<% end %>
 
-<div style="width: 400px;">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+    	<div class="modal-content">
+    		<%= form_for(@room, url:admins_chat_path(@room), method: :patch) do |f| %>
+    			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalCenterTitle">ルーム編集</h5>
+        			<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+          				<span aria-hidden="true">&times;</span>
+        			</button>
+      			</div>
+      			<div class="modal-body m-2">
+					<%= f.label :name, "ルーム名" %>
+					<%= f.text_field :name, class:"form-control", size:"80x1" %>
+
+					<%= f.label :introduction, "内容" %>
+					<%= f.text_area :introduction, class:"form-control", size:"80x3" %>
+    			</div>
+			    <div class="modal-footer">
+			    	<%= link_to "ルーム削除",admins_chat_path(@room), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger" %>
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+			        <%= f.submit "変更", class:"btn btn-primary" %>
+			    </div>
+			<% end %>
+    	</div>
+	</div>
+</div>
+
+<h2><u><%= @room.name %></u></h2>
+
+<div class="row mt-4">
+	<%= attachment_image_tag @room.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", class:"col-2" %>
+	<div class="col-8">
+		<%= @room.introduction %><br>
+		<!-- 切り替えボタンの設定 -->
+		<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModalCenter">
+		  ルーム編集
+		</button>
+	</div>
+</div>
+
+<div class="message overflow-auto mt-3 mx-auto" style="width: 90%; height: 400px;">
 	<% @room.chats.each do |chat| %>
 		<div class="row">
-		    <div class="col-xs-4">
+		    <div class="col-2">
 		    	<%= link_to admins_user_path(chat.user) do %>
-				    <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+				    <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
 				    <p><%= chat.user.name %></p>
 				<% end %>
 		    </div>
-		    <p class="col-xs-8"><%= chat.message %></p>
+		    <p class="col-10"><%= chat.message %></p>
 		</div>
 	<% end %>
 </div>

@@ -19,13 +19,6 @@ class ChatsController < ApplicationController
 		@chats = @room.chats
 	end
 
-	def edit
-		@room = Room.find(params[:id])
-		if @room.user_id != current_user.id
-			redirect_to root_path
-		end
-	end
-
 	def create
 		@room = Room.new(room_params)
 		@room.user_id = current_user.id
@@ -45,8 +38,9 @@ class ChatsController < ApplicationController
 			flash[:notice] = "編集が完了しました"
 			redirect_to talk_room_chats_path(@room)
 		else
-			flash[:notice] = "ルーム名を入力してください"
-			render 'edit'
+			@chats = @room.chats
+			flash[:danger] = "ルーム名を入力してください"
+			redirect_to talk_room_chats_path(@room)
 		end
 	end
 

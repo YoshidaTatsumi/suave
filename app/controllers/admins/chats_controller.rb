@@ -3,18 +3,14 @@ class Admins::ChatsController < ApplicationController
 		@rooms = Room.where.not(name: nil)
 	end
 
-	def edit
-		@room = Room.find(params[:id])
-	end
-
 	def update
 		@room = Room.find(params[:id])
 		if @room.update(room_params)
 			flash[:notice] = "編集が完了しました"
 			redirect_to talk_room_admins_chats_path(@room)
 		else
-			flash[:notice] = "ルーム名を入力してください"
-			render 'edit'
+			flash[:danger] = "ルーム名を入力してください"
+			redirect_to talk_room_admins_chats_path(@room)
 		end
 	end
 
