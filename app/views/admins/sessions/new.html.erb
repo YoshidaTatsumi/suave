@@ -1,24 +1,24 @@
 <div class="row">
-  <h1 class="col-xs-10 col-xs-offset-2">管理者ログイン</h1>
+  <h1 class="col-10 offset-2">管理者ログイン</h1>
 </div>
 
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="row field">
-          <div class="col-xs-offset-3">
+          <div class="offset-3">
             <%= f.label :email %><br />
             <%= f.email_field :email, autofocus: true, autocomplete: "email", size: "80" %>
           </div>
         </div>
 
         <div class="row field">
-          <div class="col-xs-offset-3">
+          <div class="offset-3">
             <%= f.label :password %><br />
             <%= f.password_field :password, autocomplete: "current-password", size: "80" %>
           </div>
         </div>
 
         <div class="row actions" style= "margin-top: 40px;">
-          <%= f.submit "ログイン", class:"col-xs-2 col-xs-offset-5 btn btn-primary" %>
+          <%= f.submit "ログイン", class:"col-2 offset-5 btn btn-primary" %>
         </div>
       <% end %>
 </div>

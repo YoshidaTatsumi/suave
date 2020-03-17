@@ -1,5 +1,7 @@
 <div class="row">
 	<h2>ゲーム一覧</h2>
+</div>
+<div class="row">
 	<div class="bxslider">
 		<% @index_games.each do |index_game| %>
 			<% screenshot = index_game.screenshots.find_by(game_id: index_game.id) %>
@@ -11,14 +13,14 @@
 </div>
 
 <div class="wrap">
-	<div class="row">
-		<ul id="game-menu">
-			<li class="col-xs-3"><a href="#new-game" class="active">新作ゲーム</a></li>
-			<li class="col-xs-3"><a href="#favorite-game" class="">人気トップ</a></li>
-			<li class="col-xs-3"><a href="#difficult-game" class="">高難易度</a></li>
-			<li class="col-xs-3"><a href="#easy-game" class="">低難易度</a></li>
-		</ul>
-	</div>
+	<ul id="game-menu">
+		<div class="row">
+			<li class="col-3"><a href="#new-game" class="active">新作ゲーム</a></li>
+			<li class="col-3"><a href="#favorite-game" class="">人気トップ</a></li>
+			<li class="col-3"><a href="#difficult-game" class="">高難易度</a></li>
+			<li class="col-3"><a href="#easy-game" class="">低難易度</a></li>
+		</div>
+	</ul>
 
 	<div id="game-contents" class="row">
 		<%= render "index", desc_games:@desc_games, favorite_games: @favorite_games, difficult_games: @difficult_games, easy_games: @easy_games %>

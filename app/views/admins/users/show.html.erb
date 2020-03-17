@@ -5,32 +5,33 @@
 <% end %>
 
 <div class="row">
-	<h2 class="col-xs-4"><%= @user.name %></h2>
+	<h2 class="col-6"><%= @user.name %></h2>
 	<% if @user.status == true %>
-		<p class="col-xs-1 col-xs-offset-1 user-validity">有効</p>
+		<p class="col-1 user-validity">有効</p>
 	<% else %>
-		<p class="col-xs-1 col-xs-offset-1 user-invalid">退会済み</p>
+		<p class="col-2 offset-1 user-invalid">退会済み</p>
 	<% end %>
-	<%= link_to "編集する", edit_admins_user_path(@user), class:"col-xs-2 col-xs-offset-1 btn btn-info" %>
 </div>
+
 <div class="row">
-	<div class="col-xs-3">
+	<div class="col-3">
 		<%= attachment_image_tag @user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'200x200' %>
-		<div class="row">
-			<h4 class="col-xs-7">フォロー数：</h4>
-			<%= link_to follow_admins_user_path(@user), class:"col-xs-5 user-follow" do %>
+		<div class="row mt-3">
+			<h5 class="col-8">フォロー数：</h5>
+			<%= link_to follow_admins_user_path(@user), class:"col-4" do %>
 				<%= @user.active_relationships.count %>
 			<% end %>
 		</div>
-		<div class="row">
-			<h4 class="col-xs-7">フォロワー数：</h4>
-			<%= link_to follower_admins_user_path(@user), class:"col-xs-5 user-follow" do %>
+		<div class="row mt-1">
+			<h5 class="col-8">フォロワー数：</h5>
+			<%= link_to follower_admins_user_path(@user), class:"col-4" do %>
 				<%= @user.passive_relationships.count %>
 			<% end %>
 		</div>
+		<%= link_to "編集する", edit_admins_user_path(@user), class:"col-10 btn btn-info mt-3" %>
 	</div>
 
-	<div class="col-xs-8 col-offset-1">
+	<div class="col-8 offset-1">
 		<h4>ひとこと</h4>
 		<div class="user-introduction">
 			<%= @user.introduction %>
@@ -38,11 +39,11 @@
 	</div>
 </div>
 
-<div class="row user-show-game">
-	<h3>ゲーム一覧</h3>
+<div class="row mt-5">
+	<h3 class="col-12"><u>ゲーム一覧</u></h3>
 	<div class="row">
 		<% @user.games.first(4).each do |game| %>
-			<div class="col-xs-2 col-xs-offset-1">
+			<div class="col-2 offset-1">
 				<%= link_to admins_game_path(game) do %>
 					<% screenshot = game.screenshots.find_by(game_id: game.id) %>
 			 		<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg', fallback: "NoImage.jpg", size:"200x200" %>
@@ -51,7 +52,7 @@
 		 	</div>
 		<% end %>
 	</div>
-	<div class="row">
-		<%= link_to "もっと見る", admins_games_path(place: "user", user_id: @user.id), class:"pull-right" %>
-	</div>
 </div>
+<%= link_to "もっと見る", admins_games_path(place: "user", user_id: @user.id), class:"float-right" %>
+
+

@@ -5,47 +5,47 @@
 <% end %>
 
 <div class="row">
-	<h2 class="col-xs-4"><%= @user.name %></h2>
+	<h2 class="col-4"><%= @user.name %></h2>
 </div>
 
 <div class="row" style="margin-top: 20px;">
-	<div class="col-xs-3">
+	<div class="col-3">
 		<%= attachment_image_tag @user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'200x200' %>
 
-		<div class="row">
-			<h4 class="col-xs-7">フォロー数：</h4>
-			<%= link_to follow_user_path(@user), class:"col-xs-5 user-follow" do %>
+		<div class="row mt-2">
+			<h5 class="col-8">フォロー数：</h5>
+			<%= link_to follow_user_path(@user), class:"col-4" do %>
 				<%= @user.active_relationships.count %>
 			<% end %>
 		</div>
 
 		<div class="row">
-			<h4 class="col-xs-7">フォロワー数：</h4>
-			<%= link_to follower_user_path(@user), class:"col-xs-5 user-follow" do %>
+			<h5 class="col-8">フォロワー数：</h5>
+			<%= link_to follower_user_path(@user), class:"col-4" do %>
 				<%= @user.passive_relationships.count %>
 			<% end %>
 		</div>
 
-		<div class="row" style="margin-top: 20px;">
+		<div class="row">
 			<% if @user.id != current_user.id %>
 				<% if current_user.following?(@user) %>
-					<%= link_to "フォロー外す", user_relationships_path(@user), method: :delete, class: "col-xs-5 col-xs-offset-2 btn btn-primary" %>
+					<%= link_to "フォロー外す", user_relationships_path(@user), method: :delete, class: "col-6 offset-2 btn btn-primary" %>
 				<% else %>
-					<%= link_to "フォローする", user_relationships_path(@user), method: :post, class: "col-xs-5 col-xs-offset-2 btn btn-success" %>
+					<%= link_to "フォローする", user_relationships_path(@user), method: :post, class: "col-6 offset-2 btn btn-success" %>
 				<% end %>
 			<% else %>
-				<%= link_to "編集する", edit_user_path(@user), class: "col-xs-4 col-xs-offset-3 btn btn-info" %>
+				<%= link_to "編集する", edit_user_path(@user), class: "col-6 offset-2 btn btn-info mt-2" %>
 			<% end %>
 		</div>
 
 		<div class="row" style="margin-top: 20px;">
 			<% if @user.id != current_user.id %>
-				<%= link_to "チャットを始める", chat_path(@user), class: "col-xs-offset-2" %>
+				<%= link_to "チャットを始める", chat_path(@user), class: "offset-2" %>
 			<% end %>
 		</div>
 	</div>
 
-	<div class="col-xs-8 col-offset-1">
+	<div class="col-8 offset-1">
 		<h4 class="page-header">ひとこと</h4>
 		<div class="user-introduction">
 			<%= @user.introduction %>
@@ -53,11 +53,11 @@
 	</div>
 </div>
 
-<div class="row user-show-game">
-	<h3 class="page-header">ゲーム一覧</h3>
-	<div class="row">
+<div class="row mt-5">
+	<h3 class="col-12"><u>ゲーム一覧</u></h3>
+	<div class="row mt-2">
 		<% @user.games.first(4).each do |game| %>
-			<div class="col-xs-2 col-xs-offset-1">
+			<div class="col-2 offset-1">
 				<%= link_to game_path(game) do %>
 					<% screenshot = game.screenshots.find_by(game_id: game.id) %>
 			 		<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg', fallback: "NoImage.jpg", size:"200x200" %>
@@ -66,7 +66,7 @@
 		 	</div>
 		<% end %>
 	</div>
-	<div class="row">
-		<%= link_to "もっと見る", more_game_games_path(place: "user", id_user: @user.id), class:"pull-right" %>
-	</div>
 </div>
+<%= link_to "もっと見る", more_game_games_path(place: "user", id_user: @user.id), class:"float-right" %>
+
+

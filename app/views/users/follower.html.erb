@@ -1,21 +1,24 @@
-<h2>Follower Users</h2>
-<table class="table">
-	<tr>
-		<th>image</th>
-		<th>name</th>
-		<th></th>
+<h2>フォロワー</h2>
+<table class="table tsticky_table">
+	<tr class="table-primary">
+		<th>画像</th>
+		<th>ユーザー名</th>
 		<th></th>
 		<th></th>
 		<th></th>
 	</tr>
-	<% @user.follower_user.each do |user| %>
+	<% @users.each do |user| %>
 		<tr>
 			<td>
 				<%= link_to user_path(user.id) do %>
-					<%= attachment_image_tag user, :image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+					<%= attachment_image_tag user, :image, :fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %>
 				<% end %>
 			</td>
-			<td><%= user.name %></td>
+			<td>
+				<%= link_to user_path(user.id) do %>
+					<%= user.name %>
+				<% end %>
+			</td>
 			<td>
 				フォロー数：<%= user.active_relationships.count %>
 			</td>
@@ -29,7 +32,7 @@
 					<%= link_to 'フォローする', user_relationships_path(user.id), method: :POST %>
 				<% end %>
 			</td>
-			<td><%= link_to "Show", user_path(user) %></td>
 		</tr>
 	<% end %>
 </table>
+<%= paginate @users, class: "paginate" %>

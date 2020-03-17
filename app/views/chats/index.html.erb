@@ -1,26 +1,50 @@
 <% if flash[:notice] %>
-	<div class="row flash">
-		<%= flash[:notice] %>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>エラー！</strong> <%= flash[:notice] %>
 	</div>
 <% end %>
 
-<h2>ルーム作成</h2>
-<%= form_for(@room, url: chats_path) do |f| %>
-	<%= f.label :name, "ルーム名" %>
-	<%= f.text_field :name %>
+<!-- モーダルの設定 -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+    	<div class="modal-content">
+    		<%= form_for(@room, url: chats_path) do |f| %>
+    			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalCenterTitle">ルーム作成</h5>
+        			<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+          				<span aria-hidden="true">&times;</span>
+        			</button>
+      			</div>
+      			<div class="modal-body m-2">
+      				<div class="row">
+						<%= f.label :name, "ルーム名" %>（<span class="required">※必須</span>）<br>
+						<%= f.text_field :name, class:"form-control", size:"80x1" %>
+					</div>
+					<div class="row mt-2">
+						<%= f.label :introduction, "内容" %><br>
+						<%= f.text_area :introduction, class:"form-control", size:"80x3" %>
+					</div>
+    			</div>
+			    <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+			        <%= f.submit "作成", class:"btn btn-primary" %>
+			    </div>
+			<% end %>
+    	</div>
+	</div>
+</div>
 
-	<%= f.label :introduction, "内容" %>
-	<%= f.text_field :introduction %>
-
-	<%= f.submit "作成" %>
-<% end %>
-
-<h2>ルーム一覧</h2>
+<h2><u>ルーム一覧</u></h2>
+<!-- 切り替えボタンの設定 -->
+<button type="button" class="btn btn-primary mt-2 mb-2 float-right" data-toggle="modal" data-target="#exampleModalCenter">
+  ルーム作成
+</button>
 <table class="table">
-	<tr class="active">
-		<th>作成者</th>
-		<th>ルーム名</th>
-		<th>内容</th>
+	<tr class="table-primary">
+		<th style="width: 20%;">作成者</th>
+		<th style="width: 20%;">ルーム名</th>
+		<th style="width: 60%;">内容</th>
 	</tr>
 	<% @rooms.each do |room| %>
 		<tr>
@@ -30,7 +54,7 @@
 					<%= room.name %>
 				<% end %>
 			</td>
-			<td><%= room.introduction %></td>
+			<td><%= room.introduction[0..100] %></td>
 		</tr>
 	<% end %>
 </table>

@@ -8,7 +8,7 @@
 		</td>
 		<td style="width: 60%;">
 			<%= comment.comment %>
-			<div style="margin-top: 40px;">
+			<div class="mt-4">
 				<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
 			</div>
 		</td>
@@ -16,7 +16,11 @@
 			<div class="comment-difficulty-box">
 				難易度<br>
 				<div class="comment-difficulty-value">
-					<%= comment.difficulty %> / 100
+					<% if comment.difficulty != nil %>
+						<%= comment.difficulty %> / 100
+					<% else %>
+						<p>未評価</p>
+					<% end %>
 				</div>
 			</div>
 		</td>
@@ -24,7 +28,11 @@
 			<div class="comment-rating-box">
 				評価<br>
 				<div class="comment-rating-value">
-					<%= comment.rating %> / 10
+					<% if comment.rating != nil %>
+						<%= comment.rating %> / 10
+					<% else %>
+						<p>未評価</p>
+					<% end %>
 				</div>
 			</div>
 		</td>

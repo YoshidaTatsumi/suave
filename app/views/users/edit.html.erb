@@ -10,33 +10,62 @@
 <% end %>
 
 <div class="row">
-	<h3 class="col-xs-2">ユーザー編集</h3>
-	<%= button_to "データを残して退会", status_change_user_path(@user), {method: :patch, params: {status: "false"}, class:"btn btn-warning col-xs-1 col-xs-offset-1", style:"height: 60px; width: 130px; white-space: normal", confirm: "今まで投稿したゲームやコメントは消えずに残ります。本当に退会しますか？"} %>
+	<h4 class="col-2">ユーザー編集</h4>
+	<%= button_to "データを残して退会", status_change_user_path(@user), {method: :patch, params: {status: "false"}, class:"btn btn-warning", style:"white-space: normal;", confirm: "今まで投稿したゲームやコメントは消えずに残ります。本当に退会しますか？"} %>
 
-	<%= link_to "全データを削除して退会", user_path(@user), method: :delete, "data-confirm" => "今まで投稿したゲームやコメントが全て消えます。本当に退会しますか？", class:"btn btn-danger col-xs-1 col-xs-offset-1", style:"height: 60px; width: 130px; white-space: normal" %>
+	<%= link_to "全データを削除して退会", user_path(@user), method: :delete, "data-confirm" => "今まで投稿したゲームやコメントが全て消えます。本当に退会しますか？", class:"btn btn-danger col-3 offset-1", style: "white-space: normal;" %>
 </div>
 
 <div class="user-edit-box">
 	<%= form_for(@user, url:user_path(@user),method: :patch) do |f| %>
 		<div class="row">
-			<div class="col-xs-3">
-				<%= attachment_image_tag @user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'200x200' %>
-				<%= f.attachment_field :image %>
+			<div class="col-3">
+				<% if @user.image != nil %>
+					<%= attachment_image_tag @user, :image,:fill, 200, 200, format: 'jpeg', class: "image_prev", size:'200x200' %>
+				<% else %>
+					<%= image_tag "NoImage.jpg", alt:"Image preview", class: "image_prev", size: "200x200" %>
+				<% end %>
+				<%= f.label :image, "画像を変更", class: "btn btn-info offset-2 mt-2" %>
+				<%= f.attachment_field :image, style:"display: none;", class: "image" %>
 			</div>
 
-			<div class="col-xs-8 col-offset-1">
+			<div class="col-8 offset-1">
 				<div class="row">
-					<%= f.label :name, "ユーザー名", class:"col-xs-2" %>
-					<%= f.text_field :name, class:"col-xs-4" %>
+					<%= f.label :name, "ユーザー名" %>（<span class="required">※必須</span>）<br>
+				</div>
+				<div class="row">
+					<%= f.text_field :name, class:"form-control", size:"90x1" %>
 				</div>
 
-				<div class="row">
-					<%= f.label :introduction, "自己紹介", class:"col-xs-2" %>
-					<%= f.text_area :introduction, class:"col-xs-4" %>
+				<div class="row mt-4">
+					<%= f.label :introduction, "ひとこと" %><br>
+					<%= f.text_area :introduction, class:"form-control", size:"90x4" %>
 				</div>
 
-				<%= f.submit "変更を保存", class:"btn btn-primary"  %>
+				<%= f.submit "変更を保存", class:"offset-4 col-4 btn btn-primary mt-3"  %>
 			</div>
 		</div>
 	<% end %>
 </div>
+
+<script>
+	$(".image").change(function(e) {
+		//ファイルオブジェクトを取得する
+	    var file = e.target.files[0];
+	    var reader = new FileReader();
+
+		if (file) {
+			reader.readAsDataURL(file);
+		}
+
+		//アップロードした画像を設定する
+	    reader.onload = (function(file){
+	      return function(e){
+	        $(".image_prev").attr("src", e.target.result);
+	        $(".image_prev").attr("title", file.name);
+	      };
+	    })(file);
+	    reader.readAsDataURL(file);
+	});
+
+</script>

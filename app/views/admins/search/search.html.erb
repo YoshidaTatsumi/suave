@@ -1,65 +1,104 @@
 <% if params[:category] == "user" %>
-	<h2>'<%= params[:search] %>'の検索結果</h2>
-	<table class="table">
-		<tr>
-			<th>image</th>
-			<th>name</th>
-			<th></th>
+	<h2><strong>'<%= params[:search] %>'</strong> のユーザー検索結果</h2>
+	<table class="table sticky_table">
+		<tr class="thead-light">
+			<th style="width: 10%">ユーザーID</th>
+			<th style="width: 20%">ユーザー名</th>
+			<th style="width: 50%">ひとこと</th>
+			<th style="width: 20%">ステータス</th>
 		</tr>
 		<% @searches.each do |search| %>
 			<tr>
+				<td><%= search.id %></td>
 				<td>
 					<%= link_to admins_user_path(search.id) do %>
-						<%= attachment_image_tag search, :image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+						<%= attachment_image_tag search, :image, :fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
+						<%= search.name %>
 					<% end %>
 				</td>
-				<td><%= search.name %></td>
-				<td><%= link_to "Show", admins_user_path(search) %></td>
+				<td><%= search.introduction %></td>
+				<td><% if search.status == true %>
+						有効
+					<% else %>
+						退会済み
+					<% end %>
+				</td>
 			</tr>
 		<% end %>
 	</table>
+	<%= paginate @searches, class: "paginate" %>
 
 <% elsif params[:category] == "game" %>
-	<h2>'<%= params[:search] %>'の検索結果</h2>
-	<table class="table">
-		<tr>
-			<th>image</th>
-			<th>title</th>
-			<th></th>
+	<h2><strong>'<%= params[:search] %>'</strong> のゲーム検索結果</h2>
+	<table class="table sticky_table">
+		<tr class="thead-light">
+			<th style="width: 10%">ゲームID</th>
+			<th style="width: 20%">タイトル</th>
+			<th style="width: 20%">作者</th>
+			<th style="width: 50%">タグ</th>
 		</tr>
 		<% @searches.each do |search| %>
 			<% screenshot = search.screenshots.find_by(game_id: search.id) %>
 			<tr>
+				<td><%= search.id %></td>
 				<td>
-					<%= link_to game_path(search) do %>
-						<%= attachment_image_tag screenshot, :image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+					<%= link_to admins_game_path(search) do %>
+						<%= attachment_image_tag screenshot, :image, :fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
+						<%= search.title %>
 					<% end %>
 				</td>
-				<td><%= search.title %></td>
-				<td><%= link_to "Show", admins_game_path(search) %></td>
+				<td>
+					<%= link_to admins_user_path(search.user.id) do %>
+						<%= attachment_image_tag search.user, :image, :fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
+						<%= search.user.name %>
+					<% end %>
+				</td>
+				<td>
+					<% search.tag_list.first(4).each do |tag| %>
+					<%= link_to admins_search_path(tag: tag), class:"btn btn-primary mt-1" do %>
+						<%= tag %>
+					<% end %>
+				<% end %>
+				</td>
 			</tr>
 		<% end %>
 	</table>
+	<%= paginate @searches, class: "paginate" %>
 
 <% elsif params[:tag].present? %>
-	<h2>'<%= params[:tag] %>'の検索結果</h2>
-	<table class="table">
-		<tr>
-			<th>image</th>
-			<th>title</th>
-			<th></th>
+	<h2><strong>'<%= params[:tag] %>'</strong> タグ一覧</h2>
+	<table class="table sticky_table">
+		<tr class="thead-light">
+			<th style="width: 10%">ゲームID</th>
+			<th style="width: 20%">タイトル</th>
+			<th style="width: 20%">作者</th>
+			<th style="width: 50%">タグ</th>
 		</tr>
 		<% @searches.each do |search| %>
 			<% screenshot = search.screenshots.find_by(game_id: search.id) %>
 			<tr>
+				<td><%= search.id %></td>
 				<td>
-					<%= link_to game_path(search) do %>
-						<%= attachment_image_tag screenshot, :image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+					<%= link_to admins_game_path(search) do %>
+						<%= attachment_image_tag screenshot, :image, :fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
+						<%= search.title %>
 					<% end %>
 				</td>
-				<td><%= search.title %></td>
-				<td><%= link_to "Show", admins_game_path(search) %></td>
+				<td>
+					<%= link_to admins_user_path(search.user.id) do %>
+						<%= attachment_image_tag search.user, :image, :fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
+						<%= search.user.name %>
+					<% end %>
+				</td>
+				<td>
+					<% search.tag_list.first(4).each do |tag| %>
+					<%= link_to admins_search_path(tag: tag), class:"btn btn-primary mt-1" do %>
+						<%= tag %>
+					<% end %>
+				<% end %>
+				</td>
 			</tr>
 		<% end %>
 	</table>
+	<%= paginate @searches, class: "paginate" %>
 <% end %>

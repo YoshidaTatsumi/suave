@@ -2,22 +2,29 @@
 
 <div class="row game-box">
 	<%= link_to game_path(game) do %>
-		<div class="col-xs-2">
+		<div class="col-3">
 			<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg', fallback:"NoImage.jpg" ,size:"200x112" %>
 		</div>
+	<% end %>
 
-		<div class="col-xs-9 col-xs-offset-1">
-			<div class="row" style="margin-top: 10px; color: white;">
-				<%= game.title %>
-			</div>
-			<div class="row">
+	<div class="col-9">
+		<div class="row mt-1">
+			<%= link_to game_path(game), style:"color: white;" do %>
+				<h4><%= game.title %></h4>
+			<% end %>
+		</div>
+		<div class="row">
+			<% if game.tag_list.present? %>
 				<% game.tag_list.first(6).each do |tag| %>
-					<%= link_to search_path(tag: tag), class:"btn btn-primary", style:"margin-top: 40px;" do %>
+					<%= link_to search_path(tag: tag), class:"btn btn-primary mt-2" do %>
 						<%= tag %>
 					<% end %>
 				<% end %>
-			</div>
+			<% else %>
+				<h6>タグが設定されていません</h6>
+			<% end %>
 		</div>
-	<% end %>
+	</div>
+	
 </div>
 

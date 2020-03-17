@@ -5,7 +5,7 @@
 
 <div class="row more-game-boxes">
 	<% @games.each do |game| %>
-		<div class="col-xs-4 more-game-box">
+		<div class="col-4 more-game-box mt-3">
 			<%= link_to game_path(game) do %>
 				<div class="row">
 					<% screenshot = game.screenshots.find_by(game_id: game.id) %>
@@ -14,12 +14,12 @@
 			<% end %>
 
 			<div class="row more_game_title">
-				<h4>タイトル</h4>
+				<h4>タイトル：</h4>
 				<h4><%= game.title %></h4>
 			</div>
 
 			<div class="row more-game-tag">
-				<h4>タグ</h4>
+				<h4>タグ：</h4>
 				<% if game.tag_list.present? %>
 					<% game.tag_list.first(3).each do |tag| %>
 						<%= link_to search_path(tag: tag), class:"btn btn-primary" do %>
@@ -27,7 +27,7 @@
 						<% end %>
 					<% end %>
 				<% else %>
-					<h4>タグが設定されていません</h4>
+					<p>タグが設定されていません</p>
 				<% end %>
 			</div>
 

@@ -5,11 +5,11 @@
 <% end %>
 
 <div class="row">
-	<%= link_to "ゲーム編集", edit_admins_game_path(@game), class:"col-xs-2 col-xs-offset-8 btn btn-info" %>
+	<%= link_to "ゲーム編集", edit_admins_game_path(@game), class:"col-2 offset-8 btn btn-info" %>
 </div>
 
 <div class="row">
-	<div class="col-xs-6">
+	<div class="col-6">
 		<h2><%= @game.title %></h2>
 		<h3 class="game-author">作者：<%= link_to @game.user.name, admins_user_path(@game.user) %></h3>
 
@@ -29,7 +29,7 @@
 		</div>
 	</div>
 
-	<div class="col-xs-6 game-sceenshots">
+	<div class="col-6 game-sceenshots">
 		<h3>スクリーンショット</h3>
 		<div class="bxslider">
 			<% @game.screenshots.each do |screenshot| %>
@@ -40,16 +40,12 @@
 </div>
 
 <div class="row">
-	<h3 class="col-xs-3 page-header">このゲームについて</h3>
+	<h3 class="col-12 mt-5"><u>このゲームについて</u></h3>
 </div>
 
 <%=raw @game.introduction %>
 
-<div class="row">
-	<h3 class="col-xs-3 page-header">コメント</h3>
-</div>
-
-<h3 id="admin-comments-count"><%= @game.comments.count %>件のコメント</h3>
+<h3 id="admin-comments-count" class="mt-5"><u><%= @game.comments.count %>件のコメント</u></h3>
 <table class="table">
 	<%= render 'admins/comments/comments', game: @game %>
 </table>

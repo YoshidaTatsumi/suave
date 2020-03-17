@@ -1,65 +1,159 @@
 <% if params[:category] == "user" %>
-	<h2>'<%= params[:search] %>'の検索結果</h2>
+	<h2><strong>'<%= params[:search] %>'</strong> のユーザー検索結果</h2>
 	<table class="table">
-		<tr>
-			<th>image</th>
-			<th>name</th>
-			<th></th>
+		<tr class="table-primary">
+			<th style="width: 20%">ユーザー名</th>
+			<th style="width: 45%">ひとこと</th>
+			<th style="width: 20%"></th>
+			<th style="width: 15%"></th>
 		</tr>
 		<% @searches.each do |search| %>
 			<tr>
 				<td>
 					<%= link_to user_path(search) do %>
-						<%= attachment_image_tag search, :image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+						<%= attachment_image_tag search, :image, :fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
+						<%= search.name %>
 					<% end %>
 				</td>
-				<td><%= search.name %></td>
-				<td><%= link_to "Show", user_path(search) %></td>
+				<td><%= search.introduction %></td>
+				<td>
+					フォロワー数：<%= search.passive_relationships.count %>
+				</td>
+				<td>
+					<% if user_signed_in? %>
+						<% if current_user.id != search.id %>
+							<% if current_user.following?(search) %>
+								<%= link_to 'フォロー外す', user_relationships_path(search.id), method: :delete %>
+							<% else %>
+								<%= link_to 'フォローする', user_relationships_path(search.id), method: :POST %>
+							<% end %>
+						<% end %>
+					<% end %>
+				</td>
 			</tr>
 		<% end %>
 	</table>
+	<%= paginate @searches, class: "paginate" %>
 
 <% elsif params[:category] == "game" %>
-	<h2>'<%= params[:search] %>'の検索結果</h2>
+	<h2><strong>'<%= params[:search] %>'</strong> のゲーム検索結果</h2>
 	<table class="table">
-		<tr>
-			<th>image</th>
-			<th>title</th>
-			<th></th>
+		<tr class="table-primary">
+			<th style="width: 20%">タイトル</th>
+			<th style="width: 20%">作者</th>
+			<th style="width: 40%">タグ</th>
+			<th style="width: 10%"></th>
+			<th style="width: 10%"></th>
 		</tr>
 		<% @searches.each do |search| %>
 			<% screenshot = search.screenshots.find_by(game_id: search.id) %>
 			<tr>
 				<td>
 					<%= link_to game_path(search) do %>
-						<%= attachment_image_tag screenshot, :image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+						<%= attachment_image_tag screenshot, :image, :fill, 1920, 1080, format: 'jpeg', fallback: "no_image.jpg", size:'142x80' %><br>
+						<%= search.title %>
 					<% end %>
 				</td>
-				<td><%= search.title %></td>
-				<td><%= link_to "Show", game_path(search) %></td>
+				<td>
+					<%= link_to user_path(search.user.id) do %>
+						<%= attachment_image_tag search.user, :image, :fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
+						<%= search.user.name %>
+					<% end %>
+				</td>
+				<td>
+					<% search.tag_list.first(4).each do |tag| %>
+					<%= link_to search_path(tag: tag), class:"btn btn-primary mt-1" do %>
+						<%= tag %>
+					<% end %>
+				<% end %>
+				</td>
+				<td style="width: 10%;">
+					<div class="comment-difficulty-box">
+						難易度<br>
+						<div class="comment-difficulty-value">
+							<% if search.difficulty != nil %>
+								<%= search.difficulty %> / 100
+							<% else %>
+								<p>未評価</p>
+							<% end %>
+						</div>
+					</div>
+				</td>
+				<td style="width: 10%;">
+					<div class="comment-rating-box">
+						評価<br>
+						<div class="comment-rating-value">
+							<% if search.rating != nil %>
+								<%= search.rating %> / 10
+							<% else %>
+								<p>未評価</p>
+							<% end %>
+						</div>
+					</div>
+				</td>
 			</tr>
 		<% end %>
 	</table>
+	<%= paginate @searches, class: "paginate" %>
 
 <% elsif params[:tag].present? %>
-	<h2>'<%= params[:tag] %>'の検索結果</h2>
+	<h2><strong>'<%= params[:tag] %>'</strong> タグ一覧</h2>
 	<table class="table">
-		<tr>
-			<th>image</th>
-			<th>title</th>
-			<th></th>
+		<tr class="table-primary">
+			<th style="width: 20%">タイトル</th>
+			<th style="width: 20%">作者</th>
+			<th style="width: 40%">タグ</th>
+			<th style="width: 10%"></th>
+			<th style="width: 10%"></th>
 		</tr>
 		<% @searches.each do |search| %>
 			<% screenshot = search.screenshots.find_by(game_id: search.id) %>
 			<tr>
 				<td>
 					<%= link_to game_path(search) do %>
-						<%= attachment_image_tag screenshot, :image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+						<%= attachment_image_tag screenshot, :image, :fill, 1920, 1080, format: 'jpeg', fallback: "no_image.jpg", size:'142x80' %><br>
+						<%= search.title %>
 					<% end %>
 				</td>
-				<td><%= search.title %></td>
-				<td><%= link_to "Show", game_path(search) %></td>
+				<td>
+					<%= link_to user_path(search.user.id) do %>
+						<%= attachment_image_tag search.user, :image, :fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
+						<%= search.user.name %>
+					<% end %>
+				</td>
+				<td>
+					<% search.tag_list.first(4).each do |tag| %>
+					<%= link_to search_path(tag: tag), class:"btn btn-primary mt-1" do %>
+						<%= tag %>
+					<% end %>
+				<% end %>
+				</td>
+				<td style="width: 10%;">
+					<div class="comment-difficulty-box">
+						難易度<br>
+						<div class="comment-difficulty-value">
+							<% if search.difficulty != nil %>
+								<%= search.difficulty %> / 100
+							<% else %>
+								<p>未評価</p>
+							<% end %>
+						</div>
+					</div>
+				</td>
+				<td style="width: 10%;">
+					<div class="comment-rating-box">
+						評価<br>
+						<div class="comment-rating-value">
+							<% if search.rating != nil %>
+								<%= search.rating %> / 10
+							<% else %>
+								<p>未評価</p>
+							<% end %>
+						</div>
+					</div>
+				</td>
 			</tr>
 		<% end %>
 	</table>
+	<%= paginate @searches, class: "paginate" %>
 <% end %>

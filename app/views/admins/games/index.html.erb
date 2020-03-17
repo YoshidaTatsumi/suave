@@ -4,12 +4,12 @@
 	</div>
 <% end %>
 <h2>ゲーム一覧</h2>
-<table class="table">
-	<tr class="active">
-		<th>ID</th>
-		<th>投稿者</th>
-		<th>タイトル</th>
-		<th>タグ</th>
+<table class="table ">
+	<tr class="thead-light">
+		<th style="width: 10%;">ID</th>
+		<th style="width: 20%;">投稿者</th>
+		<th style="width: 20%;">タイトル</th>
+		<th style="width: 50%;">タグ</th>
 	</tr>
 	<% @games.each do |game| %>
 		<tr>
@@ -21,7 +21,9 @@
 				<% end %>
 			</td>
 			<td>
+				<% screenshot = game.screenshots.find_by(game_id: game.id) %>
 				<%= link_to admins_game_path(game) do %>
+					<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg', fallback:"NoImage.jpg" ,size:"60x60" %><br>
 					<%= game.title %>
 				<% end %>
 			</td>

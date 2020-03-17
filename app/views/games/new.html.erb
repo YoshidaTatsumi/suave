@@ -2,29 +2,28 @@
 	<h2>ゲーム投稿</h2>
 </div>
 
-<div class="row">
-	<% if @game.errors.any? %>
-		<h2><%= @game.errors.count %>
-			 errors prohibited this obj from being saved:
-		</h2>
-		<ul>
-			<% @game.errors.full_messages.each do |message| %>
-				<li><%= message %></li>
-			<% end %>
-		</ul>
-	<% end %>
-</div>
+<% if @game.errors.any? %>
+	<h2><%= @game.errors.count %>
+		 errors prohibited this obj from being saved:
+	</h2>
+	<ul>
+		<% @game.errors.full_messages.each do |message| %>
+			<li><%= message %></li>
+		<% end %>
+	</ul>
+<% end %>
 
 <%= form_for(@game) do |f| %>
-	<h3>スクリーンショット選択</h3>
+	<h3 class="mt-4"><u>スクリーンショット選択</u></h3>
 	<div class="row">
 		<%= f.nested_fields_for :screenshots, wrapper_tag: :div do |i| %>
-			<div class="col-xs-3" style="margin-top: 20px;">
+			<div class="col-3 mt-3">
 				<%= image_tag "NoImage.jpg", alt:"Screenshot preview", class: "center-block image_prev", size: "250x140" %><br>
-	        	<%= i.label :image, "画像を変更", class:"btn btn-info" %>
-				<%= i.attachment_field :image, onchange: "previewFile(this)", style:"display: none;" %>
-				<%= i.remove_nested_fields_link "削除", class: "btn btn-danger" %>
 			</div>
+
+        	<%= i.label :image, "画像を変更", class:"btn btn-info mt-2" %>
+			<%= i.attachment_field :image, onchange: "previewFile(this)", style:"display: none;" %>
+			<%= i.remove_nested_fields_link "削除", class: "btn btn-danger" %>
     	<% end %>
     </div>
 	<div class="row">
@@ -32,15 +31,15 @@
 	</div>
 
 	<div class="row">
-		<div class="col-xs-12">
+		<div class="col-12">
 			<div class="row field">
 				<%= f.label :title, "タイトル" %>（<span class="required">※必須</span>）<br>
-				<%= f.text_field :title, class:"form-control", size:"80x1" %>
+				<%= f.text_field :title, class:"form-control", size:"140x1" %>
 			</div>
 
 			<div class="row field">
 				<%= f.label :url, "ダウンロードURL" %>（<span class="required">※必須</span>）<br>
-				<%= f.text_area :url, class:"form-control", size:"80x2" %>
+				<%= f.text_area :url, class:"form-control", size:"140x1" %>
 			</div>
 
 			<div class="row field">
@@ -50,14 +49,14 @@
 		</div>
     </div>
 
-    <div class="row field">
+    <div class="field">
 		<%= f.label :introduction, "ゲームについて" %>（<span class="required">※必須</span>）<br>
 		<%= f.text_area :introduction, data: { provider: 'summernote'} %>
 	</div>
 
 
 	<div class="row" style="margin-top: 40px;">
-		<%= f.submit "アップロード", class:"col-xs-4 col-xs-offset-4 btn btn-primary" %>
+		<%= f.submit "アップロード", class:"col-4 offset-4 btn btn-primary" %>
 	</div>
 
 <% end %>

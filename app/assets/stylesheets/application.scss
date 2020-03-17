@@ -14,7 +14,7 @@
  *= require bxslider
  *= require_self
  */
- @import "bootstrap-sprockets";
+
  @import "bootstrap";
  @import "summernote-bs4";
  @import "tagsinput";
@@ -71,29 +71,6 @@
  .required {
  	color :red;
  }
-
-/* admin&user-game-show*/
-.comment-difficulty-box {
-	height: 60px;
-	background-color: #fcc;
-	border: 1px solid #000;
-	border-radius: 10px;
-	text-align: center;
-	padding: 5px;
-}
-
-.comment-difficulty-value, .comment-rating-value {
-	background-color: #fff;
-	height: 30px;
-}
-
-.comment-rating-box {
-	background-color: #9f9;
-	border: 1px solid #000;
-	border-radius: 10px;
-	text-align: center;
-	padding: 5px;
-}
 
 /*admin&user--game-index*/
 .wrap {
@@ -161,7 +138,7 @@
 }
 
 .rating-box-value, .difficult-box-value {
-	height: 50px;
+	height: 57px;
 	background-color: #fff;
 }
 
@@ -194,22 +171,34 @@
 	margin-bottom: 20px;
 }
 
-/*admin&user-user-show*/
-.user-follow {
-	display: block;
-	margin-top: 10px;
+.comment-difficulty-box {
+	background-color: #fcc;
+	border: 1px solid #000;
+	border-radius: 10px;
+	text-align: center;
+	padding: 5px;
 }
 
+.comment-difficulty-value, .comment-rating-value {
+	background-color: #fff;
+	height: 30px;
+}
+
+.comment-rating-box {
+	background-color: #9f9;
+	border: 1px solid #000;
+	border-radius: 10px;
+	text-align: center;
+	padding: 5px;
+}
+
+/*admin&user-user-show*/
 .user-introduction {
 	height: 200px;
 	padding: 20px;
 	background-color: #eee;
 	border: 1px solid #000;
 	border-radius: 20px;
-}
-
-.user-show-game {
-	margin-top: 40px;
 }
 
 /*admin&user-user-edit*/

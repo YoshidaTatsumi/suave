@@ -1,12 +1,12 @@
 <h2>フォロワー一覧</h2>
-<table class="table">
-	<tr>
+<table class="table tsticky_table">
+	<tr class="thead-light">
 		<th>ID</th>
 		<th>ユーザー名</th>
 		<th>フォロー数</th>
 		<th>フォロワー数</th>
 	</tr>
-	<% @user.follower_user.each do |user| %>
+	<% @users.each do |user| %>
 		<tr>
 			<td>
 				<%= user.id %>
@@ -26,3 +26,4 @@
 		</tr>
 	<% end %>
 </table>
+<%= paginate @users, class: "paginate" %>
