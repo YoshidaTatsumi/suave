@@ -59,6 +59,5 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  #これがないとcanvasのjsが何故か二重になる
-  config.serve_static_assets = false
+
 end
