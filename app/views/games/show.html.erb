@@ -23,7 +23,7 @@
 		</div>
 
 		<div class="row">
-			<%= link_to "ダウンロードはこちら", @game.url, class:"download" %>
+			<%= link_to "ダウンロードはこちら", download_game_path(@game), class:"download" %>
 		</div>
 		<div class="row">
 			<% @game.tag_list.each do |tag| %>

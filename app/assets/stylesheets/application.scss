@@ -19,6 +19,10 @@
  @import "summernote-bs4";
  @import "tagsinput";
 
+* {
+	font-family: sans-serif;
+}
+
  header {
 	background-color: #0cf;
 	height: 120px;

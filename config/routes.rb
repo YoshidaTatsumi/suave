@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 	root 'homes#top'
 	get 'homes/about'
 	get 'search' => 'search#search'
+	resources :contacts, only: [:new, :create]
 	resources :chats, only: [:index, :show, :edit, :create, :update, :destroy] do
 		collection do
 			get 'talk_room/:id' => 'chats#talk_room', as: 'talk_room'
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
 		resource :screenshots, only: [:create, :edit, :update, :destroy]
 		resource :comments, only: [:create, :destroy]
 		get 'more_game', on: :collection
+		get 'download', on: :member
 	end
 
 	namespace :admins do
@@ -32,6 +34,7 @@ Rails.application.routes.draw do
 		resources :games, only: [:index, :show, :edit, :update, :destroy] do
 			resource :screenshots, only: [:create, :edit, :update, :destroy]
 			resource :comments, only: [:destroy]
+			get 'download', on: :member
 		end
 	end
 

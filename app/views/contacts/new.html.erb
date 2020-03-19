@@ -1,0 +1,24 @@
+<% if flash[:danger] %>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+	 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  	<strong>エラー！</strong> <%= flash[:danger] %>
+	</div>
+<% end %>
+
+<h2>お問い合わせフォーム</h2>
+
+<div class="row field">
+	<%= form_for(@contact) do |f| %>
+		<div class="row">
+			<%= f.label :title, "件名" %>（<span class="required">※必須</span>）<br>
+			<%= f.text_field :title, size: "130x1", class:"form-control" %>
+		</div>
+
+		<div class="row field">
+			<%= f.label :content, "お問い合わせ内容" %>（<span class="required">※必須</span>）<br>
+			<%= f.text_area :content, size: "130x10", class:"form-control" %>
+		</div>
+
+		<%= f.submit "送信", class:"col-4 offset-4 btn btn-primary mt-4" %>
+	<% end %>
+</div>

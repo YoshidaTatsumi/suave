@@ -7,7 +7,7 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
   <div class="row">
-    <div class="col-4 offset-1">
+    <div class="col-4">
       <div class="row field">
         <div class="offset-3">
           <%= f.label :name, "ユーザー名" %><br />
@@ -47,9 +47,11 @@
       </div>
     </div>
 
-    <div class="col-4 offset-2 field">
+    <div class="col-4 offset-4 field">
       <%= f.label :image, "トップ画像" %><br />
-      <%= f.attachment_field :image %>
+      <%= image_tag "NoImage.jpg", alt:"Image preview", class: "image_prev", size: "200x200" %>
+      <%= f.label :image, "画像を変更", class: "btn btn-info offset-2 mt-2" %>
+      <%= f.attachment_field :image, style:"display: none;", class: "image" %>
     </div>
   </div>
 
@@ -58,3 +60,24 @@
   </div>
 <% end %>
 
+<script>
+  $(".image").change(function(e) {
+    //ファイルオブジェクトを取得する
+      var file = e.target.files[0];
+      var reader = new FileReader();
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+
+    //アップロードした画像を設定する
+      reader.onload = (function(file){
+        return function(e){
+          $(".image_prev").attr("src", e.target.result);
+          $(".image_prev").attr("title", file.name);
+        };
+      })(file);
+      reader.readAsDataURL(file);
+  });
+
+</script>
