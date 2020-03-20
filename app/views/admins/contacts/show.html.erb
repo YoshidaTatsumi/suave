@@ -5,23 +5,22 @@
 	</div>
 <% end %>
 
-<h2>お問い合わせフォーム</h2>
+<h2><u>件名</u></h2>
+<h2><%= @contact.title %></h2>
 
-<div class="row field">
-	<%= form_for(@contact) do |f| %>
-		<div class="row">
-			<%= f.label :title, "件名" %>（<span class="required">※必須</span>）<br>
-			<%= f.text_field :title, size: "130x1", class:"form-control" %>
-		</div>
+<h3 class="mt-5"><u>ユーザー</u></h3>
+<h3><%= link_to @contact.user.name, admins_user_path(@contact.user) %></h3>
 
-		<div class="field">
-			<%= f.label :content, "お問い合わせ内容" %>（<span class="required">※必須</span>）<br>
-			<%= f.text_area :content, data: { provider: 'summernote'} %>
-		</div>
-
-		<%= f.submit "送信", class:"col-4 offset-4 btn btn-primary mt-4" %>
-	<% end %>
+<h3 class="mt-5"><u>お問い合わせ内容</u></h3><br>
+<div class="contact-content">
+	<%=raw @contact.content %>
 </div>
+
+<h3 class="mt-5"><u>返信内容</u></h3>
+<%= form_for(@contact, url:admins_contact_path(@contact), method: :patch) do |f| %>
+	<%= f.text_area :reply_content, data: { provider: 'summernote'} %>
+	<%= f.submit "返信する", class:"col-4 offset-4 btn btn-primary mt-4", "data-confirm" => "返信しますか？" %>
+<% end %>
 
 <script>
 	//Summernoteの設定
@@ -40,3 +39,5 @@
 	    })
 	})
 </script>
+
+

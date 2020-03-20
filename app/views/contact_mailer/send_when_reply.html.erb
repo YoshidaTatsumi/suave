@@ -1,0 +1,12 @@
+<h2><u><%= @user.name %>様</u></h2>
+
+<%=raw @contact.reply_content %>
+
+<hr>
+
+<h3 class="mt-2">件名：<%= @contact.title %></h3>
+
+<h3 class="mt-4">お問い合わせ内容</h3><br>
+<div class="contact-content">
+	<%=raw @contact.content %>
+</div>

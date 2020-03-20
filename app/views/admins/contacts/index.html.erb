@@ -1,0 +1,46 @@
+<% if params[:support] == "not" %>
+	<div class="row">
+		<h2 class="col-6">お問い合わせ一覧(未対応分)</h2>
+	</div>
+	<%= link_to "本日のお問い合わせ一覧", admins_contacts_path(support: "today"), class:"btn btn-info float-right mr-5 mb-4" %>
+<% elsif params[:support] == "today" %>
+	<div class="row">
+		<h2 class="col-6">お問い合わせ一覧（本日分）</h2>
+	</div>
+	<%= link_to "未対応一覧", admins_contacts_path(support: "not"), class:"btn btn-warning float-right mr-5 mb-4" %>
+<% else %>
+	<div class="row">
+		<h2 class="col-4">お問い合わせ一覧</h2>
+	</div>
+	<%= link_to "本日のお問い合わせ一覧", admins_contacts_path(support: "today"), class:"btn btn-info float-right mr-5 mb-4" %>
+	<%= link_to "未対応一覧", admins_contacts_path(support: "not"), class:"btn btn-warning float-right mr-5 mb-4" %>
+<% end %>
+
+<table class="table sticky_table">
+	<tr class="thead-light">
+		<th style="width: 20%;">ユーザー名</th>
+		<th style="width: 60%;">件名</th>
+		<th style="width: 20%;">ステータス</th>
+	</tr>
+	<% @contacts.each do |contact| %>
+		<tr>
+			<td>
+				<%= link_to admins_user_path(contact.user) do %>
+					<%= attachment_image_tag contact.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %><br>
+					<%= contact.user.name%>
+				<% end %>
+			</td>
+			<td>
+				<%= link_to contact.title, admins_contact_path(contact) %>
+			</td>
+			<td>
+				<% if contact.status == true %>
+					<p class="text-success">対応済</p>
+				<% else %>
+					<p class="text-danger">未対応</p>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+</table>
+<%= paginate @contacts, class: "paginate" %>

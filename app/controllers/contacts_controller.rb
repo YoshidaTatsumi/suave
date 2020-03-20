@@ -7,6 +7,7 @@ class ContactsController < ApplicationController
 		@contact = Contact.new(contact_params)
 		@contact.user_id = current_user.id
 		if @contact.save
+			ContactMailer.send_when_create(current_user, @contact).deliver_now
 			flash[:notice] = "お問い合わせを送信しました"
 			redirect_to root_path
 		else

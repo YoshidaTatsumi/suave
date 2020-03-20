@@ -1,10 +1,13 @@
 <% if flash[:notice] %>
-	<div class="row flash">
-		<%= flash[:notice] %>
+	<div class="alert alert-success alert-dismissible" role="alert">
+	 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  	<%= flash[:notice] %>
 	</div>
 <% end %>
 
-<h2>本日投稿されたゲーム</h2>
+<h2>本日のお問い合わせ<span class="ml-4"><%= link_to @contacts.count, admins_contacts_path(support: "today") %></span>件</h2>
+
+<h2 class="mt-5">本日投稿されたゲーム</h2>
 <div class="row" style= "margin-top: 40px;">
 	<% @games.first(4).each do |game| %>
 		<div class="col-3">

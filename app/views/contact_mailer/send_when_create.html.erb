@@ -1,0 +1,11 @@
+<h2><u><%= @user.name %>様</u></h2>
+
+<p>お問い合わせありがとうございます。</p>
+<p>返信まで１週間ほどかかる場合がございます。ご了承ください。</p>
+
+<hr>
+
+<h3 class="mt-2">件名：<%= @contact.title %></h3>
+
+<h3 class="mt-4">お問い合わせ内容</h3><br>
+<%=raw @contact.content %>
