@@ -25,7 +25,7 @@
 
  header {
 	background-color: #0cf;
-	height: 120px;
+	height: 190px;
 	width: 100%;
  }
 
@@ -38,6 +38,42 @@
  	margin-left: 20px;
  }
 
+ .header-user-name {
+ 	margin-top: 60px;
+ 	margin-right: 20px;
+ }
+
+ .blink {
+  animation: blinkAnime 1s infinite alternate;
+ }
+ @keyframes blinkAnime{
+    0% { color: #000 }
+  100% { color: #ff0 }
+ }
+
+ .header-notifications-count {
+ 	position: absolute;
+ 	top: 70px;
+ 	right: 20px;
+ 	font-size: 18px;
+ 	background-color: #f99;
+ 	border-radius: 50%;
+ }
+
+ .notification-show {
+ 	position: absolute;
+ 	left: 80px;
+ }
+
+ .navbar > a {
+ 	color: #666;
+ }
+
+ .navbar > a:hover {
+ 	background-color: #cff;
+ 	border-radius: 10px;
+ }
+
  .main-visual {
  	background-image: url("suave.jpg");
 	width: 100%;
@@ -48,8 +84,8 @@
 
  .search {
  	position: absolute;
- 	top: 80px;
- 	right: 20px;
+ 	top: 10px;
+ 	right: 10px;
  }
 
  .container {
@@ -75,6 +111,46 @@
  .required {
  	color :red;
  }
+
+/*通知*/
+#notifications-cover {
+	background: #000;
+	opacity: 0.6;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	display: none;
+}
+
+#notifications-menu {
+	z-index: 2;
+	position: fixed;
+	top: 190px;
+	right: -40%;
+	background: #f8f8ff;
+	padding: 8px;
+	box-sizing: border-box;
+	width: 40%;
+	min-height: 100%;
+	transition: 0.4s;
+}
+
+#notifications-show, #notifications-hide {
+	cursor: pointer;
+	color: #000;
+	font-size: 30px;
+}
+
+.notifications-menu-open #notifications-cover {
+	display: block;
+}
+
+.notifications-menu-open #notifications-menu {
+	right: 0;
+}
 
 /*admin&user--game-index*/
 .wrap {

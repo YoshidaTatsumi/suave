@@ -12,16 +12,51 @@
 
   <body>
     <header class="sticky-top">
-      <nav class="nav navbar-expand-sm navbar-fixed-top">
+
         <% if admin_signed_in? && request.fullpath.index("/admins/") %>
           <%= link_to admins_top_path do %>
-            <%= image_tag 'logo.png', class:"nav navbar-nav navbar-left logo", size: '120x120' %>
+            <%= image_tag 'logo.png', size: '120x120' %>
           <% end %>
         <% else %>
           <%= link_to root_path do %>
-            <%= image_tag 'logo.png', class:"nav navbar-nav navbar-left logo", size: '120x120' %>
+            <%= image_tag 'logo.png', size: '120x120' %>
           <% end %>
         <% end %>
+
+        <div class="search">
+          <% if admin_signed_in? && request.fullpath.index("/admins/") %>
+            <%= form_with url:admins_search_path, method: :get, local: true do |f| %>
+              <%= f.text_field :search, size: "30", placeholder: "ゲームかユーザー名で検索" %>
+              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]], class:"form-control" %>
+              <%= f.submit "検索", class:"page-link text-dark d-inline-block" %>
+            <% end %>
+          <% else %>
+            <%= form_with url:search_path, method: :get, local: true do |f| %>
+              <%= f.text_field :search, size: "30", placeholder: "ゲームかユーザー名で検索" %>
+              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]], class:"form-control" %>
+              <%= f.submit "検索", class:"page-link text-dark d-inline-block" %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <% if user_signed_in? && request.fullpath.index("/admins/") == nil %>
+          <div class="float-right">
+            <p class="header-user-name">ようこそ、<strong><%= current_user.name %></strong>さん
+              <% if unchecked_notifications.any?%>
+                <% notifications_count = current_user.passive_notifications.where(checked: false).count %>
+                <i class="fas fa-bell blink" id="notifications-show">
+                  <span class="header-notifications-count"><%= notifications_count %></span>
+                </i>
+              <% else %>
+                <i class="fas fa-bell" id="notifications-show"></i>
+              <% end %>
+            </p>
+          </div>
+        <% end %>
+
+
+      <nav class="navbar navbar-expand-md navbar-fixed-top">
+
 
         <button class="navbar-toggler" type="button"
             data-toggle="collapse"
@@ -29,44 +64,35 @@
             aria-controls="navmenu1"
             aria-expanded="false"
             aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <i class="fas fa-bars"></i>
         </button>
 
         <div class="collapse navbar-collapse" id="navmenu1">
-          <div class="navbar-nav">
+          <div class="navbar mx-auto">
             <% if user_signed_in? && request.fullpath.index("/admins/") == nil %>
               <%= render 'users/header' %>
             <% elsif admin_signed_in? && request.fullpath.index("/admins/") %>
               <%= render 'admins/header' %>
             <% else %>
-              <%= link_to "アバウト", homes_about_path, class:"nav-item nav-link" %>
+              <%= link_to "Suaveとは", homes_about_path, class:"nav-item nav-link" %>
               <%= link_to "ゲーム一覧", games_path, class:"nav-item nav-link" %>
               <%= link_to "新規登録", new_user_registration_path, class:"nav-item nav-link" %>
               <%= link_to "ログイン", new_user_session_path, class:"nav-item nav-link" %>
               <%= link_to "管理者はこちら", new_admin_session_path, class:"nav-item nav-link" %>
             <% end %>
-          </ul>
-        </div>
-
-        <div class="search">
-          <% if admin_signed_in? && request.fullpath.index("/admins/") %>
-            <%= form_with url:admins_search_path, method: :get, local: true do |f| %>
-              <%= f.text_field :search, size: "40", placeholder: "ゲームかユーザー名で検索" %>
-              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]] %>
-              <%= f.select :search_method, [["完全一致", "perfect_match"], ["部分一致", "partial_match"]] %>
-              <%= f.submit "検索", class:"btn btn-default" %>
-            <% end %>
-          <% else %>
-            <%= form_with url:search_path, method: :get, local: true do |f| %>
-              <%= f.text_field :search, size: "40", placeholder: "ゲームかユーザー名で検索" %>
-              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]] %>
-              <%= f.select :search_method, [["完全一致", "perfect_match"], ["部分一致", "partial_match"]] %>
-              <%= f.submit "検索", class:"btn btn-default" %>
-            <% end %>
-          <% end %>
+          </div>
         </div>
       </nav>
     </header>
+
+    <!-- サイドバー -->
+    <% if user_signed_in? && request.fullpath.index("/admins/") == nil %>
+      <div id="notifications-cover"></div>
+      <div id="notifications-menu">
+        <i class="fas fa-times float-right" id="notifications-hide"></i>
+        <%= render 'notifications/index' %>
+      </div>
+    <% end %>
 
     <% if !request.fullpath.index("/admins/") %>
       <div class="main-visual"></div>

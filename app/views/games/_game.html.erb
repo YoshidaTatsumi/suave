@@ -16,7 +16,7 @@
 		<div class="row">
 			<% if game.tag_list.present? %>
 				<% game.tag_list.first(6).each do |tag| %>
-					<%= link_to search_path(tag: tag), class:"btn btn-primary mt-2" do %>
+					<%= link_to search_path(tag: tag), class:"btn btn-primary mt-2 ml-1" do %>
 						<%= tag %>
 					<% end %>
 				<% end %>

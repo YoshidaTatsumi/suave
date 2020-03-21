@@ -1,0 +1,35 @@
+<% notifications.each do |notification| %>
+	<% visitor = notification.visitor %>
+	<% visited = notification.visited %>
+
+	<div class ="row mt-3">
+		<%= link_to user_path(visitor, place: "notifications", notification: notification), class:"col-2" do %>
+			<%= attachment_image_tag visitor, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'40x40' %>
+		<% end %>
+		<div class="col-1">
+			<% if notification.checked == false %>
+				<div class="spinner-grow text-warning" role="status">
+				  <span class="sr-only"></span>
+				</div>
+			<% end %>
+		</div>
+		<div class="col-9">
+			<%= link_to user_path(visitor, place: "notifications", notification: notification) do %>
+				<strong><%= visitor.name %>さんが</strong>
+			<% end %>
+			<% case notification.action %>
+				<% when 'follow' then %>
+					<%= "あなたをフォローしました。" %>
+				<% when 'comment' then %>
+					<% if notification.game.user_id == visited.id %>
+						<%= link_to "あなたのゲーム", game_path(notification.game, place: "notifications", notification: notification) %>
+					<% else %>
+						<%= link_to game_path(notification.game, place: "notifications", notification: notification) do %>
+							<%= notification.game.user.name + 'さんの投稿' %>
+					<% end %>
+				<% end %>
+				にコメントしました。
+			<% end %>
+		</div>
+	</div>
+<% end %>

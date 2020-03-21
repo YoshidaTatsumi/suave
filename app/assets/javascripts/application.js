@@ -19,3 +19,19 @@
 //= require bxslider
 //= require_tree .
 //= require nested_form_fields
+
+
+//通知の表示・非表示
+{
+	$(document).on('click', '#notifications-show', function(){
+		$('body').toggleClass('notifications-menu-open');
+	});
+
+	$(document).on('click', '#notifications-hide', function(){
+		$('body').removeClass('notifications-menu-open');
+	});
+
+	$(document).on('click', '#notifications-cover', function(){
+		$('body').removeClass('notifications-menu-open');
+	});
+}

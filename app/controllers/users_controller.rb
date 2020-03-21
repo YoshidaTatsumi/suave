@@ -5,6 +5,10 @@ class UsersController < ApplicationController
 
 	def show
 		@user = User.find(params[:id])
+		if params[:place] == "notifications"
+			notification = Notification.find(params[:notification])
+			notification.update_attributes(checked: true)
+		end
 	end
 
 	def edit

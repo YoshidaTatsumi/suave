@@ -1,8 +1,8 @@
 class Notification < ApplicationRecord
-	#新しい通知から順に取得
+	#新しい通知から順に取得。Notification.firstで一番新しいデータを取得できる
 	default_scope -> { order(created_at: :desc) }
 
-	#optional:true nilを許可する
+	#optional:true nilを許可する。belongs_toではnilが許可されない為必要。
 	belongs_to :game, optional: true
 	belongs_to :comment, optional: true
 

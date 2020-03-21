@@ -22,7 +22,7 @@
 		</div>
 		<div class="row">
 			<% @game.tag_list.each do |tag| %>
-				<%= link_to admins_search_path(tag: tag), class:"btn btn-primary game-tags" do %>
+				<%= link_to admins_search_path(tag: tag), class:"btn btn-primary game-tags mr-1" do %>
 					<%= tag %>
 				<% end %>
 			<% end %>

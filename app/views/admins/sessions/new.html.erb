@@ -4,14 +4,14 @@
 
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="row field">
-          <div class="offset-3">
+          <div class="offset-2">
             <%= f.label :email %><br />
             <%= f.email_field :email, autofocus: true, autocomplete: "email", size: "80" %>
           </div>
         </div>
 
         <div class="row field">
-          <div class="offset-3">
+          <div class="offset-2">
             <%= f.label :password %><br />
             <%= f.password_field :password, autocomplete: "current-password", size: "80" %>
           </div>

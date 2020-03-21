@@ -15,7 +15,6 @@ class Admins::ContactsController < ApplicationController
 
 	def update
 		@contact = Contact.find(params[:id])
-		binding.pry
 		if contact_params[:reply_content] == "" || contact_params[:reply_content].nil?
 			flash[:danger] = "返信内容を入力してください"
 			render "show"

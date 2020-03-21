@@ -22,7 +22,7 @@
 				<h4>タグ：</h4>
 				<% if game.tag_list.present? %>
 					<% game.tag_list.first(3).each do |tag| %>
-						<%= link_to search_path(tag: tag), class:"btn btn-primary" do %>
+						<%= link_to search_path(tag: tag), class:"btn btn-primary ml-1" do %>
 							<%= tag %>
 						<% end %>
 					<% end %>

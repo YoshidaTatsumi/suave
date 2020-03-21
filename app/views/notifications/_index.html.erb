@@ -1,0 +1,14 @@
+<div>
+	<% notifications = current_user.passive_notifications.where.not(visitor_id: current_user.id) %>
+	<% if notifications.exists? %>
+		<div class="row mb-2">
+			<h5>通知一覧</h5>
+			<%= link_to "全て既読にする", homes_check_path, class: "btn btn-success offset-6", method: :put %>
+		</div>
+		<div class="overflow-auto" style="height: 450px;">
+			<%= render 'notifications/notifications', notifications: notifications %>
+		</div>
+	<% else %>
+		<p>通知はありません</p>
+	<% end %>
+</div>

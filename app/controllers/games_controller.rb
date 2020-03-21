@@ -22,6 +22,10 @@ class GamesController < ApplicationController
 	def show
 		@game = Game.find(params[:id])
 		@comment = Comment.new
+		if params[:place] == "notifications"
+			notification = Notification.find(params[:notification])
+			notification.update_attributes(checked: true)
+		end
 	end
 
 	def edit

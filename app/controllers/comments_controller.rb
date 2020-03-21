@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
 			@game.difficulty = @game.difficulty_avg
 			@game.rating = @game.rating_avg
 			@game.save
+			@comment.game.create_notification_comment!(current_user, @comment.id)
 		else
 			render 'games/show'
 		end
