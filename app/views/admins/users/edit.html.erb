@@ -1,12 +1,8 @@
-<% if @user.errors.any? %>
-	<h2><%= @user.errors.count %>
-		 errors prohibited this obj from being saved:
-	</h2>
-	<ul>
-		<% @user.errors.full_messages.each do |message| %>
-			<li><%= message %></li>
-		<% end %>
-	</ul>
+<% if flash[:danger] %>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>エラー！</strong> <%= flash[:danger] %>
+	</div>
 <% end %>
 
 <div class="row">
@@ -37,7 +33,7 @@
 			<div class="col-8 offset-1">
 				<div class="row">
 					<%= f.label :name, "ユーザー名" %>（<span class="required">※必須</span>）<br>
-					<%= f.text_field :name, class:"form-control" %>
+					<%= f.text_field :name, class:"form-control", size:"100" %>
 				</div>
 
 				<div class="row">

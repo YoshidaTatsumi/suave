@@ -4,4 +4,31 @@
 	  	<%= flash[:notice] %>
 	</div>
 <% end %>
-<h1>人気ゲーム</h1>
+<h2><u>人気ゲーム</u></h2>
+<%= render "games/more_game", games: @favorite_games %>
+<%= link_to "ゲーム一覧へ", games_path, class:"float-right" %>
+
+<h2 class="mt-4"><u>新着ゲーム</u></h2>
+<%= render "games/more_game", games: @new_games %>
+<%= link_to "ゲーム一覧へ", games_path, class:"float-right" %>
+
+<h2 class="mt-4"><u>チャットルーム</u></h2>
+<table class="table">
+	<tr class="table-primary">
+		<th style="width: 20%;">作成者</th>
+		<th style="width: 30%;">ルーム名</th>
+		<th style="width: 50%;">内容</th>
+	</tr>
+	<% @rooms.each do |room| %>
+		<tr>
+			<td><%= room.user.name %></td>
+			<td>
+				<%= link_to talk_room_chats_path(room) do %>
+					<%= room.name %>
+				<% end %>
+			</td>
+			<td><%= room.introduction[0..100] %></td>
+		</tr>
+	<% end %>
+</table>
+<%= link_to "チャットルーム一覧へ", chats_path, class:"float-right" %>

@@ -17,6 +17,7 @@ class Admins::UsersController < ApplicationController
 			flash[:notice] = "ユーザーを編集しました"
 			redirect_to admins_user_path(@user)
 		else
+			flash[:danger] = "入力ミスがあります"
 			render "edit"
 		end
 	end
@@ -24,12 +25,14 @@ class Admins::UsersController < ApplicationController
 	def destroy
 		user = User.find(params[:id])
 		user.destroy
+		flash[:notice] = "退会処理が完了しました"
 		redirect_to admins_users_path
 	end
 
 	def status_change
 		user = User.find(params[:id])
 		user.update(change_params)
+		flash[:notice] = "退会処理が完了しました"
 		redirect_to admins_user_path(user)
 	end
 

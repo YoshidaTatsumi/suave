@@ -23,7 +23,6 @@ class CommentsController < ApplicationController
 			@game.difficulty = @game.difficulty_avg
 			@game.rating = @game.rating_avg
 			@game.save
-			flash[:notice] = "コメントを削除しました"
 		end
 	end
 

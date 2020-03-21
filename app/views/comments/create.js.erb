@@ -1,5 +1,5 @@
 $('.game-evaluation').html("<%= j(render 'games/evaluation', {game: @game}) %>");
 $('#user-comments-count').html("<%= @game.comments.count %>件のコメント");
 $('#user-comment').html("<%= j(render 'comments/comments',{ game: @game }) %>");
-$('textarea').val('');
-$('input').val('');
+$('.comment-area').val('');
+$('.value-area').val('');

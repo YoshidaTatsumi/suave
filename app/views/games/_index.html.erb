@@ -1,8 +1,8 @@
 <div id="new-game" class="game">
-	<% desc_games.each do |desc_game| %>
-		<%= render 'game', game: desc_game %>
+	<% new_games.each do |new_game| %>
+		<%= render 'game', game: new_game %>
 	<% end %>
-	<%= paginate desc_games, param_name: "new_game", remote: true, class: "paginate" %>
+	<%= paginate new_games, param_name: "new_game", remote: true, class: "paginate" %>
 </div>
 
 <div id="favorite-game" class="game">

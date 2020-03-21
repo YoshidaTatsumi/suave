@@ -1,6 +1,7 @@
 <% if flash[:notice] %>
-	<div class="row flash">
-		<%= flash[:notice] %>
+	<div class="alert alert-success alert-dismissible" role="alert">
+	 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  	<%= flash[:notice] %>
 	</div>
 <% end %>
 
@@ -60,22 +61,22 @@
 		<div class="row mt-4">
 			<div class="col-3">
 				<h4>難易度（１００点中）</h4>
-				<%= f.number_field :difficulty, class:"form-control" %>
+				<%= f.number_field :difficulty, class:"form-control value-area" %>
 			</div>
 			<div class="col-3 offset-1">
 				<h4>評価（１０点中）</h4>
 				<div class="row">
-					<%= f.number_field :rating, class:"form-control" %>
+					<%= f.number_field :rating, class:"form-control value-area" %>
 				</div>
 			</div>
 		</div>
 
 		<div class="row comment-field">
 			<div class="col-10">
-				<%= f.text_area :comment, rows:'5', class: "form-control" %>
+				<%= f.text_area :comment, rows:'5', class: "form-control comment-area" %>
 			</div>
 			<div class="col-2" style="margin-top: 80px;">
-				<%= f.submit "送信", class: "btn btn-primary pull-left" %>
+				<%= f.submit "送信", class: "btn btn-primary" %>
 			</div>
 		</div>
 	<% end %>

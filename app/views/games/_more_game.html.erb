@@ -1,0 +1,31 @@
+<div class="row more-game-boxes">
+	<% games.each do |game| %>
+		<div class="col-4 more-game-box mt-3">
+			<%= link_to game_path(game) do %>
+				<div class="row">
+					<% screenshot = game.screenshots.find_by(game_id: game.id) %>
+					<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg', fallback: "NoImage.jpg", size:"355x200" %>
+				</div>
+			<% end %>
+
+			<div class="row more_game_title">
+				<h4>タイトル：</h4>
+				<h4><%= game.title %></h4>
+			</div>
+
+			<div class="row more-game-tag">
+				<h4>タグ：</h4>
+				<% if game.tag_list.present? %>
+					<% game.tag_list.first(3).each do |tag| %>
+						<%= link_to search_path(tag: tag), class:"btn btn-primary ml-1" do %>
+							<%= tag %>
+						<% end %>
+					<% end %>
+				<% else %>
+					<p>タグが設定されていません</p>
+				<% end %>
+			</div>
+
+		</div>
+	<% end %>
+</div>

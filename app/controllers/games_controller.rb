@@ -3,7 +3,7 @@ class GamesController < ApplicationController
 	def index
 		games = Game.all
 		@index_games = Game.order("RANDOM()").limit(10)
-		@desc_games = games.order(created_at: :desc).page(params[:new_game]).per(10)
+		@new_games = games.order(created_at: :desc).page(params[:new_game]).per(10)
 		@favorite_games = games.where.not(rating: nil).order(rating: :desc).page(params[:favorite_game]).per(10)
 		@difficult_games = games.where.not(difficulty: nil).order(difficulty: :desc).page(params[:difficult_game]).per(10)
 		@easy_games = games.where.not(difficulty: nil).order(difficulty: :asc).page(params[:easy_game]).per(10)
@@ -39,20 +39,26 @@ class GamesController < ApplicationController
 		@game = Game.new(game_params)
 		@game.user_id = current_user.id
 
-		region = 'ap-northeast-1'
-	    bucket = ENV['S3_BUCKET_NAME'] # S3バケット名
-	    client = Aws::S3::Client.new(region: region)
+		if game_params[:file].present?
+			region = 'ap-northeast-1'
+		    bucket = ENV['S3_BUCKET_NAME'] # S3バケット名
+		    client = Aws::S3::Client.new(region: region)
 
-	    upload_file = game_params[:file]
-	    key = "games/" + upload_file.original_filename	#S3のファイル名
+		    upload_file = game_params[:file]
+		    key = "games/" + upload_file.original_filename	#S3のファイル名
 
-	    client.put_object(bucket: bucket, key: key, body: upload_file.read)
+		    client.put_object(bucket: bucket, key: key, body: upload_file.read)
 
-	    @game.file_name = upload_file.original_filename
-		if @game.save
-			flash[:notice] = "アップロードが完了しました"
-			redirect_to game_path(@game)
+		    @game.file_name = upload_file.original_filename
+			if @game.save
+				flash[:notice] = "アップロードが完了しました"
+				redirect_to game_path(@game)
+			else
+				flash[:danger] ="入力ミスがあります"
+				render 'new'
+			end
 		else
+			flash[:danger] ="ゲームファイルを選択してください"
 			render 'new'
 		end
 	end
@@ -79,6 +85,7 @@ class GamesController < ApplicationController
 			flash[:notice] = "変更を保存しました"
 			redirect_to game_path(@game)
 		else
+			flash[:danger] ="入力ミスがあります"
 			render 'edit'
 		end
 	end

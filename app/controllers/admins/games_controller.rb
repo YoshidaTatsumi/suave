@@ -23,6 +23,7 @@ class Admins::GamesController < ApplicationController
 			flash[:notice] = "変更を保存しました"
 			redirect_to admins_game_path(@game)
 		else
+			flash[:danger] = "入力ミスがあります"
 			render 'edit'
 		end
 	end
