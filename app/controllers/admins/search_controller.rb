@@ -1,4 +1,6 @@
 class Admins::SearchController < ApplicationController
+	before_action :authenticate_admin!
+	
 	def search
 		if params[:category] == "user"
 			if params[:search_method] == "perfect_match"

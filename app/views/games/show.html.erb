@@ -53,7 +53,7 @@
 
 
 <div class="row mt-5">
-	<h3 class="col-3"><u>コメントする</u></h3>
+	<h3 class="col-3"><u>コメント</u></h3>
 </div>
 
 <% if user_signed_in? %>
@@ -82,7 +82,7 @@
 	<% end %>
 <% end %>
 
-<h3 id="user-comments-count"><%= @game.comments.count %>件のコメント</h3>
+<h3 id="user-comments-count" class="mt-4"><%= @game.comments.count %>件のコメント</h3>
 <table id="user-comment" class="table">
 	<%= render 'comments/comments', game: @game %>
 </table>

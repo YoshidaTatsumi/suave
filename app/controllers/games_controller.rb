@@ -1,12 +1,13 @@
 class GamesController < ApplicationController
+	before_action :authenticate_user!, except: [:index, :show, :more_game, :download]
 
 	def index
 		games = Game.all
-		@index_games = Game.order("RANDOM()").limit(10)
-		@new_games = games.order(created_at: :desc).page(params[:new_game]).per(10)
-		@favorite_games = games.where.not(rating: nil).order(rating: :desc).page(params[:favorite_game]).per(10)
-		@difficult_games = games.where.not(difficulty: nil).order(difficulty: :desc).page(params[:difficult_game]).per(10)
-		@easy_games = games.where.not(difficulty: nil).order(difficulty: :asc).page(params[:easy_game]).per(10)
+		@index_games = Game.order("RANDOM()").limit(6)
+		@new_games = games.order(created_at: :desc).page(params[:new_game]).per(8)
+		@favorite_games = games.where.not(rating: nil).order(rating: :desc).page(params[:favorite_game]).per(8)
+		@difficult_games = games.where.not(difficulty: nil).order(difficulty: :desc).page(params[:difficult_game]).per(8)
+		@easy_games = games.where.not(difficulty: nil).order(difficulty: :asc).page(params[:easy_game]).per(8)
 
 		respond_to do |format|
 	      format.html
@@ -47,15 +48,22 @@ class GamesController < ApplicationController
 		    upload_file = game_params[:file]
 		    key = "games/" + upload_file.original_filename	#S3のファイル名
 
-		    client.put_object(bucket: bucket, key: key, body: upload_file.read)
+		    saved_s3_game = Game.find_by(file_name: upload_file.original_filename)
 
-		    @game.file_name = upload_file.original_filename
-			if @game.save
-				flash[:notice] = "アップロードが完了しました"
-				redirect_to game_path(@game)
-			else
-				flash[:danger] ="入力ミスがあります"
-				render 'new'
+		    if saved_s3_game.present?	#同じファイル名がある場合。S3に同じファイル名で保存されるのを防ぐ為。
+		    	flash[:danger] ="同じファイル名のゲームがあります。ファイル名を変更してアップロードしてください。"
+		    	render 'new'
+		    else
+			    client.put_object(bucket: bucket, key: key, body: upload_file.read)
+
+			    @game.file_name = upload_file.original_filename
+				if @game.save
+					flash[:notice] = "アップロードが完了しました"
+					redirect_to game_path(@game)
+				else
+					flash[:danger] ="入力ミスがあります"
+					render 'new'
+				end
 			end
 		else
 			flash[:danger] ="ゲームファイルを選択してください"
@@ -67,23 +75,33 @@ class GamesController < ApplicationController
 		@game = Game.find(params[:id])
 		file_name = @game.file_name
 		if @game.update(game_params)
-			if game_params[:file].present?
-				region = 'ap-northeast-1'
-				bucket = ENV['S3_BUCKET_NAME']
-				client = Aws::S3::Client.new(region: region)
-				file_path = "games/" + file_name
-				client.delete_object(bucket: bucket, key: file_path)		#元々のファイル削除
-
+			if game_params[:file].present?		#ゲームファイルがある場合
 				upload_file = game_params[:file]
-		    	key = "games/" + upload_file.original_filename
-		    	client.put_object(bucket: bucket, key: key, body: upload_file.read)		#編集したファイル追加
+				saved_s3_game = Game.find_by(file_name: upload_file.original_filename)
 
-		    	@game.file_name = upload_file.original_filename
-		    	@game.save
-	    	end
+			    if saved_s3_game.present?	#同じファイル名のゲームがある場合。S3に同じファイル名で保存されるのを防ぐ為。
+			    	flash[:danger] ="同じファイル名のゲームがあります。ファイル名を変更してアップロードしてください。"
+			    	render 'new'
+			    else
+					region = 'ap-northeast-1'
+					bucket = ENV['S3_BUCKET_NAME']
+					client = Aws::S3::Client.new(region: region)
+					file_path = "games/" + file_name
+					client.delete_object(bucket: bucket, key: file_path)		#元々のファイル削除
 
-			flash[:notice] = "変更を保存しました"
-			redirect_to game_path(@game)
+			    	key = "games/" + upload_file.original_filename
+			    	client.put_object(bucket: bucket, key: key, body: upload_file.read)		#編集したファイル追加
+
+			    	@game.file_name = upload_file.original_filename
+			    	@game.save
+
+			    	flash[:notice] = "変更を保存しました"
+					redirect_to game_path(@game)
+			    end
+			else
+				flash[:notice] = "変更を保存しました"
+				redirect_to game_path(@game)
+			end
 		else
 			flash[:danger] ="入力ミスがあります"
 			render 'edit'

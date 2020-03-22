@@ -27,20 +27,24 @@
 		</div>
 
 		<div class="row">
-			<% if @user.id != current_user.id %>
-				<% if current_user.following?(@user) %>
-					<%= link_to "フォロー外す", user_relationships_path(@user), method: :delete, class: "col-6 offset-2 btn btn-primary" %>
+			<% if user_signed_in? %>
+				<% if @user.id != current_user.id %>
+					<% if current_user.following?(@user) %>
+						<%= link_to "フォロー外す", user_relationships_path(@user), method: :delete, class: "col-6 offset-2 btn btn-primary" %>
+					<% else %>
+						<%= link_to "フォローする", user_relationships_path(@user), method: :post, class: "col-6 offset-2 btn btn-success" %>
+					<% end %>
 				<% else %>
-					<%= link_to "フォローする", user_relationships_path(@user), method: :post, class: "col-6 offset-2 btn btn-success" %>
+					<%= link_to "編集する", edit_user_path(@user), class: "col-6 offset-2 btn btn-info mt-2" %>
 				<% end %>
-			<% else %>
-				<%= link_to "編集する", edit_user_path(@user), class: "col-6 offset-2 btn btn-info mt-2" %>
 			<% end %>
 		</div>
 
-		<div class="row" style="margin-top: 20px;">
-			<% if @user.id != current_user.id %>
-				<%= link_to "チャットを始める", chat_path(@user), class: "offset-2" %>
+		<div class="row mt-3">
+			<% if user_signed_in? %>
+				<% if @user.id != current_user.id %>
+					<%= link_to "チャットを始める", chat_path(@user), class: "offset-2" %>
+				<% end %>
 			<% end %>
 		</div>
 	</div>

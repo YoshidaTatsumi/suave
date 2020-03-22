@@ -1,4 +1,6 @@
 class ChatsController < ApplicationController
+	before_action :authenticate_user!, except: [:index]
+
 	def index
 		@rooms = Room.where.not(name: nil)
 		@room = Room.new

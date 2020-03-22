@@ -1,4 +1,6 @@
 class Admins::ChatsController < ApplicationController
+	before_action :authenticate_admin!
+	
 	def index
 		@rooms = Room.where.not(name: nil)
 	end

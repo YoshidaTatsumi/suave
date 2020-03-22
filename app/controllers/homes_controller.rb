@@ -1,4 +1,6 @@
 class HomesController < ApplicationController
+  before_action :authenticate_user!, except: [:top, :about]
+  
   def top
     @favorite_games = Game.where.not(rating: nil).order(rating: :desc).first(3)
     @new_games = Game.order(created_at: :desc).first(3)

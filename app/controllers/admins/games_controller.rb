@@ -1,4 +1,6 @@
 class Admins::GamesController < ApplicationController
+	before_action :authenticate_admin!
+	
 	def index
 		if params[:place] == "user"
 			@games = Game.where(user_id: params[:user_id]).page(params[:page]).per(10).reverse_order

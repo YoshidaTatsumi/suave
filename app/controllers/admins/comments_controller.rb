@@ -1,4 +1,6 @@
 class Admins::CommentsController < ApplicationController
+	before_action :authenticate_admin!
+	
 	def destroy
 		@comment = Comment.find(params[:game_id])
 		@game = Game.find(@comment.game_id)
