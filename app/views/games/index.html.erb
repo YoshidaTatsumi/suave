@@ -1,7 +1,15 @@
 <div class="row">
+	<% @random.each do |random| %>
+		<%= link_to game_path(random), class:"col-2 offset-10 random-game" do%>
+			RANDOM GAME!
+		<% end %>
+	<% end %>
+</div>
+
+<div class="row mt-4">
 	<h2>ゲーム一覧</h2>
 </div>
-<div class="row">
+<div class="row mt-4">
 	<div class="bxslider">
 		<% @index_games.each do |index_game| %>
 			<% screenshot = index_game.screenshots.find_by(game_id: index_game.id) %>

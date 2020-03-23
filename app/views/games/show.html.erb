@@ -6,6 +6,14 @@
 <% end %>
 
 <div class="row">
+	<% @random.each do |random| %>
+		<%= link_to game_path(random), class:"col-2 offset-10 random-game" do%>
+			RANDOM GAME!
+		<% end %>
+	<% end %>
+</div>
+
+<div class="row mt-4">
 	<% if user_signed_in? %>
 		<% if @game.user.id == current_user.id %>
 			<%= link_to "ゲーム編集", edit_game_path(@game), class:"col-2 offset-8 btn btn-info" %>
