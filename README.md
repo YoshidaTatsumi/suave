@@ -25,7 +25,7 @@ Rails 5.2.4.1
 
 ## デモ
 
-####ゲーム投稿
+#### ゲーム投稿
 ![ゲーム投稿１](/app/assets/images/new-game1.png)
 ![ゲーム投稿２](/app/assets/images/new-game2.png)
 ![ゲーム投稿３](/app/assets/images/new-game3.png)
