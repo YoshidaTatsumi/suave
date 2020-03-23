@@ -24,11 +24,21 @@ Rails 5.2.4.1
 - チャット機能
 
 ## デモ
+いくつかの機能をピックアップして紹介します。
 
 ### ゲーム投稿
+製作したゲームを投稿することができます。投稿方法は下記画像を参照してください。
 ![ゲーム投稿１](/app/assets/images/new-game1.png)
 ![ゲーム投稿２](/app/assets/images/new-game2.png)
 ![ゲーム投稿３](/app/assets/images/new-game3.png)
+
+### チャット機能
+ユーザー同士でチャットをすることができます。チャットをしたいユーザーのページに行き、「チャットを始める」をクリックしてください。
+また、トークルームを作成していろんなユーザーとチャットすることもできます。詳細は下記画像を参照してください。
+![チャット１](/app/assets/images/talkroom1.png)
+![チャット２](/app/assets/images/talkroom2.png)
+![チャット３](/app/assets/images/talkroom3.png)
+
 
 
 
