@@ -51,6 +51,12 @@ Rails 5.2.4.1
 ![チャット２](/app/assets/images/talkroom2.png)
 ![チャット３](/app/assets/images/talkroom3.png)
 
+## さいごに
+ここまでご覧いただき、ありがとうございます。
+初めてのアプリケーション開発の為いたらないところばかりだと思いますが、
+このようなサイトがあればいいな。と思い描いていたサイトを形にすることができました。
+少しでもゲーム好きの皆さんにとって心地よい場所になれば幸いです。
+作成者：[Tatsumi](https://github.com/YoshidaTatsumi)
 
 
 
