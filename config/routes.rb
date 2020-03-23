@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 	get 'search' => 'search#search'
 	resources :notifications, only: [:index]
 	resources :contacts, only: [:new, :create]
-	resources :chats, only: [:index, :show, :edit, :create, :update, :destroy] do
+	resources :chats, only: [:index, :show, :create, :update, :destroy] do
 		collection do
 			get 'talk_room/:id' => 'chats#talk_room', as: 'talk_room'
 		end
