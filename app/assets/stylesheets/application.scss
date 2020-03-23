@@ -112,7 +112,35 @@
  	color :red;
  }
 
-/*通知*/
+ /*----------------------top & about*/
+ .about-text {
+	line-height: 2.5;
+}
+
+#container {
+	text-align: center;
+	margin: 100px auto;
+}
+
+#mycanvas {
+	background: #AAEDFF;
+}
+
+#btn {
+	margin: 3px auto;
+	width: 200px;
+	padding: 5px;
+	background: #00AAFF;
+	color: #fff;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+#btn:hover {
+	opacity: 0.8;
+}
+
+/*-----------------------notification*/
 #notifications-cover {
 	background: #000;
 	opacity: 0.6;
@@ -152,7 +180,7 @@
 	right: 0;
 }
 
-/*admin&user--game-index*/
+/*---------------------------game-index*/
 .wrap {
 	width: 90%;
 	max-width: 1000px;
@@ -206,7 +234,7 @@
 	margin-top: 0px;
 }
 
-/*admin&user--game-show*/
+/*-----------------------------game-show*/
 .random-game {
 	height: 100px;
 	background-color: #fc0;
@@ -287,7 +315,28 @@
 	padding: 5px;
 }
 
-/*admin&user-user-show*/
+/*-----------------------------more-game*/
+.more-game-box {
+	height: 400px;
+}
+
+.more_game_title {
+	display: block;
+	border-bottom: 1px solid gray;
+	width: 98%;
+	margin-top: 20px;
+	color: #666;
+}
+
+.more-game-tag {
+	color: #666;
+	display: block;
+	border-bottom: 1px solid gray;
+	width: 98%;
+	margin-top: 20px;
+}
+
+/*----------------------------user-show*/
 .user-introduction {
 	height: 200px;
 	padding: 20px;
@@ -296,9 +345,17 @@
 	border-radius: 20px;
 }
 
-/*admin&user-user-edit*/
+/*-----------------------------user-edit*/
 .user-edit-box {
 	margin-top: 60px;
+}
+
+/*------------------------------contact*/
+.contact-content {
+	width: 100%;
+	border: 1px solid #666;
+	border-radius: 10px;
+	padding: 10px;
 }
 
 
