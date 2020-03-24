@@ -78,3 +78,7 @@ gem 'summernote-rails'
 gem 'nested_form_fields'
 gem 'aws-sdk'
 
+group :production do
+  gem 'mysql2'
+end
+
