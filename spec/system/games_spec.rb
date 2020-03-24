@@ -31,9 +31,8 @@ RSpec.describe Game, type: :system do
 
 				it '作成に失敗する' do
 					fill_in 'game[title]', with: ''
-					fill_in 'game[introduction]', with: ''
 					click_button 'アップロード'
-					expect(current_path).to eq(new_game_path)
+					expect(current_path).to eq(games_path)
 				end
 			end
 		end
@@ -55,12 +54,12 @@ RSpec.describe Game, type: :system do
 
 			context '更新のテスト' do
 				it '編集に成功する' do
-					edit_game_path(game)
+					visit edit_game_path(game)
 					click_button '変更を保存'
 					expect(current_path).to eq(game_path(game))
 				end
 				it '編集に失敗する' do
-					edit_game_path(game)
+					visit edit_game_path(game)
 					fill_in 'game[title]', with: ''
 					click_button '変更を保存'
 					expect(current_path).to eq('/games/' + game.id.to_s)

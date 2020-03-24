@@ -4,12 +4,12 @@
       <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
       <p style="color: green"><%= chat.user.name %></p>
     </div>
-    <p class="col-10"><%= chat.message %></p>
+    <p class="col-8"><%= chat.message %></p>
   <% else %>
     <div class="col-2">
       <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
       <p><%= chat.user.name %></p>
     </div>
-    <p class="col-10"><%= chat.message %></p>
+    <p class="col-8"><%= chat.message %></p>
   <% end %>
 </div>
