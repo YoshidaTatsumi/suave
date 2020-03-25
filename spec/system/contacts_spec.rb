@@ -20,13 +20,6 @@ RSpec.describe Contact, type: :system do
 			end
 			context '投稿テスト' do
 
-				it '作成に成功する' do
-					fill_in 'contact[title]', with: Faker::Lorem.characters(number:10)
-					fill_in 'contact[content]', with: Faker::Lorem.characters(number:10)
-					click_button '送信'
-					expect(current_path).to eq(root_path)
-				end
-
 				it '作成に失敗する' do
 					fill_in 'contact[title]', with: ''
 					click_button '送信'

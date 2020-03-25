@@ -5,7 +5,6 @@ RSpec.describe Room, type: :system do
 
 	describe 'チャットルームテスト' do
 		let(:user) { create(:user) }
-		let!(:room) { create(:room, user: user) }
 
 		before do
 			visit new_user_session_path
@@ -22,10 +21,10 @@ RSpec.describe Room, type: :system do
 
 				it '作成に成功する' do
 					click_button 'ルーム作成'
-					fill_in 'room[name]', with: room.name
+					fill_in 'room[name]', with: Faker::Lorem.characters(number:10)
 					fill_in 'room[introduction]', with: Faker::Lorem.characters(number:10)
 					click_button '作成'
-					expect(page).to have_content room.name
+					expect(page).to have_content 'ルームを作成しました'
 				end
 
 				it '作成に失敗する' do

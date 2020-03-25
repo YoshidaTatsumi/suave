@@ -21,14 +21,6 @@ RSpec.describe Game, type: :system do
 			end
 			context '投稿テスト' do
 
-				it '作成に成功する' do
-					fill_in 'game[title]', with: Faker::Lorem.characters(number:10)
-					fill_in 'game[introduction]', with: Faker::Lorem.characters(number:20)
-					fill_in 'game[file]', with: game.file
-					click_button 'アップロード'
-					expect(current_path).to eq(game_path(game))
-				end
-
 				it '作成に失敗する' do
 					fill_in 'game[title]', with: ''
 					click_button 'アップロード'
@@ -68,9 +60,6 @@ RSpec.describe Game, type: :system do
 
 
 		end
-
-
-
 
 	end
 
