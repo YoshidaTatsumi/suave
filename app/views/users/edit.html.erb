@@ -1,17 +1,13 @@
-<% if @user.errors.any? %>
-	<h2><%= @user.errors.count %>
-		 errors prohibited this obj from being saved:
-	</h2>
-	<ul>
-		<% @user.errors.full_messages.each do |message| %>
-			<li><%= message %></li>
-		<% end %>
-	</ul>
+<% if flash[:danger] %>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>エラー！</strong> <%= flash[:danger] %>
+	</div>
 <% end %>
 
 <div class="row">
 	<h4 class="col-2">ユーザー編集</h4>
-	<%= button_to "データを残して退会", status_change_user_path(@user), {method: :patch, params: {status: "false"}, class:"btn btn-warning", style:"white-space: normal;", confirm: "今まで投稿したゲームやコメントは消えずに残ります。本当に退会しますか？"} %>
+	<%= button_to "データを残して退会", status_change_user_path(@user), {method: :patch, params: {status: "false"}, class:"btn btn-warning", style:"white-space: normal;", "data-confirm" => "今まで投稿したゲームやコメントは消えずに残ります。本当に退会しますか？"} %>
 
 	<%= link_to "全データを削除して退会", user_path(@user), method: :delete, "data-confirm" => "今まで投稿したゲームやコメントが全て消えます。本当に退会しますか？", class:"btn btn-danger col-3 offset-1", style: "white-space: normal;" %>
 </div>

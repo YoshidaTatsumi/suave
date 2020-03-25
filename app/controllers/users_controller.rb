@@ -23,8 +23,10 @@ class UsersController < ApplicationController
 	def update
 		@user =User.find(params[:id])
 		if @user.update(user_params)
+			flash[:notice] = "編集が完了しました"
 			redirect_to user_path(@user)
 		else
+			flash[:danger] = "入力ミスがあります"
 			render "edit"
 		end
 	end
@@ -33,12 +35,14 @@ class UsersController < ApplicationController
 		user = User.find(params[:id])
 		sign_out(User)
 		user.update(change_params)
+		flash[:notice] = "退会処理が完了しました"
 		redirect_to root_path
 	end
 
 	def destroy
 		user = User.find(params[:id])
 		user.destroy
+		flash[:notice] = "退会処理が完了しました"
 		redirect_to root_path
 	end
 

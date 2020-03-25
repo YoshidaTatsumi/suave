@@ -53,6 +53,13 @@ class ChatsController < ApplicationController
 		redirect_to root_path
 	end
 
+	def chat_destroy
+		chat = Chat.find(params[:chat_id])
+		chat.destroy
+		flash[:notice] = "１件のチャットを削除しました"
+		redirect_to request.referer
+	end
+
 	def talk_room
 		@room = Room.find(params[:id])
 		rooms = current_user.user_rooms.pluck(:room_id)

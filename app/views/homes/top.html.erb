@@ -4,6 +4,7 @@
 	  	<%= flash[:notice] %>
 	</div>
 <% end %>
+
 <h2><u>人気ゲーム</u></h2>
 <%= render "games/more_game", games: @favorite_games %>
 <%= link_to "ゲーム一覧へ", games_path, class:"float-right" %>

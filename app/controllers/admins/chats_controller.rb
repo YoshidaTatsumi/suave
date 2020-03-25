@@ -23,6 +23,13 @@ class Admins::ChatsController < ApplicationController
 		redirect_to admins_chats_path
 	end
 
+	def chat_destroy
+		chat = Chat.find(params[:chat_id])
+		chat.destroy
+		flash[:notice] = "１件のチャットを削除しました"
+		redirect_to request.referer
+	end
+
 	def talk_room
 		@room = Room.find(params[:id])
 	end
