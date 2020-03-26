@@ -42,7 +42,7 @@ class GamesController < ApplicationController
 		@game = Game.new(game_params)
 		@game.user_id = current_user.id
 
-		if game_params[:file].present?
+		if game_params[:file].present?	#ファイルが選択されているか？
 			region = 'ap-northeast-1'
 		    bucket = ENV['S3_BUCKET_NAME'] # S3バケット名
 		    client = Aws::S3::Client.new(region: region)
