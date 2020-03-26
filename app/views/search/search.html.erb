@@ -101,10 +101,10 @@
 	<table class="table">
 		<tr class="table-primary">
 			<th style="width: 20%">タイトル</th>
-			<th style="width: 20%">作者</th>
+			<th style="width: 15%">作者</th>
 			<th style="width: 40%">タグ</th>
-			<th style="width: 10%"></th>
-			<th style="width: 10%"></th>
+			<th style="width: 13%"></th>
+			<th style="width: 12%"></th>
 		</tr>
 		<% @searches.each do |search| %>
 			<% screenshot = search.screenshots.find_by(game_id: search.id) %>
@@ -128,7 +128,7 @@
 					<% end %>
 				<% end %>
 				</td>
-				<td style="width: 10%;">
+				<td>
 					<div class="comment-difficulty-box">
 						難易度<br>
 						<div class="comment-difficulty-value">
@@ -140,7 +140,7 @@
 						</div>
 					</div>
 				</td>
-				<td style="width: 10%;">
+				<td>
 					<div class="comment-rating-box">
 						評価<br>
 						<div class="comment-rating-value">
