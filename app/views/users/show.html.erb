@@ -62,7 +62,7 @@
 	<h3 class="col-12"><u>ゲーム一覧</u></h3>
 </div>
 <div class="row mt-2">
-	<% @user.games.first(4).each do |game| %>
+	<% @user.games.order(created_at: :desc).first(4).each do |game| %>
 		<div class="col-2 offset-1">
 			<%= link_to game_path(game) do %>
 				<% screenshot = game.screenshots.find_by(game_id: game.id) %>

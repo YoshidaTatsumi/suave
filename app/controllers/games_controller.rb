@@ -126,7 +126,7 @@ class GamesController < ApplicationController
 
 	def more_game
 		if params[:place] == "user" && params[:id_user].present?
-			@games = Game.where(user_id: params[:id_user]).page(params[:page]).per(9)
+			@games = Game.where(user_id: params[:id_user]).order(created_at: :desc).page(params[:page]).per(9)
 			@user = User.find(params[:id_user])
 		else
 			redirect_to games_path
