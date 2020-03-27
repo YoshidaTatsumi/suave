@@ -56,10 +56,9 @@ class GamesController < ApplicationController
 		    	flash[:danger] ="同じファイル名のゲームがあります。ファイル名を変更してアップロードしてください。"
 		    	render 'new'
 		    else
-			    client.put_object(bucket: bucket, key: key, body: upload_file.read)
-
 			    @game.file_name = upload_file.original_filename
 				if @game.save
+					client.put_object(bucket: bucket, key: key, body: upload_file.read)		#S3へアップロード
 					flash[:notice] = "アップロードが完了しました"
 					redirect_to game_path(@game)
 				else
