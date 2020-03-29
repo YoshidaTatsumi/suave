@@ -26,14 +26,14 @@
         <div class="search">
           <% if admin_signed_in? && request.fullpath.index("/admins/") %>
             <%= form_with url:admins_search_path, method: :get, local: true do |f| %>
-              <%= f.text_field :search, size: "30", placeholder: "ゲームかユーザー名で検索" %>
-              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]], class:"form-control" %>
+              <%= f.text_field :search, size: "30", placeholder: "検索ワードを記入してください" %>
+              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"], ["タグ", "tag"]],  class:"form-control" %>
               <%= f.submit "検索", class:"page-link text-dark d-inline-block" %>
             <% end %>
           <% else %>
             <%= form_with url:search_path, method: :get, local: true do |f| %>
-              <%= f.text_field :search, size: "30", placeholder: "ゲームかユーザー名で検索" %>
-              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"]], class:"form-control" %>
+              <%= f.text_field :search, size: "30", placeholder: "検索ワードを記入してください" %>
+              <%= f.select :category, [["ユーザー", "user"], ["ゲーム", "game"], ["タグ", "tag"]], class:"form-control" %>
               <%= f.submit "検索", class:"page-link text-dark d-inline-block" %>
             <% end %>
           <% end %>

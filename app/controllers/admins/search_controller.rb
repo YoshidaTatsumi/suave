@@ -6,6 +6,8 @@ class Admins::SearchController < ApplicationController
 			@searches = User.where("name LIKE?","%#{params[:search]}%").page(params[:page]).per(10)
 		elsif params[:category] == "game"
 			@searches = Game.where("title LIKE?","%#{params[:search]}%").page(params[:page]).per(10)
+		elsif params[:category] == "tag"
+			@searches = Game.tagged_with("#{params[:search]}").page(params[:page]).per(10)
 		elsif params[:tag].present?
 			@searches = Game.tagged_with("#{params[:tag]}").page(params[:page]).per(10)
 		else

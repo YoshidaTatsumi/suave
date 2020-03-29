@@ -65,8 +65,13 @@
 	</table>
 	<%= paginate @searches, class: "paginate" %>
 
-<% elsif params[:tag].present? %>
-	<h2><strong>'<%= params[:tag] %>'</strong> タグ一覧</h2>
+<% elsif params[:tag].present? || params[:category] == "tag" %>
+	<% if params[:category] == "tag" %>
+		<h2><strong>'<%= params[:search] %>'</strong> タグ一覧</h2>
+	<% else %>
+		<h2><strong>'<%= params[:tag] %>'</strong> タグ一覧</h2>
+	<% end %>
+
 	<table class="table sticky_table">
 		<tr class="thead-light">
 			<th style="width: 10%">ゲームID</th>
