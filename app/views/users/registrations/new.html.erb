@@ -10,7 +10,7 @@
     <div class="col-4">
       <div class="row field">
         <div class="offset-3">
-          <%= f.label :name, "ユーザー名" %><br />
+          <%= f.label :name, "ユーザー名" %>（<span class="required">※必須</span>）(2文字以上、20文字以下)<br />
           <%= f.text_field :name, autofocus: true, autocomplete: "name", size: "60" %>
         </div>
       </div>
@@ -24,14 +24,14 @@
 
       <div class="row field">
         <div class="offset-3">
-          <%= f.label :email, "メールアドレス" %><br />
+          <%= f.label :email, "メールアドレス" %>（<span class="required">※必須</span>）<br />
           <%= f.email_field :email, autofocus: true, autocomplete: "email", size: "60" %>
         </div>
       </div>
 
       <div class="row field">
         <div class="offset-3">
-        <%= f.label :password, "パスワード" %>
+        <%= f.label :password, "パスワード" %>（<span class="required">※必須</span>）
           <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %>文字以上)</em>
           <% end %><br />
@@ -41,7 +41,7 @@
 
       <div class="row field">
         <div class="offset-3">
-          <%= f.label :password_confirmation, "パスワード再入力" %><br />
+          <%= f.label :password_confirmation, "パスワード再入力" %>（<span class="required">※必須</span>）<br />
           <%= f.password_field :password_confirmation, autocomplete: "new-password", size: "60" %>
         </div>
       </div>
