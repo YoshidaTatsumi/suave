@@ -1,6 +1,6 @@
 class Admins::ContactsController < ApplicationController
 	before_action :authenticate_admin!
-	
+
 	def index
 		if params[:support] == "today"
 			@contacts = Contact.where(created_at: Time.now.in_time_zone("Tokyo").beginning_of_day..Time.now.in_time_zone("Tokyo").end_of_day).page(params[:page]).per(10).reverse_order

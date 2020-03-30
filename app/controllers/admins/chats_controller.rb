@@ -1,8 +1,8 @@
 class Admins::ChatsController < ApplicationController
 	before_action :authenticate_admin!
-	
+
 	def index
-		@rooms = Room.where.not(name: nil)
+		@rooms = Room.where.not(name: nil).page(params[:page]).per(8).reverse_order
 	end
 
 	def update
