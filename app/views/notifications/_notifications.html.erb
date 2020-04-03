@@ -15,20 +15,15 @@
 		</div>
 		<div class="col-9">
 			<%= link_to user_path(visitor, place: "notifications", notification: notification) do %>
-				<strong><%= visitor.name %>さんが</strong>
+				<strong><%= visitor.name %>さん</strong>
 			<% end %>
 			<% case notification.action %>
-				<% when 'follow' then %>
-					<%= "あなたをフォローしました。" %>
-				<% when 'comment' then %>
-					<% if notification.game.user_id == visited.id %>
-						<%= link_to "あなたのゲーム", game_path(notification.game, place: "notifications", notification: notification) %>
-					<% else %>
-						<%= link_to game_path(notification.game, place: "notifications", notification: notification) do %>
-							<%= notification.game.user.name + 'さんの投稿' %>
-					<% end %>
-				<% end %>
-				にコメントしました。
+			<% when 'follow' then %>
+				<%= "があなたをフォローしました。" %>
+			<% when 'comment' then %>
+				<%= link_to "があなたのゲームにコメントしました。", game_path(notification.game, place: "notifications", notification: notification) %>
+			<% when 'chat' then %>
+				<%= link_to "からメッセージがあります。", chat_path(visitor, place: "notifications", notification: notification) %>
 			<% end %>
 		</div>
 	</div>
