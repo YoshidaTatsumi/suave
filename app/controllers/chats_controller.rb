@@ -11,7 +11,7 @@ class ChatsController < ApplicationController
 		rooms = current_user.user_rooms.pluck(:room_id)
 		user_room = UserRoom.find_by(user_id: @user.id, room_id: rooms)
 		if user_room.nil?
-			@room =Room.new
+			@room = Room.new
 			@room.save
 			UserRoom.create(user_id: current_user.id, room_id: @room.id)
     		UserRoom.create(user_id: @user.id, room_id: @room.id)
@@ -19,16 +19,21 @@ class ChatsController < ApplicationController
 			@room = user_room.room
 		end
 		@chats = @room.chats
+
+		if params[:place] == "notifications"
+			notification = Notification.find(params[:notification])
+			notification.update_attributes(checked: true)
+		end
 	end
 
 	def create
 		@room = Room.new(room_params)
 		@room.user_id = current_user.id
-		if @room.save
+		if @room.save(context: :talk_room)
 			flash[:notice] = "ルームを作成しました"
 				redirect_to talk_room_chats_path(@room)
 		else
-			@rooms = Room.where.not(name: nil)
+			@rooms = Room.where.not(name: nil).page(params[:page]).per(8).reverse_order
 			flash[:notice] = "ルーム名を入力してください"
 			render 'index'
 		end
@@ -36,7 +41,8 @@ class ChatsController < ApplicationController
 
 	def update
 		@room = Room.find(params[:id])
-		if @room.update(room_params)
+		if room_params[:name].present?
+			@room.update(room_params)
 			flash[:notice] = "編集が完了しました"
 			redirect_to talk_room_chats_path(@room)
 		else
