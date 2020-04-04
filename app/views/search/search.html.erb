@@ -96,12 +96,15 @@
 	</table>
 	<%= paginate @searches, class: "paginate" %>
 
-<% elsif params[:tag].present? || params[:category] == "tag" %>
-	<% if params[:category] == "tag" %>
-		<h2><strong>'<%= params[:search] %>'</strong> タグ一覧</h2>
-	<% else %>
-		<h2><strong>'<%= params[:tag] %>'</strong> タグ一覧</h2>
+<% elsif params[:category] == "tag" %>
+	<h2><strong>'<%= params[:search] %>'</strong> のタグ検索結果</h2>
+
+	<% @searches.each do |search| %>
+		<%= link_to search.name, search_path(tag: search.name), class:"btn btn-primary mt-2 ml-1" %>
 	<% end %>
+
+<% elsif params[:tag].present? %>
+	<h2><strong>'<%= params[:tag] %>'</strong> タグ一覧</h2>
 
 	<table class="table">
 		<tr class="table-primary">

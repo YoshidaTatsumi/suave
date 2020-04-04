@@ -5,7 +5,8 @@ class SearchController < ApplicationController
 		elsif params[:category] == "game"
 			@searches = Game.where("title LIKE?","%#{params[:search]}%").page(params[:page]).per(10)
 		elsif params[:category] == "tag"
-			@searches = Game.tagged_with("#{params[:search]}").page(params[:page]).per(10)
+			# 部分一致でタグを検索
+			@searches = ActsAsTaggableOn::Tag.named_like("#{params[:search]}")
 		elsif params[:tag].present?
 			@searches = Game.tagged_with("#{params[:tag]}").page(params[:page]).per(10)
 		else
