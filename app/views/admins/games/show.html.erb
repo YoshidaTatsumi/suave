@@ -32,11 +32,15 @@
 
 	<div class="col-6 game-sceenshots">
 		<h3>スクリーンショット</h3>
-		<div class="bxslider">
-			<% @game.screenshots.each do |screenshot| %>
-				<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg',fallback: "NoImage.jpg", size: "500x281" %>
-			<% end %>
-		</div>
+		<% if @game.screenshots.present? %>
+			<div class="bxslider">
+				<% @game.screenshots.each do |screenshot| %>
+					<%= attachment_image_tag screenshot, :image,:fill, 1920, 1080, format: 'jpeg',fallback: "NoImage.jpg", size: "500x281" %>
+				<% end %>
+			</div>
+		<% else %>
+			<%= image_tag 'NoImage.jpg', size: "500x281" %>
+		<% end %>
 	</div>
 </div>
 
