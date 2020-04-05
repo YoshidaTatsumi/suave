@@ -34,6 +34,10 @@
 
 	<div class="col-8 offset-1">
 		<h4>ユーザーID：<%= @user.id %></h4>
+
+		<h4 class="mt-4">メールアドレス</h4>
+		<%= @user.email %>
+
 		<h4 class="mt-4">ひとこと</h4>
 		<div class="user-introduction">
 			<%= @user.introduction %>
@@ -43,17 +47,17 @@
 
 <div class="row mt-5">
 	<h3 class="col-12"><u>ゲーム一覧</u></h3>
-	<div class="row">
-		<% @user.games.first(4).each do |game| %>
-			<div class="col-2 offset-1">
-				<%= link_to admins_game_path(game) do %>
-					<% screenshot = game.screenshots.find_by(game_id: game.id) %>
-			 		<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg', fallback: "NoImage.jpg", size:"200x200" %>
-			 		<br><%= game.title %>
-			 	<% end %>
-		 	</div>
-		<% end %>
-	</div>
+</div>
+<div class="row mt-2">
+	<% @user.games.first(4).each do |game| %>
+		<div class="col-2 offset-1">
+			<%= link_to admins_game_path(game) do %>
+				<% screenshot = game.screenshots.find_by(game_id: game.id) %>
+		 		<%= attachment_image_tag screenshot, :image,:fill, 200, 200, format: 'jpeg', fallback: "NoImage.jpg", size:"200x200" %>
+		 		<br><%= game.title %>
+		 	<% end %>
+	 	</div>
+	<% end %>
 </div>
 <%= link_to "もっと見る", admins_games_path(place: "user", user_id: @user.id), class:"float-right" %>
 
