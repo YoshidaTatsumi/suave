@@ -1,16 +1,25 @@
 <div class="row">
-  <% if chat.user_id == current_user.id %>
-    <div class="col-2">
-      <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
-      <p style="color: green"><%= chat.user.name %></p>
-    </div>
-    <p class="col-8"><%= chat.message %></p>
-    <%= link_to "削除", chat_chat_destroy_path(chat), class:"col-1 btn btn-danger", style:"height: 40px;", method: :delete, "data-confirm" => "本当に削除しますか？" %>
+  <% unless admin_signed_in? %>
+    <% if chat.user_id == current_user.id %>
+      <div class="col-2">
+        <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
+        <p style="color: green"><%= chat.user.name %></p>
+      </div>
+      <p class="col-8"><%= chat.message %></p>
+      <%= link_to "削除", chat_chat_destroy_path(chat), class:"col-1 btn btn-danger", style:"height: 40px;", method: :delete, "data-confirm" => "本当に削除しますか？" %>
+    <% else %>
+      <div class="col-2">
+        <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
+        <p><%= chat.user.name %></p>
+      </div>
+      <p class="col-8"><%= chat.message %></p>
+    <% end %>
   <% else %>
     <div class="col-2">
-      <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
-      <p><%= chat.user.name %></p>
-    </div>
-    <p class="col-8"><%= chat.message %></p>
+        <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
+        <p><%= chat.user.name %></p>
+      </div>
+      <p class="col-8"><%= chat.message %></p>
+      <%= link_to "削除", admins_chat_chat_destroy_path(chat), class:"col-1 btn btn-danger", style:"height: 40px;", method: :delete, "data-confirm" => "本当に削除しますか？" %>
   <% end %>
 </div>
