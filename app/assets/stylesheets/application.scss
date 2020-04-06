@@ -25,13 +25,16 @@
 
  header {
 	background-color: #0cf;
-	height: 190px;
+	height: 162px;
 	width: 100%;
  }
 
- .navbar-fixed-top {
- 	background-color: #0cf;
-	opacity: 0.9;
+ .navbar {
+ 	position: relative;
+ 	display: flex;
+ 	-webkit-box-align: center;
+ 	align-items: center;
+ 	padding: 0 1em;
  }
 
  .logo {
