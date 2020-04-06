@@ -29,10 +29,6 @@ require 'rails_helper'
 			end
 
 			context 'ログインしていない場合、ユーザー関連のURLにアクセス' do
-				it 'ユーザー一覧画面に遷移できる' do
-					visit users_path
-					expect(current_path).to eq(users_path)
-				end
 
 				it 'ユーザー詳細画面に遷移できる' do
 					visit user_path(user)
