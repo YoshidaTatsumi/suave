@@ -1,16 +1,29 @@
 <div class="row">
-  <% if chat.user_id == current_user.id %>
-    <div class="col-2">
-      <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
-      <p style="color: green"><%= chat.user.name %></p>
-    </div>
-    <p class="col-8"><%= chat.message %></p>
-    <%= link_to "削除", chat_chat_destroy_path(chat), class:"col-1 btn btn-danger", style:"height: 40px;", method: :delete, "data-confirm" => "本当に削除しますか？" %>
-  <% else %>
-    <div class="col-2">
-      <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
-      <p><%= chat.user.name %></p>
-    </div>
-    <p class="col-8"><%= chat.message %></p>
-  <% end %>
+
+    <!-- 自分の投稿の場合 -->
+    <% if chat.user_id == current_user.id %>
+      <div class="col-2">
+        <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
+        <p style="color: green"><%= chat.user.name %></p>
+      </div>
+      <p class="col-8"><%= chat.message %></p>
+      <%= link_to "削除", chat_chat_destroy_path(chat), class:"col-1 btn btn-danger", style:"height: 40px;", method: :delete, "data-confirm" => "本当に削除しますか？" %>
+
+    <!-- 他の人の投稿の場合 -->
+    <% elsif chat.user_id.present? %>       <!-- chat.user_id != current_user.id だと管理者の場合でも引っかかってしまう。管理者のuser_id = nilのため -->
+      <div class="col-2">
+        <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
+        <p><%= chat.user.name %></p>
+      </div>
+      <p class="col-8"><%= chat.message %></p>
+
+  　<!-- 管理者の投稿の場合 -->
+    <% else %>
+      <div class="col-2">
+        <%= image_tag 'admin.jpg', size: '60x60' %>
+        <p style="color: red">Suave管理者</p>
+      </div>
+      <p class="col-8" style="color: red;"><%= chat.message %></p>
+    <% end %>
+
 </div>

@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 	   proxy = Warden::Proxy.new({}, Warden::Manager.new({})).tap{|i| i.set_user(user, scope: :user) }
 	   renderer = self.renderer.new('warden' => proxy)
 	   renderer.render(*args)
-	 end
+	end
 
 	protected
 	def configure_permitted_parameters

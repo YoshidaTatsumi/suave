@@ -8,8 +8,14 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-  	chat = Chat.create(user_id: data['current_user_id'], room_id: params['room_id'], message: data['data'])
-    template = ApplicationController.render_with_signed_in_user(chat.user, partial: 'chats/message', locals: { chat: chat })
+    if data['current_user_id'] != "admin"   #ユーザー投稿の場合
+    	chat = Chat.create(user_id: data['current_user_id'], room_id: params['room_id'], message: data['data'])
+      template = ApplicationController.render_with_signed_in_user(chat.user, partial: 'chats/message', locals: { chat: chat })
+    else  #管理者投稿の場合
+      chat = Chat.create(room_id: params['room_id'], message: data['data'])
+      template = ApplicationController.render_with_signed_in_user(chat.user, partial: 'admins/chats/message', locals: { chat: chat })
+    end
+
     room = Room.find(params['room_id'])
     unless room.name.present?
       room.user_rooms.each do |user_room|

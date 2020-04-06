@@ -1,0 +1,20 @@
+<div class="row">
+	<!-- 投稿がユーザーの場合 -->
+    <% if chat.user.present? %>
+      <div class="col-2">
+        <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
+        <p><%= chat.user.name %></p>
+      </div>
+      <p class="col-8"><%= chat.message %></p>
+      <%= link_to "削除", admins_chat_chat_destroy_path(chat), class:"col-1 btn btn-danger", style:"height: 40px;", method: :delete, "data-confirm" => "本当に削除しますか？" %>
+
+    <!-- 投稿が管理者の場合 -->
+    <% else %>
+      <div class="col-2">
+        <%= image_tag 'admin.jpg', size: '60x60' %>
+        <p style="color: red">Suave管理者</p>
+      </div>
+      <p class="col-8" style="color: red;"><%= chat.message %></p>
+      <%= link_to "削除", admins_chat_chat_destroy_path(chat), class:"col-1 btn btn-danger", style:"height: 40px;", method: :delete, "data-confirm" => "本当に削除しますか？" %>
+    <% end %>
+</div>

@@ -39,7 +39,9 @@
 	</div>
 </div>
 
-<h2><u><%= @room.name %></u></h2>
+<h2 class="room" data-room="<%= @room.id %>" data-user="admin">
+	<%= @room.name %>
+</h2>
 
 <div class="row mt-4">
 	<%= link_to admins_user_path(@room.user), class:"col-2" do %>
@@ -57,15 +59,11 @@
 
 <div class="message overflow-auto mt-3 mx-auto" style="width: 90%; height: 400px;">
 	<% @room.chats.each do |chat| %>
-		<div class="row">
-		    <div class="col-2">
-		    	<%= link_to admins_user_path(chat.user) do %>
-				    <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
-				    <p><%= chat.user.name %></p>
-				<% end %>
-		    </div>
-		    <p class="col-8"><%= chat.message %></p>
-		    <%= link_to "削除", admins_chat_chat_destroy_path(chat), class:"col-1 btn btn-danger", style:"height: 40px;", method: :delete, "data-confirm" => "本当に削除しますか？" %>
-		</div>
+		<%= render 'admins/chats/message', chat: chat %>
 	<% end %>
+</div>
+
+<div class="row mt-3">
+	<%= image_tag 'admin.jpg', size: '80x80' %>
+	<input type="text" placeholder="Enterで送信" class="post col-6 mt-2">
 </div>
