@@ -6,7 +6,7 @@
         <%= attachment_image_tag chat.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'60x60' %>
         <p style="color: green"><%= chat.user.name %></p>
       </div>
-      <p class="col-8"><%= chat.message %></p>
+      <p class="col-8"  style="color: green"><%= chat.message %></p>
       <%= link_to "削除", chat_chat_destroy_path(chat), class:"col-1 btn btn-danger", style:"height: 40px;", method: :delete, "data-confirm" => "本当に削除しますか？" %>
 
     <!-- 他の人の投稿の場合 -->

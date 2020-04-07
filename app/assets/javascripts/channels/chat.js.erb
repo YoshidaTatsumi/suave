@@ -10,7 +10,7 @@ $(function() {
   })
   $(document).on('keypress', '.post', function(e) {
     if (e.keyCode === 13) {
-      app.perform("speak", {data: $('.post').val(), current_user_id: $('.room').data('user')});
+      app.perform("speak", {data: $('.post').val(), send_user: $('.room').data('user'), current_user_id: $('.room').data('id')});
       $('.post').val('');
     }
   })
