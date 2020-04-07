@@ -26,6 +26,13 @@ class ApplicationController < ActionController::Base
 	   renderer.render(*args)
 	end
 
+	def self.render_with_signed_in_admin(admin, *args)
+	   ActionController::Renderer::RACK_KEY_TRANSLATION['warden'] ||= 'warden'
+	   proxy = Warden::Proxy.new({}, Warden::Manager.new({})).tap{|i| i.set_user(admin, scope: :admin) }
+	   renderer = self.renderer.new('warden' => proxy)
+	   renderer.render(*args)
+	end
+
 	protected
 	def configure_permitted_parameters
 	  devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :introduction, :image])
