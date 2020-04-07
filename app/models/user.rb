@@ -22,8 +22,9 @@ class User < ApplicationRecord
 
   has_many :chats, dependent: :destroy
   has_many :user_rooms, dependent: :destroy
+  has_many :rooms, through: :user_rooms, dependent: :destroy
+  # 先にthroughの方を記述しないとユーザー削除と一緒にroomが削除されない
   has_many :rooms, dependent: :destroy
-  has_many :rooms, through: :user_rooms
 
   #自分からの通知
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
