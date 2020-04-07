@@ -31,7 +31,7 @@ class ChatsController < ApplicationController
 		@room.user_id = current_user.id
 		if @room.save(context: :talk_room)
 			flash[:notice] = "ルームを作成しました"
-				redirect_to talk_room_chats_path(@room)
+			redirect_to talk_room_chats_path(@room)
 		else
 			@rooms = Room.where.not(name: nil).page(params[:page]).per(8).reverse_order
 			flash[:notice] = "ルーム名を入力してください"
@@ -69,10 +69,6 @@ class ChatsController < ApplicationController
 	def talk_room
 		@room = Room.find(params[:id])
 		rooms = current_user.user_rooms.pluck(:room_id)
-		user_room = UserRoom.find_by(user_id: current_user.id, room_id: rooms)
-		if user_room.nil?
-			UserRoom.create(user_id: current_user.id, room_id: @room.id)
-		end
 		@chats = @room.chats
 	end
 
