@@ -2,7 +2,7 @@ class ChatsController < ApplicationController
 	before_action :authenticate_user!, except: [:index]
 
 	def index
-		@rooms = Room.where.not(name: nil).page(params[:page]).per(8).reverse_order
+		@rooms = Room.where.not(name: nil).order(updated_at: :asc).page(params[:page]).per(8).reverse_order
 		@room = Room.new
 	end
 
