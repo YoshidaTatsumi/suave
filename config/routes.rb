@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 	resources :contacts, only: [:new, :create]
 	resources :chats, only: [:index, :show, :create, :update, :destroy] do
 		delete 'chat_destroy' => 'chats#chat_destroy', as: 'chat_destroy'
+		get :dm_index, on: :member
 		collection do
 			get 'talk_room/:id' => 'chats#talk_room', as: 'talk_room'
 		end
