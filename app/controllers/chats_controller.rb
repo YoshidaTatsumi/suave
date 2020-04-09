@@ -69,7 +69,7 @@ class ChatsController < ApplicationController
 
 	def dm_index
 		if params[:id].to_i == current_user.id
-			@rooms = Room.joins(:user_rooms).where(name: nil, user_rooms: {user_id: current_user.id}).order(updated_at: :desc).page(params[:page]).per(8)
+			@rooms = Room.joins(:user_rooms).where(name: nil, user_rooms: {user_id: current_user.id}).order(updated_at: :desc).page(params[:page]).per(6)
 		else
 			redirect_to root_path
 		end

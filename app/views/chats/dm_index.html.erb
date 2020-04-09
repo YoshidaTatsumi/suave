@@ -1,29 +1,35 @@
 <table class="table">
-	<tr class="table-primary">
-		<th style="width: 20%;">ユーザー名</th>
-		<th style="width: 60%;">内容</th>
-		<th style="width: 20%;"></th>
-	</tr>
-	<% @rooms.each do |room| %>
-		<% room.user_rooms.each do |user_room| %>
-			<% if user_room.user.id != current_user.id %>
-				<tr>
-					<td>
-						<%= link_to user_path(user_room.user) do %>
-							<%= attachment_image_tag user_room.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
-							<%= user_room.user.name %>
-						<% end %>
-					</td>
+	<thead>
+		<tr class="table-primary">
+			<th>ユーザー名</th>
+			<th>チャット内容</th>
+			<th></th>
+		</tr>
+	</thead>
 
-					<td>
-						<%= room.chats.last.message[0..100] %>
-					</td>
+	<tbody class="jscroll">
+		<% @rooms.each do |room| %>
+			<% room.user_rooms.each do |user_room| %>
+				<% if user_room.user.id != current_user.id %>
+					<tr>
+						<td style="width: 20%;">
+							<%= link_to user_path(user_room.user) do %>
+								<%= attachment_image_tag user_room.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
+								<%= user_room.user.name %>
+							<% end %>
+						</td>
 
-					<td>
-						<%= link_to "チャットする", chat_path(user_room.user) %>
-					</td>
-				</tr>
+						<td style="width: 60%;">
+							<%= room.chats.last.message[0..100] %>
+						</td>
+
+						<td style="width: 20%;">
+							<%= link_to "チャットする", chat_path(user_room.user) %>
+						</td>
+					</tr>
+				<% end %>
 			<% end %>
 		<% end %>
-	<% end %>
+	</tbody>
 </table>
+<%= paginate @rooms, class: "paginate" %>

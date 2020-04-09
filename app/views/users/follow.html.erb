@@ -26,7 +26,9 @@
 				フォロワー数：<%= user.passive_relationships.count %>
 			</td>
 			<td>
-				<%= link_to 'フォロー外す', user_relationships_path(user.id), method: :delete %>
+				<% if current_user.id != user.id %>
+					<%= link_to 'フォロー外す', user_relationships_path(user.id), method: :delete %>
+				<% end %>
 			</td>
 		</tr>
 	<% end %>
