@@ -7,7 +7,7 @@
 		</tr>
 	</thead>
 
-	<tbody class="jscroll">
+	<tbody>
 		<% @rooms.each do |room| %>
 			<% room.user_rooms.each do |user_room| %>
 				<% if user_room.user.id != current_user.id %>
@@ -20,7 +20,11 @@
 						</td>
 
 						<td style="width: 60%;">
-							<%= room.chats.last.message[0..100] %>
+							<% if room.chats.present? %>
+								<%= room.chats.last.message[0..100] %>
+							<% else %>
+								まだチャットしてません
+							<% end %>
 						</td>
 
 						<td style="width: 20%;">
