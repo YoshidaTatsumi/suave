@@ -75,6 +75,19 @@ class ChatsController < ApplicationController
 		end
 	end
 
+	def infiniteScrolling
+		@rooms = Room.joins(:user_rooms).where(name: nil, user_rooms: {user_id: current_user.id}).order(updated_at: :desc).page(params[:page]).per(6)
+		if @rooms.total_pages < params[:page].to_i
+			@nextPage = "last"
+	    else
+	    	@nextPage = params[:page].to_i + 1
+	    end
+
+		respond_to do |format|
+	    	format.js
+	    end
+	end
+
 	def talk_room
 		@room = Room.find(params[:id])
 		rooms = current_user.user_rooms.pluck(:room_id)

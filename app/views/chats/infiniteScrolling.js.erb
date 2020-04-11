@@ -1,0 +1,7 @@
+if("<%=@nextPage%>" != "last"){
+	$("#infiniteScrollingContainer").append("<%= j(render 'dm_index',{ rooms: @rooms }) %>");
+	$(".loader-container").addClass("d-none");
+}else {
+	$(".loader-container").html("<div class='text-center text-muted'>もうDMがありません！</div>");
+}
+$("#infiniteScrollingContainer").attr('data-page', "<%=@nextPage%>");

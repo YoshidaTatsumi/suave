@@ -1,0 +1,26 @@
+<% @rooms.each do |room| %>
+	<% room.user_rooms.each do |user_room| %>
+		<% if user_room.user.id != current_user.id %>
+			<tr>
+				<td style="width: 20%;">
+					<%= link_to user_path(user_room.user) do %>
+						<%= attachment_image_tag user_room.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
+						<%= user_room.user.name %>
+					<% end %>
+				</td>
+
+				<td style="width: 60%;">
+					<% if room.chats.present? %>
+						<%= room.chats.last.message[0..100] %>
+					<% else %>
+						まだチャットしてません
+					<% end %>
+				</td>
+
+				<td style="width: 20%;">
+					<%= link_to "チャットする", chat_path(user_room.user) %>
+				</td>
+			</tr>
+		<% end %>
+	<% end %>
+<% end %>

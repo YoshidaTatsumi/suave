@@ -7,33 +7,43 @@
 		</tr>
 	</thead>
 
-	<tbody>
-		<% @rooms.each do |room| %>
-			<% room.user_rooms.each do |user_room| %>
-				<% if user_room.user.id != current_user.id %>
-					<tr>
-						<td style="width: 20%;">
-							<%= link_to user_path(user_room.user) do %>
-								<%= attachment_image_tag user_room.user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", size:'80x80' %><br>
-								<%= user_room.user.name %>
-							<% end %>
-						</td>
-
-						<td style="width: 60%;">
-							<% if room.chats.present? %>
-								<%= room.chats.last.message[0..100] %>
-							<% else %>
-								まだチャットしてません
-							<% end %>
-						</td>
-
-						<td style="width: 20%;">
-							<%= link_to "チャットする", chat_path(user_room.user) %>
-						</td>
-					</tr>
-				<% end %>
-			<% end %>
-		<% end %>
+	<tbody id="infiniteScrollingContainer" data-page="2">
+		<%= render 'dm_index', rooms: @rooms %>
 	</tbody>
 </table>
-<%= paginate @rooms, class: "paginate" %>
+
+<div class="loader-container d-none">
+    <div class="loader"></div>
+</div>
+
+
+<script>
+	$(function() {
+		//ajaxStopperがないと勢いよくスクロールすると同じ値が２回読み込まれる。
+		var ajaxStopper = false;
+		$(window).on("scroll", function() {
+			//ページ全体の高さ
+			var scrollHeight = $(document).height();
+			//現在のスクロール位置
+			var scrollPosition = $(window).height() + $(window).scrollTop();
+			//ページの一番下にスクロールしたら
+			if ( (scrollHeight - scrollPosition) / scrollHeight <= 0) {
+				//初期値は２ページ目取得、取得後コントローラで+1 or 最後のページの場合lastとされる。
+				var page = $("#infiniteScrollingContainer").attr('data-page');
+				if(page == "last" || ajaxStopper){return}
+				ajaxStopper = true;
+				$(".loader-container").removeClass("d-none")
+				var url = "/chats/params[:id]/infiniteScrolling?page=" + page;
+				//setTimeoutで0.5秒後に呼び出す
+				setTimeout(function() {
+			        $.ajax({
+			        	//非同期的に指定したurlにpostやgetリクエストを行うことができる（デフォルトはget）
+			        	url: url
+			        }).always(function(){
+			          ajaxStopper = false;
+			        })
+			    }, 500);
+			}
+		});
+	})
+</script>
