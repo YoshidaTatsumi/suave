@@ -2,7 +2,8 @@ class Admins::ChatsController < ApplicationController
 	before_action :authenticate_admin!
 
 	def index
-		@rooms = Room.where.not(name: nil).page(params[:page]).per(8).reverse_order
+		# チャットを投稿するとroomのupdated_atが更新されるようにしている。（詳細chat_channel）
+		@rooms = Room.where.not(name: nil).order(updated_at: :asc).page(params[:page]).per(8).reverse_order
 	end
 
 	def update

@@ -2,7 +2,8 @@ class ChatsController < ApplicationController
 	before_action :authenticate_user!, except: [:index]
 
 	def index
-		@rooms = Room.where.not(name: nil).page(params[:page]).per(8).reverse_order
+		# チャットを投稿するとroomのupdated_atが更新されるようにしている。（詳細chat_channel）
+		@rooms = Room.where.not(name: nil).order(updated_at: :desc).page(params[:page]).per(8)
 		@room = Room.new
 	end
 
@@ -64,6 +65,27 @@ class ChatsController < ApplicationController
 		chat.destroy
 		flash[:notice] = "１件のチャットを削除しました"
 		redirect_to request.referer
+	end
+
+	def dm_index
+		if params[:id].to_i == current_user.id
+			@rooms = Room.joins(:user_rooms).where(name: nil, user_rooms: {user_id: current_user.id}).order(updated_at: :desc).page(params[:page]).per(6)
+		else
+			redirect_to root_path
+		end
+	end
+
+	def infiniteScrolling
+		@rooms = Room.joins(:user_rooms).where(name: nil, user_rooms: {user_id: current_user.id}).order(updated_at: :desc).page(params[:page]).per(6)
+		if @rooms.total_pages < params[:page].to_i
+			@nextPage = "last"
+	    else
+	    	@nextPage = params[:page].to_i + 1
+	    end
+
+		respond_to do |format|
+	    	format.js
+	    end
 	end
 
 	def talk_room

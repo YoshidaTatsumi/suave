@@ -17,6 +17,11 @@ class ChatChannel < ApplicationCable::Channel
     end
 
     room = Room.find(params['room_id'])
+
+    # touchでupdated_atを更新。一覧画面をチャットが投稿された順にするため。
+    room.touch
+
+    # room.nameがnilの場合、DMの為通知をおくる。今回はチャットルームに新しいチャットが来ても通知は送らないようにする。
     unless room.name.present?
       room.user_rooms.each do |user_room|
         notification = chat.user.active_notifications.new(
