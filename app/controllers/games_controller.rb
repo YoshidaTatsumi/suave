@@ -4,7 +4,11 @@ class GamesController < ApplicationController
 	def index
 		games = Game.all
 		@random = Game.offset(rand(games.count)).limit(1)
-		@index_games = Game.offset(rand(games.count)).limit(10)
+		# これだと取り出す数もランドムになる
+		# @index_games = Game.offset(rand(games.count)).limit(10)
+
+		# こっちだと10個ランダムに取り出す
+		@index_games = games.shuffle[0..9]
 		@new_games = games.order(created_at: :desc).page(params[:new_game]).per(8)
 		@favorite_games = games.where.not(rating: nil).order(rating: :desc).page(params[:favorite_game]).per(8)
 		@difficult_games = games.where.not(difficulty: nil).order(difficulty: :desc).page(params[:difficult_game]).per(8)
