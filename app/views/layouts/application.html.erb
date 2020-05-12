@@ -44,9 +44,16 @@
             <p class="header-user-name">ようこそ、<strong><%= current_user.name %></strong>さん
               <% if unchecked_notifications.any?%>
                 <% notifications_count = current_user.passive_notifications.where(checked: false).count %>
-                <i class="fas fa-bell blink" id="notifications-show">
-                  <span class="header-notifications-count"><%= notifications_count %></span>
-                </i>
+
+                <% if notifications_count < 10 %>
+                  <i class="fas fa-bell blink" id="notifications-show">
+                    <span class="header-notifications-count"><%= notifications_count %></span>
+                  </i>
+                <% else %>
+                  <i class="fas fa-bell blink" id="notifications-show">
+                    <span class="header-notifications-count" style="font-size: 16px;">9+</span>
+                  </i>
+                <% end %>
               <% else %>
                 <i class="fas fa-bell" id="notifications-show"></i>
               <% end %>

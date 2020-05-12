@@ -10,6 +10,8 @@
 	<%= button_to "データを残して退会", status_change_user_path(@user), {method: :patch, params: {status: "false"}, class:"btn btn-warning", style:"white-space: normal;", "data-confirm" => "今まで投稿したゲームやコメントは消えずに残ります。本当に退会しますか？"} %>
 
 	<%= link_to "全データを削除して退会", user_path(@user), method: :delete, "data-confirm" => "今まで投稿したゲームやコメントが全て消えます。本当に退会しますか？", class:"btn btn-danger col-3 offset-1", style: "white-space: normal;" %>
+
+	<%= link_to "パスワード変更", chenge_password_user_path(@user), class:"btn btn-info col-2 offset-1", style: "white-space: normal;" %>
 </div>
 
 <div class="user-edit-box">

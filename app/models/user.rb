@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  attr_accessor :old_password, :new_password, :new_password_confirm
+
   attachment :image
 
   has_many :games, dependent: :destroy

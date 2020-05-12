@@ -3,6 +3,10 @@
 	 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	  	<%= flash[:notice] %>
 	</div>
+<% else %>
+	<% flash.each do |message_type, message| %>
+	  <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+	<% end %>
 <% end %>
 
 <h2><u>人気ゲーム</u></h2>

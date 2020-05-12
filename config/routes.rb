@@ -63,6 +63,8 @@ Rails.application.routes.draw do
 	  	member do
 	      get :follow
 	      get :follower
+	      get :chenge_password
+		  patch :update_password
 	    end
     end
 
