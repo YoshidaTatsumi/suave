@@ -5,7 +5,11 @@ $(function() {
     disconnected: function(data) {
     },
     received(data) {
-      $('.message').append(data['data']);
+      if ($('.room').data('user') == "admin") {
+        $('.message').append(data['data_admin']);
+      } else {
+        $('.message').append(data['data_user']);
+      }
     }
   })
   $(document).on('keypress', '.post', function(e) {

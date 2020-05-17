@@ -1,5 +1,5 @@
 <div class="row">
-
+  <% if chat.admin.nil? %>
     <!-- 自分の投稿の場合 -->
     <% if chat.user_id == current_user.id %>
       <div class="col-2">
@@ -25,18 +25,19 @@
         <p><%= chat.message %></p>
         <%= chat.created_at.strftime("%Y/%m/%d %H:%M") %>
       </div>
+    <% end %>
 
   　<!-- 管理者の投稿の場合 -->
-    <% else %>
-      <div class="col-2">
-        <%= image_tag 'admin.jpg', size: '60x60' %>
-        <p style="color: red">Suave管理者</p>
-      </div>
+  <% else %>
+    <div class="col-2">
+      <%= image_tag 'admin.jpg', size: '60x60' %>
+      <p style="color: red">Suave管理者</p>
+    </div>
 
-      <div class="col-8">
-        <p style="color: red;"><%= chat.message %></p>
-        <%= chat.created_at.strftime("%Y/%m/%d %H:%M") %>
-      </div>
-    <% end %>
+    <div class="col-8">
+      <p style="color: red;"><%= chat.message %></p>
+      <%= chat.created_at.strftime("%Y/%m/%d %H:%M") %>
+    </div>
+  <% end %>
 
 </div>
