@@ -38,4 +38,9 @@ class ChatChannel < ApplicationCable::Channel
 
     ActionCable.server.broadcast "chat_channel_#{params['room_id']}", data_user: template_user, data_admin: template_admin
   end
+
+  def destroy(data)
+    Chat.destroy(data['chat_id'])
+    ActionCable.server.broadcast "chat_channel_#{params['room_id']}", data
+  end
 end
