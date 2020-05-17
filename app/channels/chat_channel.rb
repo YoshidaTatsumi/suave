@@ -10,11 +10,12 @@ class ChatChannel < ApplicationCable::Channel
   def speak(data)
     if data['send_user'] == "user"   #ユーザー投稿の場合
     	chat = Chat.create(user_id: data['current_user_id'], room_id: params['room_id'], message: data['data'])
-      template = ApplicationController.render_with_signed_in_user(chat.user, partial: 'chats/message', locals: { chat: chat })
     elsif data['send_user'] == "admin"  #管理者投稿の場合
       chat = Chat.create(admin_id: data['current_user_id'], room_id: params['room_id'], message: data['data'])
-      template = ApplicationController.render_with_signed_in_admin(chat.admin, partial: 'admins/chats/message', locals: { chat: chat })
     end
+    template_user = ApplicationController.render_with_signed_in_user(chat.user, partial: 'chats/message', locals: { chat: chat })
+    template_admin = ApplicationController.render_with_signed_in_admin(chat.admin, partial: 'admins/chats/message', locals: { chat: chat })
+
 
     room = Room.find(params['room_id'])
 
@@ -35,6 +36,11 @@ class ChatChannel < ApplicationCable::Channel
       end
     end
 
-    ActionCable.server.broadcast "chat_channel_#{params['room_id']}", data: template
+    ActionCable.server.broadcast "chat_channel_#{params['room_id']}", data_user: template_user, data_admin: template_admin
+  end
+
+  def destroy(data)
+    Chat.destroy(data['chat_id'])
+    ActionCable.server.broadcast "chat_channel_#{params['room_id']}", data
   end
 end

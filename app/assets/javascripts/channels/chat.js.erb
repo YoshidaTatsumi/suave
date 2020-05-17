@@ -5,7 +5,16 @@ $(function() {
     disconnected: function(data) {
     },
     received(data) {
-      $('.message').append(data['data']);
+      if (data['chat_id']) {
+        chat = document.getElementById('chat-'+ data['chat_id']);
+        chat.remove();
+      } else {
+        if ($('.room').data('user') == "admin") {
+          $('.message').append(data['data_admin']);
+        } else {
+          $('.message').append(data['data_user']);
+        }
+      }
     }
   })
   $(document).on('keypress', '.post', function(e) {
@@ -14,4 +23,11 @@ $(function() {
       $('.post').val('');
     }
   })
+
+  $(document).on('click','.chat-delete',function() {
+    var result = window.confirm("本当に削除しますか？")
+    if (result) {
+      app.perform("destroy", {chat_id: $(this).data('chat')})
+    } else {}
+  });
 })
