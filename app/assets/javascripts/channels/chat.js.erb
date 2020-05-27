@@ -15,7 +15,9 @@ $(function() {
         if ($('.room').data('user') == "admin") {
           if (posY >= target[0].scrollHeight) {   //現在のスクロール位置が一番下の場合
             $('.message').append(data['data_admin']);
-            target[0].scroll(0, target[0].scrollHeight)   //メッセージが追加された後に一番下にスクロールする
+            $('.scroll').animate({     //メッセージが追加された後に一番下にスクロールする
+              scrollTop: target[0].scrollHeight
+            }, 800)
           } else {
             $('.message').append(data['data_admin']);
           }
@@ -23,7 +25,9 @@ $(function() {
         } else {
           if (posY >= target[0].scrollHeight) {   //現在のスクロール位置が一番下の場合
             $('.message').append(data['data_user']);
-            target[0].scroll(0, target[0].scrollHeight)   //メッセージが追加された後に一番下にスクロールする
+            $('.scroll').animate({     //メッセージが追加された後に一番下にスクロールする
+              scrollTop: target[0].scrollHeight
+            }, 800)
           } else {
             $('.message').append(data['data_user']);
           }
