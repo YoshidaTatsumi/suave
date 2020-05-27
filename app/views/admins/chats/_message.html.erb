@@ -6,7 +6,7 @@
         <p><%= chat.user.name %></p>
       </div>
 
-      <div class="col-8">
+      <div class="col-8 chat-message">
         <!-- safe_joinでtextarea内の改行を実際に改行させる -->
         <p><%=safe_join(chat.message.split("\n"),tag(:br))%></p>
         <%= chat.created_at.strftime("%Y/%m/%d %H:%M") %>
@@ -18,11 +18,11 @@
     <% else %>
       <div class="col-2">
         <%= image_tag 'admin.jpg', size: '60x60' %>
-        <p style="color: red">Suave管理者</p>
+        <p class="admin-message">Suave管理者</p>
       </div>
 
-      <div class="col-8">
-        <p style="color: red;"><%=safe_join(chat.message.split("\n"),tag(:br))%></p>
+      <div class="col-8 chat-message">
+        <p class="admin-message"><%=safe_join(chat.message.split("\n"),tag(:br))%></p>
         <%= chat.created_at.strftime("%Y/%m/%d %H:%M") %>
       </div>
 
