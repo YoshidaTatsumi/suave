@@ -59,7 +59,7 @@
 	</div>
 </div>
 
-<div class="message overflow-auto mt-3 mx-auto" style="width: 90%; height: 400px;">
+<div class="message overflow-auto mt-3 mx-auto scroll" style="width: 90%; height: 400px;">
 	<% @chats.each do |chat| %>
 		<%= render 'chats/message', chat: chat %>
 	<% end %>
@@ -67,5 +67,11 @@
 
 <div class="row mt-3">
 	<%= attachment_image_tag current_user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", class:"col-1" %>
-	<input type="text" placeholder="Enterで送信" class="post col-6 mt-2">
+	<textarea type="text" placeholder="control + Enterで送信" class="post col-6 mt-2"></textarea>
 </div>
+
+<!-- ページを開いたときに一番下（最新）のチャットが表示されるように設定 -->
+<script>
+  var target = document.getElementsByClassName('scroll');
+  target[0].scrollTop = target[0].scrollHeight;
+</script>

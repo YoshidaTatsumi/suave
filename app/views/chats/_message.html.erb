@@ -1,4 +1,4 @@
-<div id="chat-<%= chat.id %>" class="row">
+<div id="chat-<%= chat.id %>" class="row scroll-inner">
   <% if chat.admin.nil? %>
     <!-- 自分の投稿の場合 -->
     <% if chat.user_id == current_user.id %>
@@ -8,11 +8,11 @@
       </div>
 
       <div class="col-8">
-        <p style="color: green"><%= chat.message %></p>
+        <!-- safe_joinでtextarea内の改行を実際に改行させる -->
+        <p style="color: green"><%=safe_join(chat.message.split("\n"),tag(:br))%></p>
         <%= chat.created_at.strftime("%Y/%m/%d %H:%M") %>
       </div>
-      <p class="chat-delete btn btn-danger" data-chat="<%= chat.id %>" style="height: 40px;">削除</p>
-        <%#= link_to "削除", chat_chat_destroy_path(chat), class:"col-1 btn btn-danger", style:"height: 40px;", method: :delete, "data-confirm" => "本当に削除しますか？" %>
+      <div class="chat-delete btn btn-danger col-1" data-chat="<%= chat.id %>" style="height: 40px;">削除</div>
 
     <!-- 他の人の投稿の場合 -->
     <% elsif chat.user_id.present? %>       <!-- chat.user_id != current_user.id だと管理者の場合でも引っかかってしまう。管理者のuser_id = nilのため -->
@@ -22,7 +22,7 @@
       </div>
 
       <div class="col-8">
-        <p><%= chat.message %></p>
+        <p><%=safe_join(chat.message.split("\n"),tag(:br))%></p>
         <%= chat.created_at.strftime("%Y/%m/%d %H:%M") %>
       </div>
     <% end %>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="col-8">
-      <p style="color: red;"><%= chat.message %></p>
+      <p style="color: red;"><%=safe_join(chat.message.split("\n"),tag(:br))%></p>
       <%= chat.created_at.strftime("%Y/%m/%d %H:%M") %>
     </div>
   <% end %>

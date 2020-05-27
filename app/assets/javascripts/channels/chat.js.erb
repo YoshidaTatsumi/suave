@@ -5,20 +5,38 @@ $(function() {
     disconnected: function(data) {
     },
     received(data) {
+      var target = document.getElementsByClassName('scroll');
+      var posY = target[0].scrollTop + target[0].clientHeight;
+
       if (data['chat_id']) {
         chat = document.getElementById('chat-'+ data['chat_id']);
         chat.remove();
       } else {
         if ($('.room').data('user') == "admin") {
-          $('.message').append(data['data_admin']);
+          if (posY >= target[0].scrollHeight) {   //現在のスクロール位置が一番下の場合
+            $('.message').append(data['data_admin']);
+            $('.scroll').animate({     //メッセージが追加された後に一番下にスクロールする
+              scrollTop: target[0].scrollHeight
+            }, 800)
+          } else {
+            $('.message').append(data['data_admin']);
+          }
+
         } else {
-          $('.message').append(data['data_user']);
+          if (posY >= target[0].scrollHeight) {   //現在のスクロール位置が一番下の場合
+            $('.message').append(data['data_user']);
+            $('.scroll').animate({     //メッセージが追加された後に一番下にスクロールする
+              scrollTop: target[0].scrollHeight
+            }, 800)
+          } else {
+            $('.message').append(data['data_user']);
+          }
         }
       }
     }
   })
   $(document).on('keypress', '.post', function(e) {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && e.ctrlKey) {
       app.perform("speak", {data: $('.post').val(), send_user: $('.room').data('user'), current_user_id: $('.room').data('id')});
       $('.post').val('');
     }
