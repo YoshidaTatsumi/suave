@@ -68,6 +68,7 @@
 <div class="row mt-3">
 	<%= attachment_image_tag current_user, :image,:fill, 200, 200, format: 'jpeg', fallback: "no_image.jpg", class:"col-1" %>
 	<textarea type="text" placeholder="control + Enterで送信" class="post col-6 mt-2"></textarea>
+	<input type="submit" class="btn btn-primary col-1 ml-2 mt-2 chat-submit">
 </div>
 
 <!-- ページを開いたときに一番下（最新）のチャットが表示されるように設定 -->

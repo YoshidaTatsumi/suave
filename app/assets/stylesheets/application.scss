@@ -362,11 +362,27 @@
 }
 
 /*------------------------------chats*/
+.chat-submit {
+	height: 55px;
+}
+
+.chat-message {
+	word-wrap: break-word;
+}
+
+.current-message{
+	color: green;
+}
+
+.admin-message {
+	color: red;
+}
+
 .loader-container {
   height: 80px;
   padding-top: 20px;
 }
- 
+
 .loader,
 .loader:before,
 .loader:after {

@@ -42,6 +42,11 @@ $(function() {
     }
   })
 
+  $(document).on('click', '.chat-submit', function(e) {
+    app.perform("speak", {data: $('.post').val(), send_user: $('.room').data('user'), current_user_id: $('.room').data('id')});
+    $('.post').val('');
+  })
+
   $(document).on('click','.chat-delete',function() {
     var result = window.confirm("本当に削除しますか？")
     if (result) {
